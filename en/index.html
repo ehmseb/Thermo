@@ -1,1 +1,1397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KSK - Chemistry - 3M - Thermodynamics</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
+:root{
+  --bg:#161f19;
+  --bg-deep:#0e1512;
+  --paper:#fbf6ea;
+  --paper-edge:#e7dcc0;
+  --ink:#241f16;
+  --ink-soft:#5b5644;
+  --cream:#ece4cd;
+  --flame1:#e1550c;
+  --flame2:#f2a33d;
+  --cool:#2a7f93;
+  --ok:#3f7d4a;
+  --warn:#a5322a;
+  --line: rgba(36,31,22,0.16);
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+html{ -webkit-text-size-adjust:100%; }
+body{
+  background: radial-gradient(ellipse at top left, #1e2b22 0%, var(--bg-deep) 65%);
+  color: var(--cream);
+  font-family:'Source Serif 4', Georgia, serif;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+.wrap{
+  max-width:1180px;
+  margin:0 auto;
+  padding: 28px 20px 70px;
+}
+@media (max-width:480px){
+  .wrap{ padding: 18px 14px 50px; }
+}
+
+/* ---------- Header ---------- */
+header.top{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-bottom: 26px;
+}
+.eyebrow-row{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+.flame-rule{
+  height:5px;
+  width: 64px;
+  border-radius:3px;
+  background: linear-gradient(90deg, var(--flame1), var(--flame2));
+  flex-shrink:0;
+}
+.kicker{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12.5px;
+  letter-spacing:0.02em;
+  color:#9fb2a4;
+}
+h1{
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight:700;
+  margin:0;
+  line-height:1.15;
+  color:#f6f1e2;
+}
+h1 em{
+  font-style:normal;
+  background: linear-gradient(90deg, var(--flame2), var(--flame1));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.sub{
+  max-width: 640px;
+  color:#b9c4ba;
+  font-size:16px;
+  line-height:1.55;
+  margin:0;
+}
+.progress-shell{
+  margin-top:6px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12px;
+  color:#8fa295;
+}
+.progress-track{
+  flex:1;
+  max-width:280px;
+  height:6px;
+  border-radius:4px;
+  background:rgba(255,255,255,0.08);
+  overflow:hidden;
+}
+.progress-fill{
+  height:100%;
+  background: linear-gradient(90deg, var(--cool), var(--flame2));
+  width:0%;
+  transition: width .4s ease;
+}
+
+/* ---------- Layout ---------- */
+.layout{
+  display:grid;
+  grid-template-columns: 250px 1fr;
+  gap: 22px;
+  align-items:start;
+}
+@media (max-width: 860px){
+  .layout{ grid-template-columns: 1fr; }
+}
+
+/* ---------- Nav ---------- */
+nav.groups{
+  position:sticky;
+  top:18px;
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+@media (max-width:860px){
+  nav.groups{ position:static; flex-direction:row; overflow-x:auto; gap:10px; padding-bottom:4px;}
+}
+.group-block{
+  background: rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:10px;
+  padding:12px;
+}
+@media (max-width:860px){ .group-block{ min-width:210px; } }
+.group-title{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11.5px;
+  color:#9fb2a4;
+  margin:0 0 8px 2px;
+  letter-spacing:0.01em;
+}
+.sub-btn{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  width:100%;
+  text-align:left;
+  background:transparent;
+  border:none;
+  color:#dbe3da;
+  font-family:'Source Serif 4', serif;
+  font-size:14.5px;
+  padding:7px 8px;
+  border-radius:7px;
+  cursor:pointer;
+  line-height:1.3;
+}
+.sub-btn:hover{ background:rgba(255,255,255,0.06); }
+.sub-btn.active{
+  background: rgba(225,85,12,0.16);
+  color:#ffe9d6;
+}
+.dot{
+  width:9px; height:9px; border-radius:50%;
+  flex-shrink:0;
+  border:1.5px solid #7a8b7f;
+  background:transparent;
+}
+.dot.done{ background:var(--ok); border-color:var(--ok); }
+.dot.active-dot{ border-color:var(--flame2); }
+
+/* ---------- Main paper ---------- */
+main.paper{
+  background: var(--paper);
+  color: var(--ink);
+  border-radius:14px;
+  border:1px solid var(--paper-edge);
+  box-shadow: 0 18px 50px rgba(0,0,0,0.35);
+  padding: 30px 34px 34px;
+  min-height:420px;
+}
+@media (max-width:560px){ main.paper{ padding:22px 18px 26px; } }
+@media (max-width:420px){ main.paper{ padding:16px 14px 22px; border-radius:10px; } }
+
+.task-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  flex-wrap:wrap;
+  gap:16px;
+  border-bottom:1px solid var(--line);
+  padding-bottom:16px;
+  margin-bottom:18px;
+}
+.task-head h2{
+  margin:0 0 4px;
+  font-size:22px;
+  font-weight:700;
+  overflow-wrap:break-word;
+}
+@media (max-width:480px){
+  .task-head h2{ font-size:19px; }
+  .task-head{ gap:10px; }
+}
+.task-nav-btns{
+  display:flex;
+  gap:8px;
+  flex-shrink:0;
+}
+.nav-arrow{
+  font-family:'IBM Plex Mono', monospace;
+  background:var(--cream);
+  border:1px solid var(--paper-edge);
+  color:var(--ink);
+  width:34px;height:34px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:15px;
+}
+.nav-arrow:hover{ background:#e3d8b9; }
+.nav-arrow:disabled{ opacity:0.35; cursor:default; }
+
+.equation-box{
+  font-family:'IBM Plex Mono', monospace;
+  background: var(--ink);
+  color: #f4ecd8;
+  border-radius:9px;
+  padding:16px 18px;
+  font-size:15.5px;
+  line-height:1.7;
+  margin-bottom:16px;
+  overflow-x:auto;
+  white-space:pre-wrap;
+  overflow-wrap:break-word;
+}
+.equation-box .dH{ color: var(--flame2); }
+@media (max-width:480px){
+  .equation-box{ font-size:13.5px; padding:13px 14px; }
+}
+
+.given-box{
+  background: var(--cream);
+  border:1px solid var(--paper-edge);
+  border-radius:9px;
+  padding:12px 16px;
+  margin-bottom:20px;
+  font-size:13.6px;
+  color: var(--ink-soft);
+}
+.given-box strong{ color:var(--ink); }
+.given-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px,1fr));
+  gap:6px 14px;
+  margin-top:8px;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:13px;
+}
+
+.inputs-panel{
+  background:#f2ecd9;
+  border:1px dashed #c8bb93;
+  border-radius:9px;
+  padding:14px 16px;
+  margin-bottom:20px;
+}
+.inputs-panel .lbl{
+  display:block;
+  font-size:13px;
+  color:var(--ink-soft);
+  margin-bottom:4px;
+}
+.inputs-row{
+  display:flex;
+  gap:18px;
+  flex-wrap:wrap;
+}
+.inputs-row > div{ min-width:220px; flex:1 1 220px; }
+.inputs-panel input{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:16px;
+  padding:9px 10px;
+  border-radius:6px;
+  border:1px solid var(--paper-edge);
+  width:100%;
+  max-width:220px;
+  background:#fff;
+  color:var(--ink);
+}
+@media (max-width:480px){
+  .inputs-row > div{ min-width:0; flex-basis:100%; }
+  .inputs-panel input{ max-width:100%; }
+}
+
+/* ---------- Step ---------- */
+.step-wrap{ }
+.step-progress{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12px;
+  color:var(--ink-soft);
+  margin-bottom:8px;
+}
+.step-prompt{
+  font-size:17px;
+  line-height:1.55;
+  margin: 0 0 14px;
+  overflow-wrap:break-word;
+}
+@media (max-width:480px){
+  .step-prompt{ font-size:15.5px; }
+}
+.answer-row{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+  margin-bottom:10px;
+}
+.answer-row input[type=text]{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:16px;
+  padding:9px 12px;
+  border-radius:7px;
+  border:1.5px solid var(--paper-edge);
+  width:150px;
+  max-width:100%;
+  flex:0 1 150px;
+  background:#fff;
+  color:var(--ink);
+}
+.answer-row input[type=text]:focus{ outline:2px solid var(--flame2); border-color:var(--flame2); }
+.unit-tag{
+  font-family:'IBM Plex Mono', monospace;
+  color:var(--ink-soft);
+  font-size:14px;
+}
+button.action{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:13.5px;
+  padding:9px 16px;
+  border-radius:7px;
+  border:none;
+  cursor:pointer;
+  background: var(--ink);
+  color:#f4ecd8;
+}
+button.action:hover{ background:#3a3222; }
+button.ghost{
+  background:transparent;
+  border:1px solid var(--paper-edge);
+  color:var(--ink-soft);
+}
+button.ghost:hover{ background:var(--cream); }
+button.action:disabled{ opacity:0.4; cursor:default; }
+
+.feedback{
+  border-radius:8px;
+  padding:11px 14px;
+  font-size:14.5px;
+  margin-top:10px;
+  line-height:1.5;
+  display:none;
+}
+.feedback.show{ display:block; }
+.feedback.ok{ background:rgba(63,125,74,0.13); border:1px solid rgba(63,125,74,0.4); color:#1f4a27; }
+.feedback.warn{ background:rgba(165,50,42,0.09); border:1px solid rgba(165,50,42,0.32); color:#7a2620; }
+
+.hint-block{
+  margin-top:12px;
+  padding-top:12px;
+  border-top:1px dashed var(--paper-edge);
+}
+.hint-line{
+  font-size:14px;
+  color:var(--cool);
+  margin:6px 0;
+  padding-left:16px;
+  border-left:2px solid var(--cool);
+}
+.explain-block{
+  margin-top:14px;
+  padding:13px 16px;
+  background:var(--ink);
+  color:#f4ecd8;
+  border-radius:9px;
+  font-size:14.5px;
+  line-height:1.6;
+  display:none;
+  overflow-wrap:break-word;
+}
+.explain-block.show{ display:block; }
+.explain-block b{ color: var(--flame2); }
+
+textarea.reflect-area{
+  width:100%;
+  min-height:78px;
+  font-family:'Source Serif 4', serif;
+  font-size:16px;
+  padding:10px 12px;
+  border-radius:8px;
+  border:1.5px solid var(--paper-edge);
+  resize:vertical;
+  color:var(--ink);
+  background:#fff;
+}
+
+.step-footer{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:22px;
+  padding-top:16px;
+  border-top:1px solid var(--line);
+}
+.step-dots{ display:flex; gap:7px; }
+.step-dot{
+  width:9px;height:9px;border-radius:50%;
+  background:var(--paper-edge);
+}
+.step-dot.on{ background: var(--flame1); }
+.step-dot.done{ background: var(--ok); }
+
+.subtask-done-banner{
+  background: linear-gradient(90deg, rgba(63,125,74,0.14), rgba(63,125,74,0.05));
+  border:1px solid rgba(63,125,74,0.35);
+  border-radius:9px;
+  padding:14px 16px;
+  font-size:14.5px;
+  color:#1f4a27;
+  margin-top:6px;
+}
+.sample-answer{
+  margin-top:10px;
+  font-size:14px;
+  color:var(--ink-soft);
+  background:var(--cream);
+  border-radius:7px;
+  padding:10px 13px;
+  display:none;
+  overflow-wrap:break-word;
+}
+.sample-answer.show{ display:block; }
+
+footer.foot{
+  text-align:center;
+  color:#5f7168;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11.5px;
+  margin-top:34px;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="eyebrow-row">
+      <div class="flame-rule"></div>
+      <span class="kicker">Chemistry · Thermodynamics</span>
+    </div>
+    <h1>KSK - Chemistry - 3M - <em>Thermodynamics</em></h1>
+    <p class="sub">Work through the Reaction Enthalpy tasks and the Practical Calculations. Each task is broken into steps — if you get stuck, grab a guiding question as a hint before you check the solution.</p>
+    <div class="progress-shell">
+      <span id="progressLabel">0 / 0 steps solved</span>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <nav class="groups" id="groupNav"></nav>
+    <main class="paper" id="mainPaper"></main>
+  </div>
+
+  <footer class="foot">ΔH = Σ ΔH⁰f(products) − Σ ΔH⁰f(reactants)</footer>
+</div>
+
+<script>
+/* =========================================================
+   DATA
+   ========================================================= */
+const DATA = {
+  reaction: {
+    title: "Reaction Enthalpy Tasks",
+    subtitle: "Combustion of ammonia & octane",
+    subtasks: [
+      {
+        id:"a", label:"a) ΔH ammonia",
+        heading:"a) Reaction enthalpy of ammonia combustion",
+        equation:"4 NH₃(g) + 5 O₂(g)  →  4 NO(g) + 6 H₂O(g)",
+        given:[["NH₃(g)","−46 kJ/mol"],["O₂(g)","0 kJ/mol"],["NO(g)","+90 kJ/mol"],["H₂O(g)","−242 kJ/mol"]],
+        givenLabel:"ΔH⁰f values",
+        steps:[
+          {
+            type:"text",
+            prompt:"Before you calculate: what is the general formula for finding a reaction enthalpy from enthalpies of formation?",
+            hints:[
+              "Think of the principle: first mentally break all reactants down into the elements, then build the products from those elements.",
+              "The formula has a sum for the product side and a sum for the reactant side — with a minus sign in between."
+            ],
+            explanation:"ΔH = Σ ΔH⁰f(products) − Σ ΔH⁰f(reactants). Each term is multiplied by the amount of substance (the coefficients of the equation)."
+          },
+          {
+            type:"numeric", unit:"kJ", tol:5,
+            prompt:"Calculate ΔH for the equation exactly as written above (for 4 mol NH₃).",
+            answer:-908,
+            hints:[
+              "Work out the product side first: 4 mol·ΔHf(NO) + 6 mol·ΔHf(H₂O).",
+              "Product side: 4·(+90) + 6·(−242) = 360 − 1452 = −1092 kJ. Now the reactant side: 4·(−46) + 5·0 = −184 kJ.",
+              "ΔH = (−1092 kJ) − (−184 kJ). Work that out."
+            ],
+            explanation:"ΔH = [4·90 + 6·(−242)] − [4·(−46) + 5·0] = (360 − 1452) − (−184) = −1092 + 184 = <b>−908 kJ</b>. Strongly exothermic."
+          }
+        ]
+      },
+      {
+        id:"b", label:"b) molar ΔH",
+        heading:"b) Molar enthalpy of combustion of ammonia",
+        equation:"4 NH₃(g) + 5 O₂(g)  →  4 NO(g) + 6 H₂O(g)     ΔH = −908 kJ (from a)",
+        steps:[
+          {
+            type:"numeric", unit:"kJ/mol", tol:2,
+            prompt:"What is the molar enthalpy of combustion, i.e. ΔH per mol NH₃?",
+            answer:-227,
+            hints:[
+              "How many mol of NH₃ does the ΔH from a) refer to? Look at the coefficient of NH₃ in the equation.",
+              "Divide the ΔH from a) by exactly that amount of substance.",
+              "ΔH_molar = −908 kJ / 4 mol"
+            ],
+            explanation:"ΔH_molar = ΔH / n(NH₃) = −908 kJ / 4 mol = <b>−227 kJ/mol</b>."
+          }
+        ]
+      },
+      {
+        id:"c", label:"c) formation energy NH₃",
+        heading:"c) Energy for forming the required ammonia",
+        equation:"Formation: ½N₂(g) + 3/2H₂(g) → NH₃(g)     ΔH⁰f(NH₃) = −46 kJ/mol",
+        given:[["ΔH⁰f(NH₃)","−46 kJ/mol"],["amount of NH₃ needed","4 mol (see equation above)"]],
+        givenLabel:"Given",
+        steps:[
+          {
+            type:"numeric", unit:"kJ", tol:2,
+            prompt:"How much energy is released or needed to form, from the elements, the 4 mol NH₃ required for the combustion equation?",
+            answer:-184,
+            hints:[
+              "How many mol of NH₃ appear in the combustion equation from a)?",
+              "Multiply that amount of substance by ΔH⁰f(NH₃) = −46 kJ/mol.",
+              "4 mol · (−46 kJ/mol) = ?"
+            ],
+            explanation:"4 mol · (−46 kJ/mol) = <b>−184 kJ</b>. The negative sign shows that forming NH₃ is exothermic — so no energy is actually <i>needed</i>; instead, 184 kJ are <i>released</i>. A good moment to watch the sign: the question about 'energy needed' assumes the formation is endothermic, which it isn't."
+          }
+        ]
+      },
+      {
+        id:"d", label:"d) ΔHf octane",
+        heading:"d) Molar enthalpy of formation of octane",
+        equation:"2 C₈H₁₈ + 25 O₂  →  16 CO₂ + 18 H₂O     ΔH = −10144 kJ",
+        given:[["ΔH⁰f(CO₂)","−393 kJ/mol"],["ΔH⁰f(H₂O,g)","−242 kJ/mol"],["ΔH⁰f(O₂)","0 kJ/mol"],["ΔH⁰f(C₈H₁₈)","wanted"]],
+        givenLabel:"ΔH⁰f values",
+        steps:[
+          {
+            type:"numeric", unit:"kJ/mol", tol:3,
+            prompt:"Rearrange ΔH = ΣΔHf(products) − ΣΔHf(reactants) to solve for ΔH⁰f(C₈H₁₈) and calculate the value.",
+            answer:-250,
+            hints:[
+              "Write out the full formula for this equation first: ΔH = [16·ΔHf(CO₂) + 18·ΔHf(H₂O)] − [2·ΔHf(C₈H₁₈) + 25·0].",
+              "You can calculate the product side directly: 16·(−393) + 18·(−242) = −6288 − 4356 = −10644 kJ.",
+              "−10144 kJ = −10644 kJ − 2 mol·ΔHf(C₈H₁₈). Solve for ΔHf(C₈H₁₈) and divide by 2 mol."
+            ],
+            explanation:"2·ΔHf(C₈H₁₈) = −10644 kJ − (−10144 kJ) = −500 kJ  →  ΔHf(C₈H₁₈) = −500 kJ / 2 mol = <b>−250 kJ/mol</b>."
+          }
+        ]
+      }
+    ]
+  },
+
+  practical: {
+    title:"Practical Calculations",
+    subtitle:"Cost and heating-value comparisons",
+    subtasks:[
+      {
+        id:"gasoil", label:"1) Natural gas vs. heating oil",
+        heading:"1) Which is cheaper to heat with — natural gas or heating oil?",
+        equation:"1 m³ natural gas: 1 CHF          100 L heating oil: 90 CHF, ρ = 0.84 g/cm³",
+        hasInputs:true,
+        inputsIntro:"This task needs heating values from your infosheet. Enter them here (the natural gas value is usually a known reference figure; you'll need to look up the heating oil value yourself).",
+        inputs:[
+          {key:"huGas", label:"Heating value of natural gas per infosheet (MJ/m³)", placeholder:"e.g. 32", default:32},
+          {key:"huOil", label:"Heating value of heating oil per infosheet (MJ/kg)", placeholder:"look it up, e.g. 42–43", default:null}
+        ],
+        steps:[
+          {
+            type:"dynamic", unit:"CHF/MJ", tolRel:0.06,
+            prompt:"What does 1 MJ of energy from natural gas cost you?",
+            compute:(v)=> v.huGas ? 1/v.huGas : null,
+            requires:["huGas"],
+            hints:[
+              "1 m³ of natural gas costs 1 CHF and delivers Hu(natural gas) MJ of energy, per the infosheet.",
+              "Price per m³ divided by energy per m³ gives the price per MJ.",
+              "Cost = 1 CHF / Hu(natural gas)"
+            ],
+            explanation:(v)=>`Cost = 1 CHF / ${v.huGas} MJ ≈ <b>${(1/v.huGas).toFixed(4)} CHF/MJ</b>.`
+          },
+          {
+            type:"numeric", unit:"kg", tol:1,
+            prompt:"How much do the 100 litres of heating oil weigh (ρ = 0.84 g/cm³ = 0.84 kg/L)?",
+            answer:84,
+            hints:[
+              "Density is mass per volume: ρ = m/V.",
+              "Rearrange for mass: m = ρ · V.",
+              "m = 0.84 kg/L · 100 L"
+            ],
+            explanation:"m = ρ·V = 0.84 kg/L · 100 L = <b>84 kg</b>."
+          },
+          {
+            type:"numeric", unit:"CHF/kg", tol:0.03,
+            prompt:"What does 1 kg of heating oil cost?",
+            answer:1.0714,
+            hints:[
+              "You know the price for 100 L (= 90 CHF) and the mass of those 100 L (from the previous step).",
+              "Divide the total price by the total mass.",
+              "90 CHF / 84 kg"
+            ],
+            explanation:"90 CHF / 84 kg = <b>1.071 CHF/kg</b>."
+          },
+          {
+            type:"dynamic", unit:"CHF/MJ", tolRel:0.08,
+            prompt:"What does 1 MJ of energy from heating oil cost you?",
+            compute:(v)=> v.huOil ? 1.0714/v.huOil : null,
+            requires:["huOil"],
+            hints:[
+              "You just calculated the price per kg — divide it by the heating value per kg.",
+              "Cost per MJ = price per kg / Hu(heating oil in MJ/kg).",
+              "1.071 CHF/kg / Hu(heating oil)"
+            ],
+            explanation:(v)=>`Cost = 1.071 CHF/kg / ${v.huOil} MJ/kg ≈ <b>${(1.0714/v.huOil).toFixed(4)} CHF/MJ</b>.`
+          },
+          {
+            type:"reflect",
+            prompt:"Compare the two prices per MJ: which energy source is cheaper, and by roughly what factor?",
+            sample:(v)=>{
+              if(!v.huGas||!v.huOil) return "Enter both heating values above first, then a concrete comparison can appear here.";
+              const cg=1/v.huGas, co=1.0714/v.huOil;
+              const cheaper = cg<co? "Natural gas":"Heating oil";
+              const factor = (Math.max(cg,co)/Math.min(cg,co)).toFixed(2);
+              return `With your values: natural gas ≈ ${cg.toFixed(4)} CHF/MJ, heating oil ≈ ${co.toFixed(4)} CHF/MJ. ${cheaper} is cheaper, by roughly a factor of ${factor}.`;
+            }
+          },
+          {
+            type:"reflect",
+            prompt:"The task asks: which other costs would you have to factor in besides the pure heating value? Jot down a few keywords.",
+            sample:()=>"For example: the investment/connection cost of the heating system, maintenance and chimney-sweep fees, the efficiency of the heating system (not 100% of the energy ends up as usable heat in the room), tank cleaning/storage for oil, CO₂ levies, and price fluctuations or delivery costs."
+          }
+        ]
+      },
+      {
+        id:"molar", label:"2) Heating values per mole",
+        heading:"2) Heating values of natural gas, butane and ethanol per mole",
+        equation:"Infosheet (calorific values):\nNatural gas: 32 MJ/m³        Butane: 124 MJ/m³        Ethanol: 29.7 MJ/kg\n\nMolar volume: Vm = 24 L/mol (at RT)      M(ethanol) = 46.07 g/mol",
+        givenLabel:"Given (infosheet)",
+        given:[["Natural gas (volume-based)","32 MJ/m³"],["Butane (volume-based)","124 MJ/m³"],["Ethanol (specific)","29.7 MJ/kg"],["Vm","24 L/mol"],["M(ethanol)","46.07 g/mol"]],
+        steps:[
+          {
+            type:"numeric", unit:"kJ/mol", tol:20,
+            prompt:"Calculate the molar heating value of natural gas. Use the volume-based calorific value from the infosheet (32 MJ/m³) and the molar volume Vm = 24 L/mol.",
+            answer:768,
+            hints:[
+              "Convert the molar volume to m³ first: 24 L = 0.024 m³.",
+              "Multiply the volume-based calorific value by the volume occupied by 1 mol of gas.",
+              "32 MJ/m³ · 0.024 m³/mol = ? (result in MJ/mol, then convert to kJ/mol)"
+            ],
+            explanation:"32 MJ/m³ · 0.024 m³/mol = 0.768 MJ/mol = <b>768 kJ/mol</b>."
+          },
+          {
+            type:"numeric", unit:"kJ/mol", tol:60,
+            prompt:"Do the same for butane (infosheet: 124 MJ/m³).",
+            answer:2976,
+            hints:[
+              "Same approach as for natural gas: calorific value · volume per mole.",
+              "24 L/mol = 0.024 m³/mol.",
+              "124 MJ/m³ · 0.024 m³/mol = ?"
+            ],
+            explanation:"124 MJ/m³ · 0.024 m³/mol = 2.976 MJ/mol ≈ <b>2976 kJ/mol</b>."
+          },
+          {
+            type:"numeric", unit:"kJ/mol", tol:40,
+            prompt:"Ethanol is a liquid, so its calorific value is given per mass (29.7 MJ/kg). Calculate the molar heating value using M(ethanol) = 46.07 g/mol.",
+            answer:1368,
+            hints:[
+              "Convert the molar mass to kg first: 46.07 g/mol = 0.04607 kg/mol.",
+              "Multiply the specific (mass-based) calorific value by the molar mass.",
+              "29.7 MJ/kg · 0.04607 kg/mol = ?"
+            ],
+            explanation:"29.7 MJ/kg · 0.04607 kg/mol = 1.368 MJ/mol ≈ <b>1368 kJ/mol</b>."
+          },
+          {
+            type:"reflect",
+            prompt:"Compare the three molar calorific values (natural gas 768, ethanol 1368, butane 2976 kJ/mol). What do you notice regarding molecule size — and why is the molar heating value a poor way to compare, say, burner types?",
+            sample:()=>"The more C and H atoms a molecule has (the bigger/heavier it is), the more energy is released on combustion — so the molar heating value increases with molecule size. For a fair comparison between different fuels (e.g. for burners), the molar value is therefore not very informative; the heating value per mass (kJ/g or MJ/kg) or per volume (MJ/m³), as given on the infosheet, is more useful."
+          }
+        ]
+      },
+      {
+        id:"ethanol", label:"3) Check ethanol's heating value",
+        heading:"3) Does the heating value of ethanol (29.7 MJ/kg per infosheet) check out?",
+        equation:"Needed: reaction equation + ΔH_c(ethanol)",
+        given:[["ΔH⁰f(C₂H₅OH,l)","−277 kJ/mol"],["ΔH⁰f(CO₂)","−393 kJ/mol"],["ΔH⁰f(H₂O,g)","−242 kJ/mol"],["M(C₂H₅OH)","46.07 g/mol"]],
+        givenLabel:"Given",
+        steps:[
+          {
+            type:"text",
+            prompt:"First write out the complete, balanced reaction equation for the combustion of ethanol.",
+            hints:[
+              "Ethanol is C₂H₅OH; it burns with O₂ to give CO₂ and H₂O.",
+              "Balance C and H first, then O."
+            ],
+            explanation:"C₂H₅OH + 3 O₂ → 2 CO₂ + 3 H₂O"
+          },
+          {
+            type:"numeric", unit:"kJ", tol:8,
+            prompt:"Calculate ΔH of this reaction for 1 mol of ethanol using the ΔH⁰f values.",
+            answer:-1235,
+            hints:[
+              "Product side: 2·ΔHf(CO₂) + 3·ΔHf(H₂O).",
+              "Reactant side: 1·ΔHf(C₂H₅OH) (O₂ is an element, ΔHf=0).",
+              "ΔH = [2·(−393) + 3·(−242)] − [1·(−277)]"
+            ],
+            explanation:"ΔH = 2mol·(−393) + 3mol·(−242) − 1mol·(−277) = −786 − 726 + 277 = <b>−1235 kJ</b>."
+          },
+          {
+            type:"numeric", unit:"g", tol:0.5,
+            prompt:"How many grams is 1 mol of ethanol (M = 46.07 g/mol)?",
+            answer:46.07,
+            hints:["n = m/M → rearrange for m.", "m = n · M", "m = 1 mol · 46.07 g/mol"],
+            explanation:"m = 1 mol · 46.07 g/mol = <b>46.07 g</b>."
+          },
+          {
+            type:"numeric", unit:"kJ/g (≈ MJ/kg)", tol:0.4,
+            prompt:"From this, calculate the heating value per gram (i.e. MJ/kg).",
+            answer:26.8,
+            hints:[
+              "Divide the energy from step 2 (as a magnitude) by the mass from step 3.",
+              "1235 kJ / 46.07 g",
+              "The result in kJ/g is numerically identical to MJ/kg."
+            ],
+            explanation:"1235 kJ / 46.07 g = <b>26.8 kJ/g = 26.8 MJ/kg</b>."
+          },
+          {
+            type:"reflect",
+            prompt:"The infosheet states 29.7 MJ/kg — your calculated value is 26.8 MJ/kg. Why does your value come out lower?",
+            sample:()=>"We calculated using H₂O(g) (gaseous water) — that corresponds to the 'net calorific value' (lower heating value). If you instead use H₂O(l) (liquid, ΔH⁰f ≈ −286 kJ/mol instead of −242), more energy is released (the heat of condensation), which corresponds to the 'gross calorific value' (higher heating value) usually printed on infosheets. Tabulated ΔH⁰f values are also rounded and refer to standard conditions, while real measurements (bomb calorimeter) involve slightly different conditions."
+          }
+        ]
+      },
+      {
+        id:"erdgas", label:"4) Natural gas heating value from a bill",
+        heading:"4) Calculate the heating value of natural gas from the utility bill",
+        equation:"Bill: 666.67 CHF for 1200 m³ natural gas      Website price: 5.25 Rp./kWh",
+        given:[["Amount","666.67 CHF"],["Volume","1200 m³"],["Price","5.25 Rp./kWh = 0.0525 CHF/kWh"]],
+        givenLabel:"Given",
+        steps:[
+          {
+            type:"numeric", unit:"kWh", tol:120,
+            prompt:"How much energy in kWh was consumed according to the bill?",
+            answer:12700,
+            hints:[
+              "You know the total amount and the price per kWh.",
+              "Energy = amount / price per kWh.",
+              "666.67 CHF / 0.0525 CHF/kWh"
+            ],
+            explanation:"666.67 CHF / 0.0525 CHF/kWh ≈ <b>12,700 kWh</b>."
+          },
+          {
+            type:"numeric", unit:"MJ", tol:250,
+            prompt:"Convert this amount of energy into MJ (1 kWh = 3.6 MJ).",
+            answer:45720,
+            hints:[
+              "1 kWh corresponds to 3.6 MJ — which operation gets you from kWh to MJ?",
+              "Multiply the kWh figure by 3.6.",
+              "12700 kWh · 3.6 MJ/kWh"
+            ],
+            explanation:"12,700 kWh · 3.6 MJ/kWh = <b>45,720 MJ</b>."
+          },
+          {
+            type:"numeric", unit:"MJ/m³", tol:0.6,
+            prompt:"How many MJ does 1 m³ of this natural gas deliver (the actual heating value)?",
+            answer:38.1,
+            hints:[
+              "You now know the total energy (MJ) and the total volume (m³) from the bill.",
+              "Divide the energy by the volume.",
+              "45720 MJ / 1200 m³"
+            ],
+            explanation:"45,720 MJ / 1200 m³ = <b>38.1 MJ/m³</b>."
+          },
+          {
+            type:"reflect",
+            prompt:"This value (38.1 MJ/m³) is higher than the heating value of natural gas tabulated on the infosheet (32 MJ/m³). How might that be explained?",
+            sample:()=>"Real natural gas is not pure methane — it often also contains higher alkanes such as ethane, propane or butane, which have a higher heating value per m³. The actual gas mix delivered can therefore be more energy-rich than the tabulated value for 'natural gas'. The tabulated value may also refer to slightly different standard measurement conditions (pressure, temperature) than the gas meter."
+          }
+        ]
+      }
+    ]
+  },
+
+  followup: {
+    title:"Follow-up Tasks",
+    subtitle:"Wood heating & heat pump",
+    subtasks:[
+      {
+        id:"wood", label:"1) Wood heating",
+        heading:"1) How much can wood cost at most?",
+        equation:"1 Ster (= 1 m³) of wood, density of beech firewood: 750 kg/m³ — comparison with natural gas & heating oil from 'Practical Calculations'",
+        given:[["Density of beech firewood","750 kg/m³"],["Mass of 1 Ster","750 kg"]],
+        givenLabel:"Given",
+        hasInputs:true,
+        inputsIntro:"Check your infosheet: what is the specific calorific value of wood? Enter the value.",
+        inputs:[
+          {key:"huWood", label:"Specific calorific value of wood per infosheet (MJ/kg)", placeholder:"look it up (approx. …)", default:null}
+        ],
+        steps:[
+          {
+            type:"dynamic", unit:"MJ", tolRel:0.1,
+            prompt:"How much total energy does 1 Ster of wood (750 kg, beech density) deliver?",
+            compute:(v)=> v.huWood ? v.huWood*750 : null,
+            requires:["huWood"],
+            hints:[
+              "The specific calorific value is given per kg — at this density, 1 Ster weighs 750 kg.",
+              "Energy = calorific value (MJ/kg) · mass (750 kg).",
+              "Multiply your entered value by 750."
+            ],
+            explanation:(v)=>`Energy = ${v.huWood} MJ/kg · 750 kg ≈ <b>${(v.huWood*750).toFixed(0)} MJ</b> per Ster.`
+          },
+          {
+            type:"dynamic", unit:"CHF", tolRel:0.1,
+            prompt:"In 'Practical Calculations', heating oil at ≈ 0.0259 CHF/MJ was the cheaper of the two heating options. So how much can 1 Ster of wood cost at most so that wood isn't more expensive than heating oil?",
+            compute:(v)=> v.huWood ? v.huWood*750*0.0259 : null,
+            requires:["huWood"],
+            hints:[
+              "You now know the energy per Ster (MJ) from the previous step.",
+              "Multiply that energy by the threshold price per MJ (0.0259 CHF/MJ, the heating oil value).",
+              "Max price = energy (MJ) · 0.0259 CHF/MJ"
+            ],
+            explanation:(v)=>`Max price = ${(v.huWood*750).toFixed(0)} MJ · 0.0259 CHF/MJ ≈ <b>${(v.huWood*750*0.0259).toFixed(0)} CHF</b> per Ster.`
+          },
+          {
+            type:"reflect",
+            prompt:"Why is a stove, or especially an open fireplace, less efficient than, say, an automatic wood-chip heating system?",
+            sample:()=>"With an open fireplace, a large share of the heat escapes unused up the chimney, a lot of warm room air is drawn out along with the flue gas, and combustion is often incomplete (soot, unburnt wood gas). There is also usually no heat exchanger or buffer tank to transfer the energy to water/the heating system. An automatic wood-chip heating system controls the air supply optimally, burns more completely, and transfers the heat via a heat exchanger directly into the heating system — the efficiency is much higher."
+          }
+        ]
+      },
+      {
+        id:"heatpump", label:"2) Heat pump vs. gas",
+        heading:"2) Is heating with a heat pump cheaper than with gas?",
+        equation:"A heat pump needs only 1/3 of the energy of a gas heating system for the same amount of heat      Electricity price: 30 Rp./kWh",
+        given:[["Electricity price","30 Rp./kWh = 0.30 CHF/kWh"],["1 kWh","3.6·10⁶ J = 3.6 MJ"],["Natural gas (from 'Practical Calculations')","≈ 0.0313 CHF/MJ"]],
+        givenLabel:"Given",
+        steps:[
+          {
+            type:"numeric", unit:"CHF/MJ", tol:0.003,
+            prompt:"Convert the electricity price of 30 Rp./kWh into CHF per MJ (1 kWh = 3.6 MJ).",
+            answer:0.0833,
+            hints:[
+              "0.30 CHF/kWh is the price for 1 kWh of electrical energy.",
+              "1 kWh corresponds to 3.6 MJ (i.e. 3.6·10⁶ J).",
+              "Cost per MJ = 0.30 CHF / 3.6 MJ"
+            ],
+            explanation:"0.30 CHF / 3.6 MJ ≈ <b>0.0833 CHF/MJ</b>."
+          },
+          {
+            type:"numeric", unit:"CHF/MJ", tol:0.002,
+            prompt:"The heat pump needs only 1/3 as much energy as a gas heating system for the same amount of heat. What does 1 MJ of heat from the heat pump cost you?",
+            answer:0.0278,
+            hints:[
+              "If only a third of the energy is needed, the same amount of heat also costs only a third as much.",
+              "Divide the cost per MJ of electricity from the previous step by 3.",
+              "0.0833 CHF/MJ / 3"
+            ],
+            explanation:"0.0833 CHF/MJ / 3 ≈ <b>0.0278 CHF/MJ</b>."
+          },
+          {
+            type:"reflect",
+            prompt:"At this electricity price, is heating with the heat pump cheaper than with a gas heating system? Compare with the natural gas result (≈0.0313 CHF/MJ) from 'Practical Calculations'.",
+            sample:()=>"Heat pump ≈ 0.0278 CHF/MJ, natural gas ≈ 0.0313 CHF/MJ. Despite the higher price per MJ of electricity, the heat pump is cheaper because, thanks to its efficiency factor of 3, it delivers three times as much heat per unit of energy used."
+          }
+        ]
+      }
+    ]
+  }
+};
+
+const GROUP_ORDER = ["reaction","practical","followup"];
+
+/* =========================================================
+   STATE
+   ========================================================= */
+let state = {
+  group:"reaction",
+  subIndex:0,
+  stepIndex:0,
+  solved:{},      // key "group:subId:stepIdx" -> true
+  hintLevel:{},   // key -> number of hints shown
+  inputs:{}       // key "group:subId:inputKey" -> value
+};
+
+const STORAGE_KEY = "thermo-progress-en-v2";
+
+async function loadProgress(){
+  try{
+    const res = await window.storage.get(STORAGE_KEY, false);
+    if(res && res.value){
+      const parsed = JSON.parse(res.value);
+      state.solved = parsed.solved || {};
+      state.inputs = parsed.inputs || {};
+    }
+  }catch(e){ /* no saved progress yet, that's fine */ }
+}
+async function saveProgress(){
+  try{
+    await window.storage.set(STORAGE_KEY, JSON.stringify({solved:state.solved, inputs:state.inputs}), false);
+  }catch(e){ /* best-effort */ }
+}
+
+function stepKey(g,subId,i){ return g+":"+subId+":"+i; }
+function inputKey(g,subId,k){ return g+":"+subId+":"+k; }
+
+function parseNum(str){
+  if(str===undefined||str===null) return NaN;
+  const cleaned = String(str).trim().replace(/'/g,"").replace(",",".");
+  return parseFloat(cleaned);
+}
+
+function totalStepsCount(){
+  let n=0;
+  GROUP_ORDER.forEach(g=>{
+    DATA[g].subtasks.forEach(st=>{
+      st.steps.forEach(()=>{ n++; });
+    });
+  });
+  return n;
+}
+function solvedStepsCount(){
+  return Object.values(state.solved).filter(Boolean).length;
+}
+
+/* =========================================================
+   RENDER: NAV
+   ========================================================= */
+function renderNav(){
+  const nav = document.getElementById("groupNav");
+  nav.innerHTML = "";
+  GROUP_ORDER.forEach(g=>{
+    const grp = DATA[g];
+    const block = document.createElement("div");
+    block.className = "group-block";
+    const title = document.createElement("p");
+    title.className = "group-title";
+    title.textContent = grp.title;
+    block.appendChild(title);
+
+    grp.subtasks.forEach((st, idx)=>{
+      const btn = document.createElement("button");
+      btn.className = "sub-btn" + (g===state.group && idx===state.subIndex ? " active" : "");
+      const allSolved = st.steps.every((_,si)=> state.solved[stepKey(g,st.id,si)]);
+      const dot = document.createElement("span");
+      dot.className = "dot" + (allSolved ? " done" : (g===state.group && idx===state.subIndex ? " active-dot" : ""));
+      const lbl = document.createElement("span");
+      lbl.textContent = st.label;
+      btn.appendChild(dot);
+      btn.appendChild(lbl);
+      btn.addEventListener("click", ()=>{
+        state.group = g; state.subIndex = idx; state.stepIndex = 0;
+        renderAll();
+      });
+      block.appendChild(btn);
+    });
+    nav.appendChild(block);
+  });
+}
+
+/* =========================================================
+   RENDER: PROGRESS BAR
+   ========================================================= */
+function renderProgress(){
+  const total = totalStepsCount();
+  const solved = solvedStepsCount();
+  document.getElementById("progressLabel").textContent = solved + " / " + total + " steps solved";
+  document.getElementById("progressFill").style.width = (total? (100*solved/total):0) + "%";
+}
+
+/* =========================================================
+   RENDER: MAIN PAPER
+   ========================================================= */
+function currentSubtask(){
+  return DATA[state.group].subtasks[state.subIndex];
+}
+
+function renderMain(){
+  const main = document.getElementById("mainPaper");
+  main.innerHTML = "";
+  const grp = DATA[state.group];
+  const st = currentSubtask();
+
+  // head
+  const head = document.createElement("div");
+  head.className = "task-head";
+  const left = document.createElement("div");
+  const h2 = document.createElement("h2");
+  h2.textContent = st.heading;
+  left.appendChild(h2);
+  const groupTag = document.createElement("div");
+  groupTag.style.cssText="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink-soft);";
+  groupTag.textContent = grp.title + " — " + grp.subtitle;
+  left.appendChild(groupTag);
+  head.appendChild(left);
+
+  const navBtns = document.createElement("div");
+  navBtns.className = "task-nav-btns";
+  const prevBtn = document.createElement("button");
+  prevBtn.className = "nav-arrow"; prevBtn.textContent = "←";
+  prevBtn.title = "Previous subtask";
+  prevBtn.disabled = (state.group===GROUP_ORDER[0] && state.subIndex===0);
+  prevBtn.addEventListener("click", goPrevSubtask);
+  const nextBtn = document.createElement("button");
+  nextBtn.className = "nav-arrow"; nextBtn.textContent = "→";
+  nextBtn.title = "Next subtask";
+  const isLastGroup = state.group===GROUP_ORDER[GROUP_ORDER.length-1];
+  const isLastSub = state.subIndex === grp.subtasks.length-1;
+  nextBtn.disabled = isLastGroup && isLastSub;
+  nextBtn.addEventListener("click", goNextSubtask);
+  navBtns.appendChild(prevBtn); navBtns.appendChild(nextBtn);
+  head.appendChild(navBtns);
+  main.appendChild(head);
+
+  // equation
+  if(st.equation){
+    const eq = document.createElement("div");
+    eq.className = "equation-box";
+    eq.textContent = st.equation;
+    main.appendChild(eq);
+  }
+
+  // given values
+  if(st.given){
+    const gb = document.createElement("div");
+    gb.className = "given-box";
+    const strong = document.createElement("strong");
+    strong.textContent = st.givenLabel || "Given";
+    gb.appendChild(strong);
+    const grid = document.createElement("div");
+    grid.className = "given-grid";
+    st.given.forEach(([k,v])=>{
+      const span = document.createElement("span");
+      span.textContent = k + " = " + v;
+      grid.appendChild(span);
+    });
+    gb.appendChild(grid);
+    main.appendChild(gb);
+  }
+
+  // inputs panel
+  if(st.hasInputs){
+    const panel = document.createElement("div");
+    panel.className = "inputs-panel";
+    const intro = document.createElement("p");
+    intro.style.cssText="margin:0 0 10px;font-size:13.5px;color:var(--ink-soft);";
+    intro.textContent = st.inputsIntro;
+    panel.appendChild(intro);
+    const row = document.createElement("div");
+    row.className = "inputs-row";
+    st.inputs.forEach(inp=>{
+      const div = document.createElement("div");
+      const lbl = document.createElement("label");
+      lbl.className = "lbl";
+      lbl.textContent = inp.label;
+      const input = document.createElement("input");
+      input.type="text";
+      input.placeholder = inp.placeholder || "";
+      const key = inputKey(state.group, st.id, inp.key);
+      const existing = state.inputs[key] !== undefined ? state.inputs[key] : inp.default;
+      if(existing!==null && existing!==undefined) input.value = existing;
+      input.addEventListener("change", ()=>{
+        const val = parseNum(input.value);
+        state.inputs[key] = isNaN(val) ? null : val;
+        saveProgress();
+        renderStep();
+      });
+      div.appendChild(lbl); div.appendChild(input);
+      row.appendChild(div);
+    });
+    panel.appendChild(row);
+    main.appendChild(panel);
+  }
+
+  // step area
+  const stepWrap = document.createElement("div");
+  stepWrap.className = "step-wrap";
+  stepWrap.id = "stepWrap";
+  main.appendChild(stepWrap);
+  renderStep();
+}
+
+function getInputValues(st){
+  const vals = {};
+  if(st.hasInputs){
+    st.inputs.forEach(inp=>{
+      const key = inputKey(state.group, st.id, inp.key);
+      vals[inp.key] = state.inputs[key] !== undefined ? state.inputs[key] : inp.default;
+    });
+  }
+  return vals;
+}
+
+function renderStep(){
+  const wrap = document.getElementById("stepWrap");
+  if(!wrap) return;
+  wrap.innerHTML = "";
+  const st = currentSubtask();
+  const idx = state.stepIndex;
+  const step = st.steps[idx];
+  const key = stepKey(state.group, st.id, idx);
+  const solved = !!state.solved[key];
+
+  const prog = document.createElement("div");
+  prog.className = "step-progress";
+  prog.textContent = "Step " + (idx+1) + " of " + st.steps.length;
+  wrap.appendChild(prog);
+
+  const prompt = document.createElement("p");
+  prompt.className = "step-prompt";
+  prompt.textContent = step.prompt;
+  wrap.appendChild(prompt);
+
+  const feedback = document.createElement("div");
+  feedback.className = "feedback";
+  feedback.id = "feedback";
+
+  if(step.type === "numeric" || step.type === "dynamic"){
+    const row = document.createElement("div");
+    row.className = "answer-row";
+    const input = document.createElement("input");
+    input.type = "text";
+    input.id = "answerInput";
+    input.placeholder = "enter a number";
+    const unit = document.createElement("span");
+    unit.className = "unit-tag";
+    unit.textContent = step.unit || "";
+    const checkBtn = document.createElement("button");
+    checkBtn.className = "action";
+    checkBtn.textContent = "Check answer";
+
+    let vals = {};
+    if(step.type === "dynamic"){
+      vals = getInputValues(st);
+      const missing = (step.requires||[]).some(r=> vals[r]===null || vals[r]===undefined || isNaN(vals[r]));
+      if(missing){
+        checkBtn.disabled = true;
+        input.disabled = true;
+        input.placeholder = "enter values above first";
+      }
+    }
+
+    checkBtn.addEventListener("click", ()=>{
+      const userVal = parseNum(input.value);
+      if(isNaN(userVal)){
+        showFeedback(feedback, false, "Enter a number first.");
+        return;
+      }
+      let expected, ok;
+      if(step.type==="dynamic"){
+        expected = step.compute(vals);
+        const tolAbs = expected!==null ? Math.abs(expected)*step.tolRel + 0.001 : 0;
+        ok = expected!==null && Math.abs(userVal-expected) <= tolAbs;
+      } else {
+        expected = step.answer;
+        ok = Math.abs(userVal-expected) <= step.tol;
+      }
+      if(ok){
+        state.solved[key] = true;
+        saveProgress();
+        showFeedback(feedback, true, "Correct! On to the next step.");
+        renderNav(); renderProgress();
+        revealExplanation(step, vals);
+        updateFooterDots();
+      } else {
+        showFeedback(feedback, false, "Not quite yet — check the guiding questions below or try again.");
+      }
+    });
+
+    row.appendChild(input); row.appendChild(unit); row.appendChild(checkBtn);
+    wrap.appendChild(row);
+  }
+
+  if(step.type === "text"){
+    const row = document.createElement("div");
+    row.className = "answer-row";
+    const tryBtn = document.createElement("button");
+    tryBtn.className = "action";
+    tryBtn.textContent = "I have an answer — show solution";
+    tryBtn.addEventListener("click", ()=>{
+      state.solved[key] = true;
+      saveProgress();
+      revealExplanation(step, {});
+      renderNav(); renderProgress();
+      updateFooterDots();
+    });
+    row.appendChild(tryBtn);
+    wrap.appendChild(row);
+  }
+
+  if(step.type === "reflect"){
+    const area = document.createElement("textarea");
+    area.className = "reflect-area";
+    area.placeholder = "Jot down your thoughts here …";
+    wrap.appendChild(area);
+    const row = document.createElement("div");
+    row.className = "answer-row";
+    row.style.marginTop = "10px";
+    const compareBtn = document.createElement("button");
+    compareBtn.className = "action ghost";
+    compareBtn.textContent = "Compare with sample answer";
+    const sample = document.createElement("div");
+    sample.className = "sample-answer";
+    const vals = getInputValues(st);
+    sample.innerHTML = typeof step.sample === "function" ? step.sample(vals) : step.sample;
+    compareBtn.addEventListener("click", ()=>{
+      sample.classList.toggle("show");
+      state.solved[key] = true;
+      saveProgress();
+      renderNav(); renderProgress();
+      updateFooterDots();
+    });
+    row.appendChild(compareBtn);
+    wrap.appendChild(row);
+    wrap.appendChild(sample);
+  }
+
+  wrap.appendChild(feedback);
+
+  // hints
+  if(step.hints && step.hints.length){
+    const hBlock = document.createElement("div");
+    hBlock.className = "hint-block";
+    const hintKey = key;
+    const shown = state.hintLevel[hintKey] || 0;
+    const hintList = document.createElement("div");
+    hintList.id = "hintList";
+    for(let i=0;i<shown;i++){
+      const line = document.createElement("p");
+      line.className = "hint-line";
+      line.textContent = step.hints[i];
+      hintList.appendChild(line);
+    }
+    hBlock.appendChild(hintList);
+    if(shown < step.hints.length){
+      const hintBtn = document.createElement("button");
+      hintBtn.className = "action ghost";
+      hintBtn.textContent = shown===0 ? "Guiding question / hint" : "Another hint";
+      hintBtn.addEventListener("click", ()=>{
+        state.hintLevel[hintKey] = (state.hintLevel[hintKey]||0) + 1;
+        renderStep();
+      });
+      hBlock.appendChild(hintBtn);
+    }
+    wrap.appendChild(hBlock);
+  }
+
+  // explanation (revealed on correct / on request)
+  const explainDiv = document.createElement("div");
+  explainDiv.className = "explain-block" + (solved ? " show" : "");
+  explainDiv.id = "explainBlock";
+  if(solved){
+    const vals = getInputValues(st);
+    explainDiv.innerHTML = "<b>Solution: </b>" + (typeof step.explanation==="function" ? step.explanation(vals) : step.explanation);
+  }
+  wrap.appendChild(explainDiv);
+
+  if(!solved){
+    const giveUpRow = document.createElement("div");
+    giveUpRow.style.cssText = "margin-top:12px;";
+    const giveUp = document.createElement("button");
+    giveUp.className = "action ghost";
+    giveUp.textContent = "Show solution";
+    giveUp.addEventListener("click", ()=>{
+      state.solved[key] = true;
+      saveProgress();
+      renderNav(); renderProgress();
+      revealExplanation(step, getInputValues(st));
+      updateFooterDots();
+    });
+    giveUpRow.appendChild(giveUp);
+    wrap.appendChild(giveUpRow);
+  }
+
+  // footer nav between steps within subtask
+  const footer = document.createElement("div");
+  footer.className = "step-footer";
+  const dots = document.createElement("div");
+  dots.className = "step-dots";
+  dots.id = "stepDots";
+  st.steps.forEach((_,si)=>{
+    const d = document.createElement("span");
+    d.className = "step-dot" + (si===idx ? " on":"") + (state.solved[stepKey(state.group,st.id,si)] ? " done":"");
+    dots.appendChild(d);
+  });
+  footer.appendChild(dots);
+
+  const stepBtns = document.createElement("div");
+  stepBtns.style.cssText = "display:flex;gap:8px;";
+  const prevStep = document.createElement("button");
+  prevStep.className = "nav-arrow"; prevStep.textContent = "‹";
+  prevStep.disabled = idx===0;
+  prevStep.addEventListener("click", ()=>{ state.stepIndex--; renderStep(); });
+  const nextStep = document.createElement("button");
+  nextStep.className = "nav-arrow"; nextStep.textContent = "›";
+  nextStep.disabled = idx===st.steps.length-1;
+  nextStep.addEventListener("click", ()=>{ state.stepIndex++; renderStep(); });
+  stepBtns.appendChild(prevStep); stepBtns.appendChild(nextStep);
+  footer.appendChild(stepBtns);
+  wrap.appendChild(footer);
+
+  // subtask complete banner
+  const allDone = st.steps.every((_,si)=> state.solved[stepKey(state.group,st.id,si)]);
+  if(allDone){
+    const banner = document.createElement("div");
+    banner.className = "subtask-done-banner";
+    banner.textContent = "This subtask is fully solved.";
+    wrap.appendChild(banner);
+  }
+}
+
+function showFeedback(el, ok, msg){
+  el.className = "feedback show " + (ok?"ok":"warn");
+  el.textContent = msg;
+}
+
+function revealExplanation(step, vals){
+  const block = document.getElementById("explainBlock");
+  if(!block) return;
+  block.classList.add("show");
+  block.innerHTML = "<b>Solution: </b>" + (typeof step.explanation==="function" ? step.explanation(vals) : step.explanation);
+}
+
+function updateFooterDots(){
+  const st = currentSubtask();
+  const dots = document.getElementById("stepDots");
+  if(!dots) return;
+  dots.innerHTML = "";
+  st.steps.forEach((_,si)=>{
+    const d = document.createElement("span");
+    d.className = "step-dot" + (si===state.stepIndex ? " on":"") + (state.solved[stepKey(state.group,st.id,si)] ? " done":"");
+    dots.appendChild(d);
+  });
+}
+
+function goPrevSubtask(){
+  if(state.subIndex>0){ state.subIndex--; }
+  else{
+    const gi = GROUP_ORDER.indexOf(state.group);
+    if(gi>0){ state.group = GROUP_ORDER[gi-1]; state.subIndex = DATA[state.group].subtasks.length-1; }
+  }
+  state.stepIndex = 0;
+  renderAll();
+}
+function goNextSubtask(){
+  const grp = DATA[state.group];
+  if(state.subIndex < grp.subtasks.length-1){ state.subIndex++; }
+  else{
+    const gi = GROUP_ORDER.indexOf(state.group);
+    if(gi < GROUP_ORDER.length-1){ state.group = GROUP_ORDER[gi+1]; state.subIndex = 0; }
+  }
+  state.stepIndex = 0;
+  renderAll();
+}
+
+function renderAll(){
+  renderNav();
+  renderProgress();
+  renderMain();
+}
+
+(async function init(){
+  await loadProgress();
+  renderAll();
+})();
+</script>
+</body>
+</html>
