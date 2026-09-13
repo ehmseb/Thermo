@@ -1,1 +1,1372 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KSK - Chemie - 3M - Thermodynamik</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
+:root{
+  --bg:#161f19;
+  --bg-deep:#0e1512;
+  --paper:#fbf6ea;
+  --paper-edge:#e7dcc0;
+  --ink:#241f16;
+  --ink-soft:#5b5644;
+  --cream:#ece4cd;
+  --flame1:#e1550c;
+  --flame2:#f2a33d;
+  --cool:#2a7f93;
+  --ok:#3f7d4a;
+  --warn:#a5322a;
+  --line: rgba(36,31,22,0.16);
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background: radial-gradient(ellipse at top left, #1e2b22 0%, var(--bg-deep) 65%);
+  color: var(--cream);
+  font-family:'Source Serif 4', Georgia, serif;
+  min-height:100vh;
+}
+.wrap{
+  max-width:1180px;
+  margin:0 auto;
+  padding: 28px 20px 70px;
+}
+
+/* ---------- Header ---------- */
+header.top{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-bottom: 26px;
+}
+.eyebrow-row{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+.flame-rule{
+  height:5px;
+  width: 64px;
+  border-radius:3px;
+  background: linear-gradient(90deg, var(--flame1), var(--flame2));
+  flex-shrink:0;
+}
+.kicker{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12.5px;
+  letter-spacing:0.02em;
+  color:#9fb2a4;
+}
+h1{
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight:700;
+  margin:0;
+  line-height:1.15;
+  color:#f6f1e2;
+}
+h1 em{
+  font-style:normal;
+  background: linear-gradient(90deg, var(--flame2), var(--flame1));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.sub{
+  max-width: 640px;
+  color:#b9c4ba;
+  font-size:16px;
+  line-height:1.55;
+  margin:0;
+}
+.progress-shell{
+  margin-top:6px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12px;
+  color:#8fa295;
+}
+.progress-track{
+  flex:1;
+  max-width:280px;
+  height:6px;
+  border-radius:4px;
+  background:rgba(255,255,255,0.08);
+  overflow:hidden;
+}
+.progress-fill{
+  height:100%;
+  background: linear-gradient(90deg, var(--cool), var(--flame2));
+  width:0%;
+  transition: width .4s ease;
+}
+
+/* ---------- Layout ---------- */
+.layout{
+  display:grid;
+  grid-template-columns: 250px 1fr;
+  gap: 22px;
+  align-items:start;
+}
+@media (max-width: 860px){
+  .layout{ grid-template-columns: 1fr; }
+}
+
+/* ---------- Nav ---------- */
+nav.groups{
+  position:sticky;
+  top:18px;
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+@media (max-width:860px){
+  nav.groups{ position:static; flex-direction:row; overflow-x:auto; gap:10px; padding-bottom:4px;}
+}
+.group-block{
+  background: rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:10px;
+  padding:12px;
+}
+@media (max-width:860px){ .group-block{ min-width:210px; } }
+.group-title{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11.5px;
+  color:#9fb2a4;
+  margin:0 0 8px 2px;
+  letter-spacing:0.01em;
+}
+.sub-btn{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  width:100%;
+  text-align:left;
+  background:transparent;
+  border:none;
+  color:#dbe3da;
+  font-family:'Source Serif 4', serif;
+  font-size:14.5px;
+  padding:7px 8px;
+  border-radius:7px;
+  cursor:pointer;
+  line-height:1.3;
+}
+.sub-btn:hover{ background:rgba(255,255,255,0.06); }
+.sub-btn.active{
+  background: rgba(225,85,12,0.16);
+  color:#ffe9d6;
+}
+.dot{
+  width:9px; height:9px; border-radius:50%;
+  flex-shrink:0;
+  border:1.5px solid #7a8b7f;
+  background:transparent;
+}
+.dot.done{ background:var(--ok); border-color:var(--ok); }
+.dot.active-dot{ border-color:var(--flame2); }
+
+/* ---------- Main paper ---------- */
+main.paper{
+  background: var(--paper);
+  color: var(--ink);
+  border-radius:14px;
+  border:1px solid var(--paper-edge);
+  box-shadow: 0 18px 50px rgba(0,0,0,0.35);
+  padding: 30px 34px 34px;
+  min-height:420px;
+}
+@media (max-width:560px){ main.paper{ padding:22px 18px 26px; } }
+
+.task-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:16px;
+  border-bottom:1px solid var(--line);
+  padding-bottom:16px;
+  margin-bottom:18px;
+}
+.task-head h2{
+  margin:0 0 4px;
+  font-size:22px;
+  font-weight:700;
+}
+.task-nav-btns{
+  display:flex;
+  gap:8px;
+  flex-shrink:0;
+}
+.nav-arrow{
+  font-family:'IBM Plex Mono', monospace;
+  background:var(--cream);
+  border:1px solid var(--paper-edge);
+  color:var(--ink);
+  width:34px;height:34px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:15px;
+}
+.nav-arrow:hover{ background:#e3d8b9; }
+.nav-arrow:disabled{ opacity:0.35; cursor:default; }
+
+.equation-box{
+  font-family:'IBM Plex Mono', monospace;
+  background: var(--ink);
+  color: #f4ecd8;
+  border-radius:9px;
+  padding:16px 18px;
+  font-size:15.5px;
+  line-height:1.7;
+  margin-bottom:16px;
+  overflow-x:auto;
+  white-space:pre-wrap;
+}
+.equation-box .dH{ color: var(--flame2); }
+
+.given-box{
+  background: var(--cream);
+  border:1px solid var(--paper-edge);
+  border-radius:9px;
+  padding:12px 16px;
+  margin-bottom:20px;
+  font-size:13.6px;
+  color: var(--ink-soft);
+}
+.given-box strong{ color:var(--ink); }
+.given-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px,1fr));
+  gap:6px 14px;
+  margin-top:8px;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:13px;
+}
+
+.inputs-panel{
+  background:#f2ecd9;
+  border:1px dashed #c8bb93;
+  border-radius:9px;
+  padding:14px 16px;
+  margin-bottom:20px;
+}
+.inputs-panel .lbl{
+  display:block;
+  font-size:13px;
+  color:var(--ink-soft);
+  margin-bottom:4px;
+}
+.inputs-row{
+  display:flex;
+  gap:18px;
+  flex-wrap:wrap;
+}
+.inputs-row > div{ min-width:220px; }
+.inputs-panel input{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:15px;
+  padding:7px 9px;
+  border-radius:6px;
+  border:1px solid var(--paper-edge);
+  width:120px;
+  background:#fff;
+  color:var(--ink);
+}
+
+/* ---------- Step ---------- */
+.step-wrap{ }
+.step-progress{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12px;
+  color:var(--ink-soft);
+  margin-bottom:8px;
+}
+.step-prompt{
+  font-size:17px;
+  line-height:1.55;
+  margin: 0 0 14px;
+}
+.answer-row{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+  margin-bottom:10px;
+}
+.answer-row input[type=text]{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:16px;
+  padding:9px 12px;
+  border-radius:7px;
+  border:1.5px solid var(--paper-edge);
+  width:170px;
+  background:#fff;
+  color:var(--ink);
+}
+.answer-row input[type=text]:focus{ outline:2px solid var(--flame2); border-color:var(--flame2); }
+.unit-tag{
+  font-family:'IBM Plex Mono', monospace;
+  color:var(--ink-soft);
+  font-size:14px;
+}
+button.action{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:13.5px;
+  padding:9px 16px;
+  border-radius:7px;
+  border:none;
+  cursor:pointer;
+  background: var(--ink);
+  color:#f4ecd8;
+}
+button.action:hover{ background:#3a3222; }
+button.ghost{
+  background:transparent;
+  border:1px solid var(--paper-edge);
+  color:var(--ink-soft);
+}
+button.ghost:hover{ background:var(--cream); }
+button.action:disabled{ opacity:0.4; cursor:default; }
+
+.feedback{
+  border-radius:8px;
+  padding:11px 14px;
+  font-size:14.5px;
+  margin-top:10px;
+  line-height:1.5;
+  display:none;
+}
+.feedback.show{ display:block; }
+.feedback.ok{ background:rgba(63,125,74,0.13); border:1px solid rgba(63,125,74,0.4); color:#1f4a27; }
+.feedback.warn{ background:rgba(165,50,42,0.09); border:1px solid rgba(165,50,42,0.32); color:#7a2620; }
+
+.hint-block{
+  margin-top:12px;
+  padding-top:12px;
+  border-top:1px dashed var(--paper-edge);
+}
+.hint-line{
+  font-size:14px;
+  color:var(--cool);
+  margin:6px 0;
+  padding-left:16px;
+  border-left:2px solid var(--cool);
+}
+.explain-block{
+  margin-top:14px;
+  padding:13px 16px;
+  background:var(--ink);
+  color:#f4ecd8;
+  border-radius:9px;
+  font-size:14.5px;
+  line-height:1.6;
+  display:none;
+}
+.explain-block.show{ display:block; }
+.explain-block b{ color: var(--flame2); }
+
+textarea.reflect-area{
+  width:100%;
+  min-height:78px;
+  font-family:'Source Serif 4', serif;
+  font-size:15px;
+  padding:10px 12px;
+  border-radius:8px;
+  border:1.5px solid var(--paper-edge);
+  resize:vertical;
+  color:var(--ink);
+  background:#fff;
+}
+
+.step-footer{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:22px;
+  padding-top:16px;
+  border-top:1px solid var(--line);
+}
+.step-dots{ display:flex; gap:7px; }
+.step-dot{
+  width:9px;height:9px;border-radius:50%;
+  background:var(--paper-edge);
+}
+.step-dot.on{ background: var(--flame1); }
+.step-dot.done{ background: var(--ok); }
+
+.subtask-done-banner{
+  background: linear-gradient(90deg, rgba(63,125,74,0.14), rgba(63,125,74,0.05));
+  border:1px solid rgba(63,125,74,0.35);
+  border-radius:9px;
+  padding:14px 16px;
+  font-size:14.5px;
+  color:#1f4a27;
+  margin-top:6px;
+}
+.sample-answer{
+  margin-top:10px;
+  font-size:14px;
+  color:var(--ink-soft);
+  background:var(--cream);
+  border-radius:7px;
+  padding:10px 13px;
+  display:none;
+}
+.sample-answer.show{ display:block; }
+
+footer.foot{
+  text-align:center;
+  color:#5f7168;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11.5px;
+  margin-top:34px;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="eyebrow-row">
+      <div class="flame-rule"></div>
+      <span class="kicker">Chemie · Thermodynamik</span>
+    </div>
+    <h1>KSK - Chemie - 3M - <em>Thermodynamik</em></h1>
+    <p class="sub">Arbeite dich durch die Aufgaben Reaktionsenthalpien und die Praktischen Rechnungen. Jede Aufgabe ist in Schritte zerlegt — wenn du nicht weiterkommst, hol dir eine Gegenfrage als Tipp, bevor du die Lösung ansiehst.</p>
+    <div class="progress-shell">
+      <span id="progressLabel">0 / 0 Schritte gelöst</span>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <nav class="groups" id="groupNav"></nav>
+    <main class="paper" id="mainPaper"></main>
+  </div>
+
+  <footer class="foot">ΔH = Σ ΔH⁰f(Produkte) − Σ ΔH⁰f(Edukte)</footer>
+</div>
+
+<script>
+/* =========================================================
+   DATA
+   ========================================================= */
+const DATA = {
+  reaction: {
+    title: "Aufgaben Reaktionsenthalpien",
+    subtitle: "Verbrennung von Ammoniak & Octan",
+    subtasks: [
+      {
+        id:"a", label:"a) ΔH Ammoniak",
+        heading:"a) Reaktionsenthalpie der Ammoniak-Verbrennung",
+        equation:"4 NH₃(g) + 5 O₂(g)  →  4 NO(g) + 6 H₂O(g)",
+        given:[["NH₃(g)","−46 kJ/mol"],["O₂(g)","0 kJ/mol"],["NO(g)","+90 kJ/mol"],["H₂O(g)","−242 kJ/mol"]],
+        givenLabel:"ΔH⁰f-Werte",
+        steps:[
+          {
+            type:"text",
+            prompt:"Bevor du rechnest: Wie lautet die allgemeine Formel, mit der man eine Reaktionsenthalpie aus Bildungsenthalpien berechnet?",
+            hints:[
+              "Denk an das Prinzip: erst gedanklich alle Edukte in die Elemente zerlegen, dann die Produkte daraus aufbauen.",
+              "Die Formel enthält eine Summe für die Produktseite und eine Summe für die Eduktseite — mit einem Minus dazwischen."
+            ],
+            explanation:"ΔH = Σ ΔH⁰f(Produkte) − Σ ΔH⁰f(Edukte). Jeder Summand wird mit der Stoffmenge (den Koeffizienten der Gleichung) multipliziert."
+          },
+          {
+            type:"numeric", unit:"kJ", tol:5,
+            prompt:"Berechne ΔH für die Gleichung genau so, wie sie oben steht (bezogen auf 4 mol NH₃).",
+            answer:-908,
+            hints:[
+              "Rechne zuerst die Produktseite aus: 4 mol·ΔHf(NO) + 6 mol·ΔHf(H₂O).",
+              "Produktseite: 4·(+90) + 6·(−242) = 360 − 1452 = −1092 kJ. Jetzt die Eduktseite: 4·(−46) + 5·0 = −184 kJ.",
+              "ΔH = (−1092 kJ) − (−184 kJ). Rechne das aus."
+            ],
+            explanation:"ΔH = [4·90 + 6·(−242)] − [4·(−46) + 5·0] = (360 − 1452) − (−184) = −1092 + 184 = <b>−908 kJ</b>. Stark exotherm."
+          }
+        ]
+      },
+      {
+        id:"b", label:"b) molare ΔH",
+        heading:"b) Molare Verbrennungsenthalpie von Ammoniak",
+        equation:"4 NH₃(g) + 5 O₂(g)  →  4 NO(g) + 6 H₂O(g)     ΔH = −908 kJ (aus a)",
+        steps:[
+          {
+            type:"numeric", unit:"kJ/mol", tol:2,
+            prompt:"Wie gross ist die molare Verbrennungsenthalpie, also ΔH pro mol NH₃?",
+            answer:-227,
+            hints:[
+              "Auf wie viele mol NH₃ bezieht sich das ΔH aus a)? Schau dir den Koeffizienten von NH₃ in der Gleichung an.",
+              "Teile ΔH aus a) durch genau diese Stoffmenge.",
+              "ΔH_molar = −908 kJ / 4 mol"
+            ],
+            explanation:"ΔH_molar = ΔH / n(NH₃) = −908 kJ / 4 mol = <b>−227 kJ/mol</b>."
+          }
+        ]
+      },
+      {
+        id:"c", label:"c) Bildungsenergie NH₃",
+        heading:"c) Energie für die Bildung des benötigten Ammoniaks",
+        equation:"Bildung: ½N₂(g) + 3/2H₂(g) → NH₃(g)     ΔH⁰f(NH₃) = −46 kJ/mol",
+        given:[["ΔH⁰f(NH₃)","−46 kJ/mol"],["benötigte Stoffmenge NH₃","4 mol (s. Gleichung oben)"]],
+        givenLabel:"Gegeben",
+        steps:[
+          {
+            type:"numeric", unit:"kJ", tol:2,
+            prompt:"Wie viel Energie wird frei bzw. benötigt, um die für die Verbrennungsgleichung nötigen 4 mol NH₃ aus den Elementen zu bilden?",
+            answer:-184,
+            hints:[
+              "Wie viel mol NH₃ tauchen in der Verbrennungsgleichung aus a) auf?",
+              "Multipliziere diese Stoffmenge mit ΔH⁰f(NH₃) = −46 kJ/mol.",
+              "4 mol · (−46 kJ/mol) = ?"
+            ],
+            explanation:"4 mol · (−46 kJ/mol) = <b>−184 kJ</b>. Das negative Vorzeichen zeigt: Die Bildung von NH₃ ist exotherm — es wird also gar keine Energie <i>benötigt</i>, sondern es werden 184 kJ <i>frei</i>. Ein guter Moment, um auf das Vorzeichen zu achten: die Frage nach 'benötigter Energie' geht hier von der falschen Annahme aus, dass die Bildung endotherm sei."
+          }
+        ]
+      },
+      {
+        id:"d", label:"d) ΔHf Octan",
+        heading:"d) Molare Bildungsenthalpie von Octan",
+        equation:"2 C₈H₁₈ + 25 O₂  →  16 CO₂ + 18 H₂O     ΔH = −10144 kJ",
+        given:[["ΔH⁰f(CO₂)","−393 kJ/mol"],["ΔH⁰f(H₂O,g)","−242 kJ/mol"],["ΔH⁰f(O₂)","0 kJ/mol"],["ΔH⁰f(C₈H₁₈)","gesucht"]],
+        givenLabel:"ΔH⁰f-Werte",
+        steps:[
+          {
+            type:"numeric", unit:"kJ/mol", tol:3,
+            prompt:"Stelle ΔH = ΣΔHf(Produkte) − ΣΔHf(Edukte) nach ΔH⁰f(C₈H₁₈) um und berechne den Wert.",
+            answer:-250,
+            hints:[
+              "Schreib die Formel für diese Gleichung zuerst vollständig auf: ΔH = [16·ΔHf(CO₂) + 18·ΔHf(H₂O)] − [2·ΔHf(C₈H₁₈) + 25·0].",
+              "Die Produktseite kannst du direkt ausrechnen: 16·(−393) + 18·(−242) = −6288 − 4356 = −10644 kJ.",
+              "−10144 kJ = −10644 kJ − 2 mol·ΔHf(C₈H₁₈). Löse nach ΔHf(C₈H₁₈) auf und teile durch 2 mol."
+            ],
+            explanation:"2·ΔHf(C₈H₁₈) = −10644 kJ − (−10144 kJ) = −500 kJ  →  ΔHf(C₈H₁₈) = −500 kJ / 2 mol = <b>−250 kJ/mol</b>."
+          }
+        ]
+      }
+    ]
+  },
+
+  practical: {
+    title:"Praktische Rechnungen",
+    subtitle:"Kosten- und Heizwertvergleiche",
+    subtasks:[
+      {
+        id:"gasoil", label:"1) Erdgas vs. Heizöl",
+        heading:"1) Womit heizt man günstiger — Erdgas oder Heizöl?",
+        equation:"1 m³ Erdgas: 1 CHF          100 L Heizöl: 90 CHF, ρ = 0,84 g/cm³",
+        steps:[
+          {
+            type:"numeric", unit:"MJ/m³", tol:1.5,
+            prompt:"Schau in deinem Infoblatt nach: Wie gross ist der volumenbezogene Brennwert von Erdgas?",
+            answer:32,
+            hints:[
+              "Auf dem Infoblatt gibt es eine Tabelle mit volumenbezogenen Brennwerten (Einheit MJ/m³).",
+              "Gesucht ist der Eintrag 'Erdgas' in dieser Tabelle."
+            ],
+            explanation:"Laut Infoblatt: <b>32 MJ/m³</b>."
+          },
+          {
+            type:"numeric", unit:"CHF/MJ", tol:0.003,
+            prompt:"Was kostet dich 1 MJ Energie aus Erdgas?",
+            answer:0.03125,
+            hints:[
+              "1 m³ Erdgas kostet 1 CHF und liefert so viel Energie, wie du im letzten Schritt nachgeschlagen hast.",
+              "Preis pro m³ geteilt durch Energie pro m³ ergibt den Preis pro MJ.",
+              "Kosten = 1 CHF / 32 MJ"
+            ],
+            explanation:"Kosten = 1 CHF / 32 MJ ≈ <b>0,0313 CHF/MJ</b>."
+          },
+          {
+            type:"numeric", unit:"kg", tol:1,
+            prompt:"Wie viel wiegen die 100 Liter Heizöl (ρ = 0,84 g/cm³ = 0,84 kg/L)?",
+            answer:84,
+            hints:[
+              "Dichte ist Masse pro Volumen: ρ = m/V.",
+              "Stell nach der Masse um: m = ρ · V.",
+              "m = 0,84 kg/L · 100 L"
+            ],
+            explanation:"m = ρ·V = 0,84 kg/L · 100 L = <b>84 kg</b>."
+          },
+          {
+            type:"numeric", unit:"CHF/kg", tol:0.03,
+            prompt:"Was kostet 1 kg Heizöl?",
+            answer:1.0714,
+            hints:[
+              "Du kennst den Preis für 100 L (= 90 CHF) und die Masse dieser 100 L (aus dem letzten Schritt).",
+              "Teile den Gesamtpreis durch die Gesamtmasse.",
+              "90 CHF / 84 kg"
+            ],
+            explanation:"90 CHF / 84 kg = <b>1,071 CHF/kg</b>."
+          },
+          {
+            type:"numeric", unit:"MJ/kg", tol:2,
+            prompt:"Schau in deinem Infoblatt nach: Wie gross ist der spezifische (massebezogene) Brennwert von Heizöl?",
+            answer:41.4,
+            hints:[
+              "Auf dem Infoblatt gibt es eine Tabelle mit spezifischen Brennwerten (Einheit MJ/kg).",
+              "Gesucht ist der Eintrag 'Heizöl' in dieser Tabelle."
+            ],
+            explanation:"Laut Infoblatt: <b>41,4 MJ/kg</b>."
+          },
+          {
+            type:"numeric", unit:"CHF/MJ", tol:0.004,
+            prompt:"Was kostet dich 1 MJ Energie aus Heizöl?",
+            answer:0.02588,
+            hints:[
+              "Du hast gerade den Preis pro kg berechnet — teile ihn durch den Heizwert pro kg.",
+              "Kosten pro MJ = Preis pro kg / Brennwert (MJ/kg).",
+              "1,071 CHF/kg / 41,4 MJ/kg"
+            ],
+            explanation:"Kosten = 1,071 CHF/kg / 41,4 MJ/kg ≈ <b>0,0259 CHF/MJ</b>."
+          },
+          {
+            type:"reflect",
+            prompt:"Vergleiche die beiden Preise pro MJ: Welcher Energieträger ist günstiger, und um welchen Faktor ungefähr?",
+            sample:()=>"Erdgas ≈ 0,0313 CHF/MJ, Heizöl ≈ 0,0259 CHF/MJ. Heizöl ist günstiger, etwa um den Faktor 1,2."
+          },
+          {
+            type:"reflect",
+            prompt:"Die Aufgabe fragt: Welche weiteren Kosten müsste man neben dem reinen Heizwert noch einbeziehen? Notiere ein paar Stichworte.",
+            sample:()=>"Zum Beispiel: Investitions-/Anschlusskosten der Heizanlage, Wartung und Kaminfeger, Wirkungsgrad der Heizung (nicht 100 % der Energie kommt als Wärme im Raum an), Tankreinigung/Lagerung beim Heizöl, CO₂-Lenkungsabgabe, Preisschwankungen bzw. Lieferkosten."
+          }
+        ]
+      },
+      {
+        id:"molar", label:"2) Heizwerte pro Mol",
+        heading:"2) Heizwerte von Erdgas, Butan und Ethanol pro Mol",
+        equation:"Infoblatt (Brennwerte):\nErdgas: 32 MJ/m³        Butan: 124 MJ/m³        Ethanol: 29,7 MJ/kg\n\nMolares Volumen: Vm = 24 L/mol (bei RT)      M(Ethanol) = 46,07 g/mol",
+        givenLabel:"Gegeben (Infoblatt)",
+        given:[["Erdgas (volumenbez.)","32 MJ/m³"],["Butan (volumenbez.)","124 MJ/m³"],["Ethanol (spezifisch)","29,7 MJ/kg"],["Vm","24 L/mol"],["M(Ethanol)","46,07 g/mol"]],
+        steps:[
+          {
+            type:"numeric", unit:"kJ/mol", tol:20,
+            prompt:"Berechne den molaren Heizwert von Erdgas. Nutze den volumenbezogenen Brennwert aus dem Infoblatt (32 MJ/m³) und das molare Volumen Vm = 24 L/mol.",
+            answer:768,
+            hints:[
+              "Wandle das molare Volumen zuerst in m³ um: 24 L = 0,024 m³.",
+              "Multipliziere den volumenbezogenen Brennwert mit dem Volumen, das 1 mol Gas einnimmt.",
+              "32 MJ/m³ · 0,024 m³/mol = ? (Ergebnis in MJ/mol, dann in kJ/mol umrechnen)"
+            ],
+            explanation:"32 MJ/m³ · 0,024 m³/mol = 0,768 MJ/mol = <b>768 kJ/mol</b>."
+          },
+          {
+            type:"numeric", unit:"kJ/mol", tol:60,
+            prompt:"Berechne auf die gleiche Art den molaren Heizwert von Butan (Infoblatt: 124 MJ/m³).",
+            answer:2976,
+            hints:[
+              "Gleiches Vorgehen wie beim Erdgas: Brennwert · Volumen pro Mol.",
+              "24 L/mol = 0,024 m³/mol.",
+              "124 MJ/m³ · 0,024 m³/mol = ?"
+            ],
+            explanation:"124 MJ/m³ · 0,024 m³/mol = 2,976 MJ/mol ≈ <b>2976 kJ/mol</b>."
+          },
+          {
+            type:"numeric", unit:"kJ/mol", tol:40,
+            prompt:"Ethanol ist eine Flüssigkeit, sein Brennwert ist daher massebezogen angegeben (29,7 MJ/kg). Berechne den molaren Heizwert mit M(Ethanol) = 46,07 g/mol.",
+            answer:1368,
+            hints:[
+              "Wandle die Molmasse zuerst in kg um: 46,07 g/mol = 0,04607 kg/mol.",
+              "Multipliziere den spezifischen (massebezogenen) Brennwert mit der Molmasse.",
+              "29,7 MJ/kg · 0,04607 kg/mol = ?"
+            ],
+            explanation:"29,7 MJ/kg · 0,04607 kg/mol = 1,368 MJ/mol ≈ <b>1368 kJ/mol</b>."
+          },
+          {
+            type:"reflect",
+            prompt:"Vergleiche die drei molaren Brennwerte (Erdgas 768, Ethanol 1368, Butan 2976 kJ/mol). Was fällt dir bezüglich der Molekülgrösse auf — und warum eignet sich der molare Heizwert schlecht, um z. B. Brenner-Typen zu vergleichen?",
+            sample:()=>"Je mehr C- und H-Atome ein Molekül hat (je grösser/schwerer es ist), desto mehr Energie wird bei der Verbrennung frei — der molare Heizwert steigt also mit der Molekülgrösse. Für einen fairen Vergleich verschiedener Brennstoffe (z. B. bei Brennern) ist der molare Wert deshalb wenig aussagekräftig; sinnvoller ist der Heizwert pro Masse (kJ/g bzw. MJ/kg) oder pro Volumen (MJ/m³), wie er auf dem Infoblatt steht."
+          }
+        ]
+      },
+      {
+        id:"ethanol", label:"3) Heizwert Ethanol prüfen",
+        heading:"3) Stimmt der Heizwert von Ethanol (29,7 MJ/kg laut Infoblatt)?",
+        equation:"gesucht: Reaktionsgleichung + ΔH_c(Ethanol)",
+        given:[["ΔH⁰f(C₂H₅OH,l)","−277 kJ/mol"],["ΔH⁰f(CO₂)","−393 kJ/mol"],["ΔH⁰f(H₂O,g)","−242 kJ/mol"],["M(C₂H₅OH)","46,07 g/mol"]],
+        givenLabel:"Gegeben",
+        steps:[
+          {
+            type:"text",
+            prompt:"Schreibe zuerst die vollständige, ausgeglichene Reaktionsgleichung der Ethanolverbrennung auf.",
+            hints:[
+              "Ethanol ist C₂H₅OH, es verbrennt mit O₂ zu CO₂ und H₂O.",
+              "Gleiche zuerst C und H aus, dann O."
+            ],
+            explanation:"C₂H₅OH + 3 O₂ → 2 CO₂ + 3 H₂O"
+          },
+          {
+            type:"numeric", unit:"kJ", tol:8,
+            prompt:"Berechne ΔH dieser Reaktion für 1 mol Ethanol mit den ΔH⁰f-Werten.",
+            answer:-1235,
+            hints:[
+              "Produktseite: 2·ΔHf(CO₂) + 3·ΔHf(H₂O).",
+              "Eduktseite: 1·ΔHf(C₂H₅OH) (O₂ ist ein Element, ΔHf=0).",
+              "ΔH = [2·(−393) + 3·(−242)] − [1·(−277)]"
+            ],
+            explanation:"ΔH = 2mol·(−393) + 3mol·(−242) − 1mol·(−277) = −786 − 726 + 277 = <b>−1235 kJ</b>."
+          },
+          {
+            type:"numeric", unit:"g", tol:0.5,
+            prompt:"Wie viel Gramm sind 1 mol Ethanol (M = 46,07 g/mol)?",
+            answer:46.07,
+            hints:["n = m/M → stell nach m um.", "m = n · M", "m = 1 mol · 46,07 g/mol"],
+            explanation:"m = 1 mol · 46,07 g/mol = <b>46,07 g</b>."
+          },
+          {
+            type:"numeric", unit:"kJ/g (≈ MJ/kg)", tol:0.4,
+            prompt:"Berechne daraus den Heizwert pro Gramm (bzw. MJ/kg).",
+            answer:26.8,
+            hints:[
+              "Teile die Energie aus Schritt 2 (als Betrag) durch die Masse aus Schritt 3.",
+              "1235 kJ / 46,07 g",
+              "Das Ergebnis in kJ/g ist zahlenmässig identisch mit MJ/kg."
+            ],
+            explanation:"1235 kJ / 46,07 g = <b>26,8 kJ/g = 26,8 MJ/kg</b>."
+          },
+          {
+            type:"reflect",
+            prompt:"Das Infoblatt nennt 29,7 MJ/kg — dein berechneter Wert ist 26,8 MJ/kg. Warum weicht dein Wert nach unten ab?",
+            sample:()=>"Wir haben mit H₂O(g) (gasförmigem Wasser) gerechnet — das entspricht dem 'Heizwert' (unterer Heizwert). Verwendet man stattdessen H₂O(l) (flüssig, ΔH⁰f ≈ −286 kJ/mol statt −242), wird mehr Energie frei (Kondensationswärme), das entspricht dem 'Brennwert' (oberer Heizwert), wie er meist auf Infoblättern steht. Zusätzlich sind tabellierte ΔH⁰f-Werte gerundet und beziehen sich auf Standardbedingungen, während reale Messungen (Bombenkalorimeter) leicht andere Bedingungen haben."
+          }
+        ]
+      },
+      {
+        id:"erdgas", label:"4) Heizwert Erdgas aus Rechnung",
+        heading:"4) Heizwert von Erdgas aus der TBK-Rechnung berechnen",
+        equation:"Rechnung: 666,67 CHF für 1200 m³ Erdgas      Preis lt. Website: 5,25 Rp./kWh",
+        given:[["Betrag","666,67 CHF"],["Volumen","1200 m³"],["Preis","5,25 Rp./kWh = 0,0525 CHF/kWh"]],
+        givenLabel:"Gegeben",
+        steps:[
+          {
+            type:"numeric", unit:"kWh", tol:120,
+            prompt:"Wie viel Energie in kWh wurde laut Rechnung verbraucht?",
+            answer:12700,
+            hints:[
+              "Du kennst den Gesamtbetrag und den Preis pro kWh.",
+              "Energie = Betrag / Preis pro kWh.",
+              "666,67 CHF / 0,0525 CHF/kWh"
+            ],
+            explanation:"666,67 CHF / 0,0525 CHF/kWh ≈ <b>12 700 kWh</b>."
+          },
+          {
+            type:"numeric", unit:"MJ", tol:250,
+            prompt:"Rechne diese Energiemenge in MJ um (1 kWh = 3,6 MJ).",
+            answer:45720,
+            hints:[
+              "1 kWh entspricht 3,6 MJ — mit welcher Rechenoperation kommst du von kWh zu MJ?",
+              "Multipliziere die kWh-Zahl mit 3,6.",
+              "12700 kWh · 3,6 MJ/kWh"
+            ],
+            explanation:"12 700 kWh · 3,6 MJ/kWh = <b>45 720 MJ</b>."
+          },
+          {
+            type:"numeric", unit:"MJ/m³", tol:0.6,
+            prompt:"Wie viel MJ liefert 1 m³ dieses Erdgases (der eigentliche Heizwert)?",
+            answer:38.1,
+            hints:[
+              "Du kennst jetzt die Gesamtenergie (MJ) und das Gesamtvolumen (m³) aus der Rechnung.",
+              "Teile die Energie durch das Volumen.",
+              "45720 MJ / 1200 m³"
+            ],
+            explanation:"45 720 MJ / 1200 m³ = <b>38,1 MJ/m³</b>."
+          },
+          {
+            type:"reflect",
+            prompt:"Dieser Wert (38,1 MJ/m³) ist höher als der auf dem Infoblatt tabellierte Heizwert von Erdgas (32 MJ/m³). Wie könnte das zu erklären sein?",
+            sample:()=>"Reales Erdgas ist kein reines Methan — es enthält oft auch höhere Alkane wie Ethan, Propan oder Butan, die pro m³ einen höheren Heizwert haben. Der tatsächlich gelieferte Gas-Mix kann daher energiereicher sein als der Tabellenwert für 'Erdgas'. Auch kann sich der Tabellenwert auf etwas andere Norm-/Messbedingungen (Druck, Temperatur) beziehen als der Gaszähler."
+          }
+        ]
+      }
+    ]
+  },
+
+  followup: {
+    title:"Folgeaufgaben",
+    subtitle:"Holzheizung & Wärmepumpe",
+    subtasks:[
+      {
+        id:"holz", label:"1) Holzheizung",
+        heading:"1) Wie viel darf Holz maximal kosten?",
+        equation:"1 Ster (= 1 m³) Holz, Dichte Brennholz Buche: 750 kg/m³ — Vergleich mit Erdgas & Heizöl aus 'Praktische Rechnungen'",
+        given:[["Dichte Brennholz Buche","750 kg/m³"],["Masse von 1 Ster","750 kg"]],
+        givenLabel:"Gegeben",
+        hasInputs:true,
+        inputsIntro:"Schau in deinem Infoblatt nach: Wie gross ist der spezifische Brennwert von Holz? Trag den Wert ein.",
+        inputs:[
+          {key:"huHolz", label:"Spezifischer Brennwert Holz laut Infoblatt (MJ/kg)", placeholder:"nachschlagen (ca. …)", default:null}
+        ],
+        steps:[
+          {
+            type:"dynamic", unit:"MJ", tolRel:0.1,
+            prompt:"Wie viel Energie liefert 1 Ster Holz (750 kg, Dichte Buche) insgesamt?",
+            compute:(v)=> v.huHolz ? v.huHolz*750 : null,
+            requires:["huHolz"],
+            hints:[
+              "Der spezifische Brennwert ist pro kg angegeben — 1 Ster wiegt bei dieser Dichte 750 kg.",
+              "Energie = Brennwert (MJ/kg) · Masse (750 kg).",
+              "Multipliziere deinen eingetragenen Wert mit 750."
+            ],
+            explanation:(v)=>`Energie = ${v.huHolz} MJ/kg · 750 kg ≈ <b>${(v.huHolz*750).toFixed(0)} MJ</b> pro Ster.`
+          },
+          {
+            type:"dynamic", unit:"CHF", tolRel:0.1,
+            prompt:"In 'Praktische Rechnungen' war Heizöl mit ≈ 0,0259 CHF/MJ die günstigste der beiden Heizarten. Wie viel darf 1 Ster Holz also höchstens kosten, damit Holz nicht teurer ist als Heizöl?",
+            compute:(v)=> v.huHolz ? v.huHolz*750*0.0259 : null,
+            requires:["huHolz"],
+            hints:[
+              "Du kennst jetzt die Energie pro Ster (MJ) aus dem letzten Schritt.",
+              "Multipliziere diese Energie mit dem Grenzpreis pro MJ (0,0259 CHF/MJ, der Heizöl-Wert).",
+              "Preis_max = Energie(MJ) · 0,0259 CHF/MJ"
+            ],
+            explanation:(v)=>`Preis_max = ${(v.huHolz*750).toFixed(0)} MJ · 0,0259 CHF/MJ ≈ <b>${(v.huHolz*750*0.0259).toFixed(0)} CHF</b> pro Ster.`
+          },
+          {
+            type:"reflect",
+            prompt:"Warum ist ein Ofen oder gar ein offenes Cheminée weniger effizient als z. B. eine automatische Hackschnitzelheizung?",
+            sample:()=>"Bei einem offenen Cheminée entweicht ein grosser Teil der Wärme ungenutzt durch den Kamin, viel warme Raumluft strömt mit den Abgasen ab, und die Verbrennung ist oft unvollständig (Russ, unverbranntes Holzgas). Es gibt zudem meist keinen Wärmetauscher oder Pufferspeicher, der die Energie ans Wasser/Heizsystem abgibt. Eine automatische Hackschnitzelheizung regelt die Luftzufuhr optimal, verbrennt vollständiger und leitet die Wärme über einen Wärmetauscher direkt ins Heizsystem — der Wirkungsgrad ist deutlich höher."
+          }
+        ]
+      },
+      {
+        id:"waermepumpe", label:"2) Wärmepumpe vs. Gas",
+        heading:"2) Ist Heizen mit einer Wärmepumpe günstiger als mit Gas?",
+        equation:"Wärmepumpe braucht nur 1/3 der Energie einer Gasheizung für die gleiche Wärmemenge      Strompreis: 30 Rp./kWh",
+        given:[["Strompreis","30 Rp./kWh = 0,30 CHF/kWh"],["1 kWh","3,6·10⁶ J = 3,6 MJ"],["Erdgas (aus 'Praktische Rechnungen')","≈ 0,0313 CHF/MJ"]],
+        givenLabel:"Gegeben",
+        steps:[
+          {
+            type:"numeric", unit:"CHF/MJ", tol:0.003,
+            prompt:"Rechne den Strompreis von 30 Rp./kWh in CHF pro MJ um (1 kWh = 3,6 MJ).",
+            answer:0.0833,
+            hints:[
+              "0,30 CHF/kWh ist der Preis für 1 kWh elektrische Energie.",
+              "1 kWh entspricht 3,6 MJ (bzw. 3,6·10⁶ J).",
+              "Kosten pro MJ = 0,30 CHF / 3,6 MJ"
+            ],
+            explanation:"0,30 CHF / 3,6 MJ ≈ <b>0,0833 CHF/MJ</b>."
+          },
+          {
+            type:"numeric", unit:"CHF/MJ", tol:0.002,
+            prompt:"Die Wärmepumpe braucht nur 1/3 so viel Energie wie eine Gasheizung für die gleiche Wärmemenge. Wie viel kostet dich 1 MJ Wärme aus der Wärmepumpe?",
+            answer:0.0278,
+            hints:[
+              "Wenn nur ein Drittel der Energie nötig ist, kostet die gleiche Wärmemenge auch nur ein Drittel so viel.",
+              "Teile die Kosten pro MJ Strom aus dem letzten Schritt durch 3.",
+              "0,0833 CHF/MJ / 3"
+            ],
+            explanation:"0,0833 CHF/MJ / 3 ≈ <b>0,0278 CHF/MJ</b>."
+          },
+          {
+            type:"reflect",
+            prompt:"Ist Heizen mit der Wärmepumpe bei diesem Strompreis günstiger als mit einer Gasheizung? Vergleiche mit dem Erdgas-Ergebnis (≈0,0313 CHF/MJ) aus 'Praktische Rechnungen'.",
+            sample:()=>"Wärmepumpe ≈ 0,0278 CHF/MJ, Erdgas ≈ 0,0313 CHF/MJ. Die Wärmepumpe ist trotz höherem Preis pro MJ Strom günstiger, weil sie dank des Wirkungsgradfaktors 3 pro eingesetzter Energieeinheit dreimal so viel Wärme liefert."
+          }
+        ]
+      }
+    ]
+  }
+};
+
+const GROUP_ORDER = ["reaction","practical","followup"];
+
+/* =========================================================
+   STATE
+   ========================================================= */
+let state = {
+  group:"reaction",
+  subIndex:0,
+  stepIndex:0,
+  solved:{},      // key "group:subId:stepIdx" -> true
+  hintLevel:{},   // key -> number of hints shown
+  inputs:{}       // key "group:subId:inputKey" -> value
+};
+
+const STORAGE_KEY = "thermo-progress-de-v2";
+
+async function loadProgress(){
+  try{
+    const res = await window.storage.get(STORAGE_KEY, false);
+    if(res && res.value){
+      const parsed = JSON.parse(res.value);
+      state.solved = parsed.solved || {};
+      state.inputs = parsed.inputs || {};
+    }
+  }catch(e){ /* no saved progress yet, that's fine */ }
+}
+async function saveProgress(){
+  try{
+    await window.storage.set(STORAGE_KEY, JSON.stringify({solved:state.solved, inputs:state.inputs}), false);
+  }catch(e){ /* best-effort */ }
+}
+
+function stepKey(g,subId,i){ return g+":"+subId+":"+i; }
+function inputKey(g,subId,k){ return g+":"+subId+":"+k; }
+
+function parseNum(str){
+  if(str===undefined||str===null) return NaN;
+  const cleaned = String(str).trim().replace(/'/g,"").replace(",",".");
+  return parseFloat(cleaned);
+}
+
+function totalStepsCount(){
+  let n=0;
+  GROUP_ORDER.forEach(g=>{
+    DATA[g].subtasks.forEach(st=>{
+      st.steps.forEach(()=>{ n++; });
+    });
+  });
+  return n;
+}
+function solvedStepsCount(){
+  return Object.values(state.solved).filter(Boolean).length;
+}
+
+/* =========================================================
+   RENDER: NAV
+   ========================================================= */
+function renderNav(){
+  const nav = document.getElementById("groupNav");
+  nav.innerHTML = "";
+  GROUP_ORDER.forEach(g=>{
+    const grp = DATA[g];
+    const block = document.createElement("div");
+    block.className = "group-block";
+    const title = document.createElement("p");
+    title.className = "group-title";
+    title.textContent = grp.title;
+    block.appendChild(title);
+
+    grp.subtasks.forEach((st, idx)=>{
+      const btn = document.createElement("button");
+      btn.className = "sub-btn" + (g===state.group && idx===state.subIndex ? " active" : "");
+      const allSolved = st.steps.every((_,si)=> state.solved[stepKey(g,st.id,si)]);
+      const dot = document.createElement("span");
+      dot.className = "dot" + (allSolved ? " done" : (g===state.group && idx===state.subIndex ? " active-dot" : ""));
+      const lbl = document.createElement("span");
+      lbl.textContent = st.label;
+      btn.appendChild(dot);
+      btn.appendChild(lbl);
+      btn.addEventListener("click", ()=>{
+        state.group = g; state.subIndex = idx; state.stepIndex = 0;
+        renderAll();
+      });
+      block.appendChild(btn);
+    });
+    nav.appendChild(block);
+  });
+}
+
+/* =========================================================
+   RENDER: PROGRESS BAR
+   ========================================================= */
+function renderProgress(){
+  const total = totalStepsCount();
+  const solved = solvedStepsCount();
+  document.getElementById("progressLabel").textContent = solved + " / " + total + " Schritte gelöst";
+  document.getElementById("progressFill").style.width = (total? (100*solved/total):0) + "%";
+}
+
+/* =========================================================
+   RENDER: MAIN PAPER
+   ========================================================= */
+function currentSubtask(){
+  return DATA[state.group].subtasks[state.subIndex];
+}
+
+function renderMain(){
+  const main = document.getElementById("mainPaper");
+  main.innerHTML = "";
+  const grp = DATA[state.group];
+  const st = currentSubtask();
+
+  // head
+  const head = document.createElement("div");
+  head.className = "task-head";
+  const left = document.createElement("div");
+  const h2 = document.createElement("h2");
+  h2.textContent = st.heading;
+  left.appendChild(h2);
+  const groupTag = document.createElement("div");
+  groupTag.style.cssText="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink-soft);";
+  groupTag.textContent = grp.title + " — " + grp.subtitle;
+  left.appendChild(groupTag);
+  head.appendChild(left);
+
+  const navBtns = document.createElement("div");
+  navBtns.className = "task-nav-btns";
+  const prevBtn = document.createElement("button");
+  prevBtn.className = "nav-arrow"; prevBtn.textContent = "←";
+  prevBtn.title = "Vorherige Teilaufgabe";
+  prevBtn.disabled = (state.group===GROUP_ORDER[0] && state.subIndex===0);
+  prevBtn.addEventListener("click", goPrevSubtask);
+  const nextBtn = document.createElement("button");
+  nextBtn.className = "nav-arrow"; nextBtn.textContent = "→";
+  nextBtn.title = "Nächste Teilaufgabe";
+  const isLastGroup = state.group===GROUP_ORDER[GROUP_ORDER.length-1];
+  const isLastSub = state.subIndex === grp.subtasks.length-1;
+  nextBtn.disabled = isLastGroup && isLastSub;
+  nextBtn.addEventListener("click", goNextSubtask);
+  navBtns.appendChild(prevBtn); navBtns.appendChild(nextBtn);
+  head.appendChild(navBtns);
+  main.appendChild(head);
+
+  // equation
+  if(st.equation){
+    const eq = document.createElement("div");
+    eq.className = "equation-box";
+    eq.textContent = st.equation;
+    main.appendChild(eq);
+  }
+
+  // given values
+  if(st.given){
+    const gb = document.createElement("div");
+    gb.className = "given-box";
+    const strong = document.createElement("strong");
+    strong.textContent = st.givenLabel || "Gegeben";
+    gb.appendChild(strong);
+    const grid = document.createElement("div");
+    grid.className = "given-grid";
+    st.given.forEach(([k,v])=>{
+      const span = document.createElement("span");
+      span.textContent = k + " = " + v;
+      grid.appendChild(span);
+    });
+    gb.appendChild(grid);
+    main.appendChild(gb);
+  }
+
+  // inputs panel
+  if(st.hasInputs){
+    const panel = document.createElement("div");
+    panel.className = "inputs-panel";
+    const intro = document.createElement("p");
+    intro.style.cssText="margin:0 0 10px;font-size:13.5px;color:var(--ink-soft);";
+    intro.textContent = st.inputsIntro;
+    panel.appendChild(intro);
+    const row = document.createElement("div");
+    row.className = "inputs-row";
+    st.inputs.forEach(inp=>{
+      const div = document.createElement("div");
+      const lbl = document.createElement("label");
+      lbl.className = "lbl";
+      lbl.textContent = inp.label;
+      const input = document.createElement("input");
+      input.type="text";
+      input.placeholder = inp.placeholder || "";
+      const key = inputKey(state.group, st.id, inp.key);
+      const existing = state.inputs[key] !== undefined ? state.inputs[key] : inp.default;
+      if(existing!==null && existing!==undefined) input.value = existing;
+      input.addEventListener("change", ()=>{
+        const val = parseNum(input.value);
+        state.inputs[key] = isNaN(val) ? null : val;
+        saveProgress();
+        renderStep();
+      });
+      div.appendChild(lbl); div.appendChild(input);
+      row.appendChild(div);
+    });
+    panel.appendChild(row);
+    main.appendChild(panel);
+  }
+
+  // step area
+  const stepWrap = document.createElement("div");
+  stepWrap.className = "step-wrap";
+  stepWrap.id = "stepWrap";
+  main.appendChild(stepWrap);
+  renderStep();
+}
+
+function getInputValues(st){
+  const vals = {};
+  if(st.hasInputs){
+    st.inputs.forEach(inp=>{
+      const key = inputKey(state.group, st.id, inp.key);
+      vals[inp.key] = state.inputs[key] !== undefined ? state.inputs[key] : inp.default;
+    });
+  }
+  return vals;
+}
+
+function renderStep(){
+  const wrap = document.getElementById("stepWrap");
+  if(!wrap) return;
+  wrap.innerHTML = "";
+  const st = currentSubtask();
+  const idx = state.stepIndex;
+  const step = st.steps[idx];
+  const key = stepKey(state.group, st.id, idx);
+  const solved = !!state.solved[key];
+
+  const prog = document.createElement("div");
+  prog.className = "step-progress";
+  prog.textContent = "Schritt " + (idx+1) + " von " + st.steps.length;
+  wrap.appendChild(prog);
+
+  const prompt = document.createElement("p");
+  prompt.className = "step-prompt";
+  prompt.textContent = step.prompt;
+  wrap.appendChild(prompt);
+
+  const feedback = document.createElement("div");
+  feedback.className = "feedback";
+  feedback.id = "feedback";
+
+  if(step.type === "numeric" || step.type === "dynamic"){
+    const row = document.createElement("div");
+    row.className = "answer-row";
+    const input = document.createElement("input");
+    input.type = "text";
+    input.id = "answerInput";
+    input.placeholder = "Zahl eingeben";
+    const unit = document.createElement("span");
+    unit.className = "unit-tag";
+    unit.textContent = step.unit || "";
+    const checkBtn = document.createElement("button");
+    checkBtn.className = "action";
+    checkBtn.textContent = "Antwort prüfen";
+
+    let vals = {};
+    if(step.type === "dynamic"){
+      vals = getInputValues(st);
+      const missing = (step.requires||[]).some(r=> vals[r]===null || vals[r]===undefined || isNaN(vals[r]));
+      if(missing){
+        checkBtn.disabled = true;
+        input.disabled = true;
+        input.placeholder = "erst Werte oben eintragen";
+      }
+    }
+
+    checkBtn.addEventListener("click", ()=>{
+      const userVal = parseNum(input.value);
+      if(isNaN(userVal)){
+        showFeedback(feedback, false, "Trag zuerst eine Zahl ein.");
+        return;
+      }
+      let expected, ok;
+      if(step.type==="dynamic"){
+        expected = step.compute(vals);
+        const tolAbs = expected!==null ? Math.abs(expected)*step.tolRel + 0.001 : 0;
+        ok = expected!==null && Math.abs(userVal-expected) <= tolAbs;
+      } else {
+        expected = step.answer;
+        ok = Math.abs(userVal-expected) <= step.tol;
+      }
+      if(ok){
+        state.solved[key] = true;
+        saveProgress();
+        showFeedback(feedback, true, "Richtig! Weiter geht's.");
+        renderNav(); renderProgress();
+        revealExplanation(step, vals);
+        updateFooterDots();
+      } else {
+        showFeedback(feedback, false, "Noch nicht ganz — schau dir die Gegenfragen unten an oder versuch es nochmal.");
+      }
+    });
+
+    row.appendChild(input); row.appendChild(unit); row.appendChild(checkBtn);
+    wrap.appendChild(row);
+  }
+
+  if(step.type === "text"){
+    const row = document.createElement("div");
+    row.className = "answer-row";
+    const tryBtn = document.createElement("button");
+    tryBtn.className = "action";
+    tryBtn.textContent = "Ich habe eine Antwort — Lösung zeigen";
+    tryBtn.addEventListener("click", ()=>{
+      state.solved[key] = true;
+      saveProgress();
+      revealExplanation(step, {});
+      renderNav(); renderProgress();
+      updateFooterDots();
+    });
+    row.appendChild(tryBtn);
+    wrap.appendChild(row);
+  }
+
+  if(step.type === "reflect"){
+    const area = document.createElement("textarea");
+    area.className = "reflect-area";
+    area.placeholder = "Notiere hier kurz deine Gedanken …";
+    wrap.appendChild(area);
+    const row = document.createElement("div");
+    row.className = "answer-row";
+    row.style.marginTop = "10px";
+    const compareBtn = document.createElement("button");
+    compareBtn.className = "action ghost";
+    compareBtn.textContent = "Mit Musterantwort vergleichen";
+    const sample = document.createElement("div");
+    sample.className = "sample-answer";
+    const vals = getInputValues(st);
+    sample.innerHTML = typeof step.sample === "function" ? step.sample(vals) : step.sample;
+    compareBtn.addEventListener("click", ()=>{
+      sample.classList.toggle("show");
+      state.solved[key] = true;
+      saveProgress();
+      renderNav(); renderProgress();
+      updateFooterDots();
+    });
+    row.appendChild(compareBtn);
+    wrap.appendChild(row);
+    wrap.appendChild(sample);
+  }
+
+  wrap.appendChild(feedback);
+
+  // hints
+  if(step.hints && step.hints.length){
+    const hBlock = document.createElement("div");
+    hBlock.className = "hint-block";
+    const hintKey = key;
+    const shown = state.hintLevel[hintKey] || 0;
+    const hintList = document.createElement("div");
+    hintList.id = "hintList";
+    for(let i=0;i<shown;i++){
+      const line = document.createElement("p");
+      line.className = "hint-line";
+      line.textContent = step.hints[i];
+      hintList.appendChild(line);
+    }
+    hBlock.appendChild(hintList);
+    if(shown < step.hints.length){
+      const hintBtn = document.createElement("button");
+      hintBtn.className = "action ghost";
+      hintBtn.textContent = shown===0 ? "Gegenfrage / Tipp" : "Noch einen Tipp";
+      hintBtn.addEventListener("click", ()=>{
+        state.hintLevel[hintKey] = (state.hintLevel[hintKey]||0) + 1;
+        renderStep();
+      });
+      hBlock.appendChild(hintBtn);
+    }
+    wrap.appendChild(hBlock);
+  }
+
+  // explanation (revealed on correct / on request)
+  const explainDiv = document.createElement("div");
+  explainDiv.className = "explain-block" + (solved ? " show" : "");
+  explainDiv.id = "explainBlock";
+  if(solved){
+    const vals = getInputValues(st);
+    explainDiv.innerHTML = "<b>Lösung: </b>" + (typeof step.explanation==="function" ? step.explanation(vals) : step.explanation);
+  }
+  wrap.appendChild(explainDiv);
+
+  if(!solved){
+    const giveUpRow = document.createElement("div");
+    giveUpRow.style.cssText = "margin-top:12px;";
+    const giveUp = document.createElement("button");
+    giveUp.className = "action ghost";
+    giveUp.textContent = "Lösung anzeigen";
+    giveUp.addEventListener("click", ()=>{
+      state.solved[key] = true;
+      saveProgress();
+      renderNav(); renderProgress();
+      revealExplanation(step, getInputValues(st));
+      updateFooterDots();
+    });
+    giveUpRow.appendChild(giveUp);
+    wrap.appendChild(giveUpRow);
+  }
+
+  // footer nav between steps within subtask
+  const footer = document.createElement("div");
+  footer.className = "step-footer";
+  const dots = document.createElement("div");
+  dots.className = "step-dots";
+  dots.id = "stepDots";
+  st.steps.forEach((_,si)=>{
+    const d = document.createElement("span");
+    d.className = "step-dot" + (si===idx ? " on":"") + (state.solved[stepKey(state.group,st.id,si)] ? " done":"");
+    dots.appendChild(d);
+  });
+  footer.appendChild(dots);
+
+  const stepBtns = document.createElement("div");
+  stepBtns.style.cssText = "display:flex;gap:8px;";
+  const prevStep = document.createElement("button");
+  prevStep.className = "nav-arrow"; prevStep.textContent = "‹";
+  prevStep.disabled = idx===0;
+  prevStep.addEventListener("click", ()=>{ state.stepIndex--; renderStep(); });
+  const nextStep = document.createElement("button");
+  nextStep.className = "nav-arrow"; nextStep.textContent = "›";
+  nextStep.disabled = idx===st.steps.length-1;
+  nextStep.addEventListener("click", ()=>{ state.stepIndex++; renderStep(); });
+  stepBtns.appendChild(prevStep); stepBtns.appendChild(nextStep);
+  footer.appendChild(stepBtns);
+  wrap.appendChild(footer);
+
+  // subtask complete banner
+  const allDone = st.steps.every((_,si)=> state.solved[stepKey(state.group,st.id,si)]);
+  if(allDone){
+    const banner = document.createElement("div");
+    banner.className = "subtask-done-banner";
+    banner.textContent = "Diese Teilaufgabe ist vollständig gelöst.";
+    wrap.appendChild(banner);
+  }
+}
+
+function showFeedback(el, ok, msg){
+  el.className = "feedback show " + (ok?"ok":"warn");
+  el.textContent = msg;
+}
+
+function revealExplanation(step, vals){
+  const block = document.getElementById("explainBlock");
+  if(!block) return;
+  block.classList.add("show");
+  block.innerHTML = "<b>Lösung: </b>" + (typeof step.explanation==="function" ? step.explanation(vals) : step.explanation);
+}
+
+function updateFooterDots(){
+  const st = currentSubtask();
+  const dots = document.getElementById("stepDots");
+  if(!dots) return;
+  dots.innerHTML = "";
+  st.steps.forEach((_,si)=>{
+    const d = document.createElement("span");
+    d.className = "step-dot" + (si===state.stepIndex ? " on":"") + (state.solved[stepKey(state.group,st.id,si)] ? " done":"");
+    dots.appendChild(d);
+  });
+}
+
+function goPrevSubtask(){
+  if(state.subIndex>0){ state.subIndex--; }
+  else{
+    const gi = GROUP_ORDER.indexOf(state.group);
+    if(gi>0){ state.group = GROUP_ORDER[gi-1]; state.subIndex = DATA[state.group].subtasks.length-1; }
+  }
+  state.stepIndex = 0;
+  renderAll();
+}
+function goNextSubtask(){
+  const grp = DATA[state.group];
+  if(state.subIndex < grp.subtasks.length-1){ state.subIndex++; }
+  else{
+    const gi = GROUP_ORDER.indexOf(state.group);
+    if(gi < GROUP_ORDER.length-1){ state.group = GROUP_ORDER[gi+1]; state.subIndex = 0; }
+  }
+  state.stepIndex = 0;
+  renderAll();
+}
+
+function renderAll(){
+  renderNav();
+  renderProgress();
+  renderMain();
+}
+
+(async function init(){
+  await loadProgress();
+  renderAll();
+})();
+</script>
+</body>
+</html>
