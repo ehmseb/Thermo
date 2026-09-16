@@ -895,10 +895,135 @@ const DATA = {
         ]
       }
     ]
+  },
+
+  moreEnthalpy: {
+    title:"More Calculations on Enthalpies",
+    subtitle:"Calorimetry, Hess's Law & bond enthalpies",
+    subtasks:[
+      {
+        id:"walnuts", label:"1) Walnuts",
+        heading:"1) Calorimetry: burning walnuts",
+        equation:"4.7 g of walnuts heat 20 mL of water from 23°C to 87.7°C",
+        given:[["m(walnuts)","4.7 g"],["m(water)","20 g (20 mL)"],["ΔT","64.7 K"],["c(water)","4.18 J/(g·K)"]],
+        givenLabel:"Given",
+        steps:[
+          {
+            type:"numeric", unit:"J", tol:150,
+            prompt:"Calculate the reaction heat Q.",
+            answer:5409,
+            hints:[
+              "Formula: Q = c · m(water) · ΔT.",
+              "ΔT = 87.7°C − 23°C = 64.7 K.",
+              "Q = 4.18 J/(g·K) · 20 g · 64.7 K"
+            ],
+            explanation:"Q = 4.18 J/(g·K) · 20 g · 64.7 K ≈ <b>5409 J ≈ 5.41 kJ</b>."
+          },
+          {
+            type:"numeric", unit:"kJ/g (≈ MJ/kg)", tol:0.15,
+            prompt:"Give the specific calorific value (reaction heat per mass of walnuts).",
+            answer:1.15,
+            hints:[
+              "Specific calorific value = Q / m(walnuts).",
+              "Use Q from the last step (in kJ) and divide by 4.7 g.",
+              "5.41 kJ / 4.7 g"
+            ],
+            explanation:"5.41 kJ / 4.7 g ≈ <b>1.15 kJ/g ≈ 1.15 MJ/kg</b>."
+          },
+          {
+            type:"reflect",
+            prompt:"Real walnuts have a calorific value of about 28 MJ/kg (they're very high in fat). Why does your calculated value come out so much lower?",
+            sample:()=>"In this simple setup (an open test tube instead of a bomb calorimeter), most of the heat of combustion escapes unused into the surrounding air instead of fully transferring to the water. Only a small fraction of the energy actually released gets measured — similar to the popcorn experiment."
+          }
+        ]
+      },
+      {
+        id:"hcl", label:"2) Hydrochloric acid",
+        heading:"2) Enthalpy of solution of HCl gas",
+        equation:"70 mL of HCl gas dissolve in 1 L of water, which warms up by 15 K",
+        given:[["V(HCl gas)","70 mL"],["m(water)","1000 g (1 L)"],["ΔT","15 K"],["c(water)","4.18 J/(g·K)"],["Vm(gas, RT)","24 L/mol"]],
+        givenLabel:"Given",
+        steps:[
+          {
+            type:"numeric", unit:"kJ", tol:3,
+            prompt:"Calculate the reaction heat Q.",
+            answer:62.7,
+            hints:[
+              "Formula: Q = c · m(water) · ΔT.",
+              "Watch the unit of m(water): 1 L of water = 1000 g.",
+              "Q = 4.18 J/(g·K) · 1000 g · 15 K"
+            ],
+            explanation:"Q = 4.18 J/(g·K) · 1000 g · 15 K = 62700 J = <b>62.7 kJ</b>."
+          },
+          {
+            type:"numeric", unit:"mol", tol:0.0003,
+            prompt:"How many mol of HCl gas were dissolved (Vm = 24 L/mol at RT)?",
+            answer:0.00292,
+            hints:[
+              "n = V / Vm.",
+              "Convert 70 mL to litres first: 70 mL = 0.070 L.",
+              "n = 0.070 L / 24 L/mol"
+            ],
+            explanation:"n = 0.070 L / 24 L/mol ≈ <b>0.00292 mol</b> (2.92 mmol)."
+          },
+          {
+            type:"numeric", unit:"kJ/mol", tol:1500,
+            prompt:"From this, calculate the molar enthalpy of solution ΔH_L of the gas (watch the sign: dissolving is exothermic).",
+            answer:-21500,
+            hints:[
+              "ΔH_L = −Q / n (negative, since heat is released on dissolving).",
+              "Use Q from step 1 (in kJ) and n from step 2.",
+              "ΔH_L = −62.7 kJ / 0.00292 mol"
+            ],
+            explanation:"ΔH_L = −62.7 kJ / 0.00292 mol ≈ <b>−21,500 kJ/mol</b>. Note: this magnitude looks very large because a tiny amount of gas (a few mmol) is here combined with a large heat quantity in a large amount of water — a typical effect when the numbers in an exercise don't exactly match a real experiment."
+          }
+        ]
+      },
+      {
+        id:"biogas", label:"3) Biogas → hydrogen",
+        heading:"3) Producing hydrogen from biogas (steam reforming)",
+        equation:"CH₄(g) + H₂O(g)  →  CO(g) + 3 H₂(g)",
+        given:[["ΔH⁰f(CH₄)","−74 kJ/mol"],["ΔH⁰f(H₂O,g)","−242 kJ/mol"],["ΔH⁰f(CO)","−111 kJ/mol"],["ΔH⁰f(H₂)","0 kJ/mol"]],
+        givenLabel:"Given (ΔH⁰f values)",
+        steps:[
+          {
+            type:"text",
+            prompt:"First set up the reaction equation: biogas (CH₄) reacts with water to give carbon monoxide and hydrogen.",
+            hints:[
+              "Methane has 4 H atoms; water brings one more O and 2 more H.",
+              "Make sure all atoms balance at the end."
+            ],
+            explanation:"CH₄(g) + H₂O(g) → CO(g) + 3 H₂(g)"
+          },
+          {
+            type:"numeric", unit:"kJ", tol:6,
+            prompt:"Calculate the reaction enthalpy using enthalpies of formation.",
+            answer:205,
+            hints:[
+              "Product side: 1·ΔHf(CO) + 3·ΔHf(H₂).",
+              "Reactant side: 1·ΔHf(CH₄) + 1·ΔHf(H₂O).",
+              "ΔH = [−111 + 0] − [−74 − 242]"
+            ],
+            explanation:"ΔH = −111 − (−74) − (−242) = −111 + 74 + 242 = <b>+205 kJ</b>. The reaction is endothermic."
+          },
+          {
+            type:"numeric", unit:"kJ/mol", tol:5,
+            prompt:"Calculate the energy needed to produce 1 mol of hydrogen.",
+            answer:68.3,
+            hints:[
+              "How many mol of H₂ are produced per reaction, according to the equation?",
+              "Divide the reaction enthalpy by this amount of substance.",
+              "205 kJ / 3 mol"
+            ],
+            explanation:"205 kJ / 3 mol ≈ <b>68.3 kJ/mol</b> H₂."
+          }
+        ]
+      }
+    ]
   }
 };
 
-const GROUP_ORDER = ["reaction","practical","followup"];
+const GROUP_ORDER = ["reaction","practical","followup","moreEnthalpy"];
 
 /* =========================================================
    STATE
