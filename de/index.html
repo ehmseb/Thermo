@@ -870,10 +870,135 @@ const DATA = {
         ]
       }
     ]
+  },
+
+  moreEnthalpy: {
+    title:"Mehr Rechnungen zu Enthalpien",
+    subtitle:"Kalorimetrie, Satz von Hess & Bindungsenthalpien",
+    subtasks:[
+      {
+        id:"baumnuesse", label:"1) Baumnüsse",
+        heading:"1) Kalorimetrie: Baumnüsse verbrennen",
+        equation:"4,7 g Baumnüsse erwärmen 20 mL Wasser von 23°C auf 87,7°C",
+        given:[["m(Baumnüsse)","4,7 g"],["m(Wasser)","20 g (20 mL)"],["ΔT","64,7 K"],["c(Wasser)","4,18 J/(g·K)"]],
+        givenLabel:"Gegeben",
+        steps:[
+          {
+            type:"numeric", unit:"J", tol:150,
+            prompt:"Berechne die Reaktionswärme Q.",
+            answer:5409,
+            hints:[
+              "Formel: Q = c · m(Wasser) · ΔT.",
+              "ΔT = 87,7°C − 23°C = 64,7 K.",
+              "Q = 4,18 J/(g·K) · 20 g · 64,7 K"
+            ],
+            explanation:"Q = 4,18 J/(g·K) · 20 g · 64,7 K ≈ <b>5409 J ≈ 5,41 kJ</b>."
+          },
+          {
+            type:"numeric", unit:"kJ/g (≈ MJ/kg)", tol:0.15,
+            prompt:"Gib den spezifischen Brennwert an (Reaktionswärme bezogen auf die Masse der Baumnüsse).",
+            answer:1.15,
+            hints:[
+              "Spezifischer Brennwert = Q / m(Baumnüsse).",
+              "Nutze Q aus dem letzten Schritt (in kJ) und teile durch 4,7 g.",
+              "5,41 kJ / 4,7 g"
+            ],
+            explanation:"5,41 kJ / 4,7 g ≈ <b>1,15 kJ/g ≈ 1,15 MJ/kg</b>."
+          },
+          {
+            type:"reflect",
+            prompt:"Echte Baumnüsse haben einen Brennwert von ca. 28 MJ/kg (sie sind sehr fetthaltig). Warum liegt dein berechneter Wert so viel tiefer?",
+            sample:()=>"Bei diesem einfachen Versuchsaufbau (offenes Reagenzglas statt Bombenkalorimeter) geht der grösste Teil der Verbrennungswärme ungenutzt an die Umgebungsluft verloren, statt vollständig ins Wasser überzugehen. Nur ein kleiner Bruchteil der tatsächlich freigesetzten Energie wird gemessen — ähnlich wie beim Popcorn-Versuch."
+          }
+        ]
+      },
+      {
+        id:"salzsaeure", label:"2) Salzsäure",
+        heading:"2) Lösungsenthalpie von HCl-Gas",
+        equation:"70 mL HCl-Gas lösen sich in 1 L Wasser, das sich dabei um 15 K erwärmt",
+        given:[["V(HCl-Gas)","70 mL"],["m(Wasser)","1000 g (1 L)"],["ΔT","15 K"],["c(Wasser)","4,18 J/(g·K)"],["Vm(Gas, RT)","24 L/mol"]],
+        givenLabel:"Gegeben",
+        steps:[
+          {
+            type:"numeric", unit:"kJ", tol:3,
+            prompt:"Berechne die Reaktionswärme Q.",
+            answer:62.7,
+            hints:[
+              "Formel: Q = c · m(Wasser) · ΔT.",
+              "Achte auf die Einheit von m(Wasser): 1 L Wasser = 1000 g.",
+              "Q = 4,18 J/(g·K) · 1000 g · 15 K"
+            ],
+            explanation:"Q = 4,18 J/(g·K) · 1000 g · 15 K = 62700 J = <b>62,7 kJ</b>."
+          },
+          {
+            type:"numeric", unit:"mol", tol:0.0003,
+            prompt:"Wie viel mol HCl-Gas wurden gelöst (Vm = 24 L/mol bei RT)?",
+            answer:0.00292,
+            hints:[
+              "n = V / Vm.",
+              "Wandle 70 mL zuerst in Liter um: 70 mL = 0,070 L.",
+              "n = 0,070 L / 24 L/mol"
+            ],
+            explanation:"n = 0,070 L / 24 L/mol ≈ <b>0,00292 mol</b> (2,92 mmol)."
+          },
+          {
+            type:"numeric", unit:"kJ/mol", tol:1500,
+            prompt:"Berechne daraus die molare Lösungsenthalpie ΔH_L des Gases (Vorzeichen beachten: die Lösung ist exotherm).",
+            answer:-21500,
+            hints:[
+              "ΔH_L = −Q / n (negativ, da beim Lösen Wärme frei wird).",
+              "Nutze Q aus Schritt 1 (in kJ) und n aus Schritt 2.",
+              "ΔH_L = −62,7 kJ / 0,00292 mol"
+            ],
+            explanation:"ΔH_L = −62,7 kJ / 0,00292 mol ≈ <b>−21 500 kJ/mol</b>. Hinweis: Diese Grössenordnung wirkt sehr hoch, weil hier eine sehr kleine Gasmenge (wenige mmol) mit einer grossen Wärmemenge in einer grossen Wassermenge kombiniert wird — ein typischer Effekt, wenn Modellzahlen einer Übung nicht exakt einem realen Experiment entsprechen."
+          }
+        ]
+      },
+      {
+        id:"biogas", label:"3) Biogas → Wasserstoff",
+        heading:"3) Wasserstoffgewinnung aus Biogas (Dampfreformierung)",
+        equation:"CH₄(g) + H₂O(g)  →  CO(g) + 3 H₂(g)",
+        given:[["ΔH⁰f(CH₄)","−74 kJ/mol"],["ΔH⁰f(H₂O,g)","−242 kJ/mol"],["ΔH⁰f(CO)","−111 kJ/mol"],["ΔH⁰f(H₂)","0 kJ/mol"]],
+        givenLabel:"Gegeben (ΔH⁰f-Werte)",
+        steps:[
+          {
+            type:"text",
+            prompt:"Stelle zunächst die Reaktionsgleichung auf: Biogas (CH₄) reagiert mit Wasser zu Kohlenstoffmonoxid und Wasserstoff.",
+            hints:[
+              "Methan hat 4 H-Atome, Wasser bringt ein weiteres O und 2 weitere H mit.",
+              "Achte darauf, dass am Ende alle Atome ausgeglichen sind."
+            ],
+            explanation:"CH₄(g) + H₂O(g) → CO(g) + 3 H₂(g)"
+          },
+          {
+            type:"numeric", unit:"kJ", tol:6,
+            prompt:"Berechne die Reaktionsenthalpie mit Hilfe der Bildungsenthalpien.",
+            answer:205,
+            hints:[
+              "Produktseite: 1·ΔHf(CO) + 3·ΔHf(H₂).",
+              "Eduktseite: 1·ΔHf(CH₄) + 1·ΔHf(H₂O).",
+              "ΔH = [−111 + 0] − [−74 − 242]"
+            ],
+            explanation:"ΔH = −111 − (−74) − (−242) = −111 + 74 + 242 = <b>+205 kJ</b>. Die Reaktion ist endotherm."
+          },
+          {
+            type:"numeric", unit:"kJ/mol", tol:5,
+            prompt:"Berechne die Energie, die man benötigt, um 1 mol Wasserstoff zu erzeugen.",
+            answer:68.3,
+            hints:[
+              "Wie viel mol H₂ entstehen laut Reaktionsgleichung pro Reaktionsumsatz?",
+              "Teile die Reaktionsenthalpie durch diese Stoffmenge.",
+              "205 kJ / 3 mol"
+            ],
+            explanation:"205 kJ / 3 mol ≈ <b>68,3 kJ/mol</b> H₂."
+          }
+        ]
+      }
+    ]
   }
 };
 
-const GROUP_ORDER = ["reaction","practical","followup"];
+const GROUP_ORDER = ["reaction","practical","followup","moreEnthalpy"];
 
 /* =========================================================
    STATE
