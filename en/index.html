@@ -737,8 +737,8 @@ const DATA = {
             prompt:"Calculate ΔH of this reaction for 1 mol of ethanol using the ΔH⁰f values.",
             answer:-1235,
             hints:[
-              "Product side: 2·ΔHf(CO₂) + 3·ΔHf(H₂O).",
-              "Reactant side: 1·ΔHf(C₂H₅OH) (O₂ is an element, ΔHf=0).",
+              "Count the CO₂ and H₂O molecules in your balanced equation before using their formation enthalpies.",
+              "Which reactant has a nonzero formation enthalpy? What is ΔH⁰f for elemental O₂?",
               "Subtract the entire reactant sum; be careful when that sum is negative."
             ],
             explanation:"ΔH = 2mol·(−393) + 3mol·(−242) − 1mol·(−277) = −786 − 726 + 277 = <b>−1235 kJ</b>."
@@ -755,8 +755,8 @@ const DATA = {
             prompt:"From this, calculate the heating value per gram (i.e. MJ/kg).",
             answer:26.8,
             hints:[
-              "Divide the energy from step 2 (as a magnitude) by the mass from step 3.",
-              "Use the magnitude of the energy from step 2 and the mass from step 3.",
+              "A heating value reports released energy per unit of fuel mass. Which two earlier results do you need?",
+              "Use the magnitude of the reaction energy, since a heating value is quoted as a positive quantity.",
               "The result in kJ/g is numerically identical to MJ/kg."
             ],
             explanation:"1235 kJ / 46.07 g = <b>26.8 kJ/g = 26.8 MJ/kg</b>."
@@ -888,8 +888,8 @@ const DATA = {
             prompt:"The heat pump provides 3 MJ of heat per 1 MJ of electricity. What does 1 MJ of heat cost?",
             answer:0.0278,
             hints:[
-              "If only a third of the energy is needed, the same amount of heat also costs only a third as much.",
-              "Divide the cost per MJ of electricity from the previous step by 3.",
+              "How many MJ of useful heat do you receive for the cost of 1 MJ of electricity?",
+              "To find a cost per MJ of useful heat, relate that electricity cost to all the heat it provides.",
               "The cost per MJ of useful heat must be less than the cost per MJ of electricity."
             ],
             explanation:"0.0833 CHF/MJ / 3 ≈ <b>0.0278 CHF/MJ</b>."
@@ -989,7 +989,7 @@ const DATA = {
       {
         id:"biogas", label:"3) Biogas → hydrogen",
         heading:"3) Producing hydrogen from biogas (steam reforming)",
-        equation:"CH₄(g) + H₂O(g)  →  CO(g) + 3 H₂(g)",
+        equation:"Methane + steam → carbon monoxide + hydrogen (balance this equation in Step 1)",
         given:[["ΔH⁰f(CH₄)","−74 kJ/mol"],["ΔH⁰f(H₂O,g)","−242 kJ/mol"],["ΔH⁰f(CO)","−111 kJ/mol"],["ΔH⁰f(H₂)","0 kJ/mol"]],
         givenLabel:"Given (ΔH⁰f values)",
         steps:[
@@ -1007,8 +1007,8 @@ const DATA = {
             prompt:"Calculate the reaction enthalpy using enthalpies of formation.",
             answer:205,
             hints:[
-              "Product side: 1·ΔHf(CO) + 3·ΔHf(H₂).",
-              "Reactant side: 1·ΔHf(CH₄) + 1·ΔHf(H₂O).",
+              "Use the coefficients in your balanced equation to weight each product's formation enthalpy.",
+              "Do the same for the reactants; the formation enthalpy of elemental H₂ is zero.",
               "Subtract the reactant sum as a whole, including its negative signs."
             ],
             explanation:"ΔH = −111 − (−74) − (−242) = −111 + 74 + 242 = <b>+205 kJ</b>. The reaction is endothermic."
@@ -1495,6 +1495,7 @@ function renderStep(){
     const tryBtn = document.createElement("button");
     tryBtn.className = "action";
     tryBtn.textContent = "I have an answer — show solution";
+    tryBtn.classList.add("show-answer-trigger");
     tryBtn.addEventListener("click", ()=>{
       state.solved[key] = true;
       saveProgress();
@@ -1502,8 +1503,7 @@ function renderStep(){
       renderNav(); renderProgress();
       updateFooterDots();
     });
-    row.appendChild(tryBtn);
-    wrap.appendChild(row);
+    if(!solved){ row.appendChild(tryBtn); wrap.appendChild(row); }
   }
 
   if(step.type === "reflect"){
@@ -1577,6 +1577,7 @@ function renderStep(){
 
   if(!solved && step.type!=="reflect"){
     const giveUpRow = document.createElement("div");
+    giveUpRow.className = "give-up-row";
     giveUpRow.style.cssText = "margin-top:12px;";
     const giveUp = document.createElement("button");
     giveUp.className = "action ghost";
@@ -1639,6 +1640,8 @@ function revealExplanation(step, vals){
   if(!block) return;
   block.classList.add("show");
   block.innerHTML = "<b>Solution: </b>" + (typeof step.explanation==="function" ? step.explanation(vals) : step.explanation);
+  document.querySelector("#stepWrap .give-up-row")?.remove();
+  document.querySelector("#stepWrap .show-answer-trigger")?.parentElement?.remove();
 }
 
 function updateFooterDots(){
