@@ -274,7 +274,8 @@ main.paper{
   padding:7px 9px;
   border-radius:6px;
   border:1px solid var(--paper-edge);
-  width:120px;
+  width:220px;
+  max-width:100%;
   background:#fff;
   color:var(--ink);
 }
@@ -525,14 +526,14 @@ const DATA = {
   "Wie verändert sich die Energieänderung, wenn entsprechend mehr Ammoniak gebildet wird?",
   "Verwende ΔH = n · ΔH⁰f. Prüfe am Vorzeichen, ob Wärme frei wird oder aufgenommen wird."
 ],
-            explanation:"4 mol · (−46 kJ/mol) = <b>−184 kJ</b>. Das negative Vorzeichen zeigt: Die Bildung von NH₃ ist exotherm — es wird also gar keine Energie <i>benötigt</i>, sondern es werden 184 kJ <i>frei</i>. Ein guter Moment, um auf das Vorzeichen zu achten: die Frage nach 'benötigter Energie' geht hier von der falschen Annahme aus, dass die Bildung endotherm sei."
+            explanation:"4 mol · (−46 kJ/mol) = <b>−184 kJ</b>. Das negative Vorzeichen zeigt: Bei der Bildung von 4 mol NH₃ werden 184 kJ Wärme frei."
           }
         ]
       },
       {
         id:"d", label:"d) ΔHf Octan",
         heading:"d) Molare Bildungsenthalpie von Octan",
-        equation:"2 C₈H₁₈ + 25 O₂  →  16 CO₂ + 18 H₂O     ΔH = −10144 kJ",
+        equation:"2 C₈H₁₈(l) + 25 O₂(g)  →  16 CO₂(g) + 18 H₂O(g)     ΔH = −10144 kJ",
         given:[["ΔH⁰f(CO₂)","−393 kJ/mol"],["ΔH⁰f(H₂O,g)","−242 kJ/mol"],["ΔH⁰f(O₂)","0 kJ/mol"],["ΔH⁰f(C₈H₁₈)","gesucht"]],
         givenLabel:"ΔH⁰f-Werte",
         steps:[
@@ -632,7 +633,7 @@ const DATA = {
           },
           {
             type:"reflect",
-            prompt:"Die Aufgabe fragt: Welche weiteren Kosten müsste man neben dem reinen Heizwert noch einbeziehen? Notiere ein paar Stichworte.",
+            prompt:"Welche weiteren Kosten müsste man neben dem Brennstoffpreis pro MJ einbeziehen? Notiere ein paar Stichworte.",
             sample:()=>"Zum Beispiel: Investitions-/Anschlusskosten der Heizanlage, Wartung und Kaminfeger, Wirkungsgrad der Heizung (nicht 100 % der Energie kommt als Wärme im Raum an), Tankreinigung/Lagerung beim Heizöl, CO₂-Lenkungsabgabe, Preisschwankungen bzw. Lieferkosten."
           }
         ]
@@ -668,7 +669,7 @@ const DATA = {
           },
           {
             type:"numeric", unit:"kJ/mol", tol:40,
-            prompt:"Ethanol ist eine Flüssigkeit, sein Brennwert ist daher massebezogen angegeben (29,7 MJ/kg). Berechne den molaren Heizwert mit M(Ethanol) = 46,07 g/mol.",
+            prompt:"Für Ethanol ist der Brennwert im Infoblatt massebezogen angegeben (29,7 MJ/kg). Berechne den molaren Wert mit M(Ethanol) = 46,07 g/mol.",
             answer:1368,
             hints:[
   "Welche Masse hat ein Mol Ethanol? In welcher Masseneinheit ist der Brennwert angegeben?",
@@ -783,7 +784,7 @@ const DATA = {
           {
             type:"reflect",
             prompt:"Dieser Wert (38,1 MJ/m³) ist höher als der auf dem Infoblatt tabellierte Heizwert von Erdgas (32 MJ/m³). Wie könnte das zu erklären sein?",
-            sample:()=>"Reales Erdgas ist kein reines Methan — es enthält oft auch höhere Alkane wie Ethan, Propan oder Butan, die pro m³ einen höheren Heizwert haben. Der tatsächlich gelieferte Gas-Mix kann daher energiereicher sein als der Tabellenwert für 'Erdgas'. Auch kann sich der Tabellenwert auf etwas andere Norm-/Messbedingungen (Druck, Temperatur) beziehen als der Gaszähler."
+            sample:()=>"Erdgas ist ein Gemisch, dessen Zusammensetzung und Brennwert schwanken. Auch Bezugsbedingungen für das Gasvolumen können verschieden sein. Aus einem Rechnungsbetrag und einem veröffentlichten Preis lässt sich der Brennwert nur dann berechnen, wenn der gesamte Betrag tatsächlich nach diesem Arbeitspreis abgerechnet wurde; Grundgebühren und Abgaben würden das Ergebnis verfälschen."
           }
         ]
       }
@@ -795,40 +796,40 @@ const DATA = {
     subtitle:"Holzheizung & Wärmepumpe",
     subtasks:[
       {
-        id:"holz", label:"1) Holzheizung",
+        id:"holz_ster", label:"1) Holzheizung",
         heading:"1) Wie viel darf Holz maximal kosten?",
-        equation:"1 Ster (= 1 m³) Holz, Dichte Brennholz Buche: 750 kg/m³ — Vergleich mit Erdgas & Heizöl aus 'Praktische Rechnungen'",
-        given:[["Dichte Brennholz Buche","750 kg/m³"],["Masse von 1 Ster","750 kg"]],
+        equation:"1 Ster (= 1 m³ gestapeltes Holz) · Festholzanteil 0,70 m³ · Dichte Buche 750 kg/m³ — Vergleich mit Heizöl",
+        given:[["Festholz in 1 Ster","0,70 m³"],["Dichte Buche","750 kg/m³"],["Holzmasse","525 kg"]],
         givenLabel:"Gegeben",
         hasInputs:true,
-        inputsIntro:"Schau in deinem Infoblatt nach: Wie gross ist der spezifische Brennwert von Holz? Trag den Wert ein.",
+        inputsIntro:"Schau in deinem Infoblatt nach: Wie gross ist der spezifische Brennwert von Holz? Trag einen positiven Wert in MJ/kg ein.",
         inputs:[
           {key:"huHolz", label:"Spezifischer Brennwert Holz laut Infoblatt (MJ/kg)", placeholder:"nachschlagen (ca. …)", default:null}
         ],
         steps:[
           {
-            type:"dynamic", unit:"MJ", tolRel:0.1,
-            prompt:"Wie viel Energie liefert 1 Ster Holz (750 kg, Dichte Buche) insgesamt?",
-            compute:(v)=> v.huHolz ? v.huHolz*750 : null,
+            type:"dynamic", unit:"MJ", tolRel:0.02,
+            prompt:"Wie viel Energie liefert 1 Ster Holz mit 525 kg Holzmasse insgesamt?",
+            compute:(v)=> v.huHolz > 0 ? v.huHolz*525 : null,
             requires:["huHolz"],
             hints:[
   "Welche Energie liefert ein Kilogramm Holz laut deinem eingetragenen Tabellenwert?",
   "Wie erhältst du daraus die Energie für die in dieser Aufgabe angenommene Holzmasse?",
-  "Verwende E = massebezogener Brennwert · Masse. Prüfe, ob als Einheit MJ übrig bleibt."
+  "Prüfe bei deiner Rechnung, ob sich kg kürzt und als Einheit MJ übrig bleibt."
 ],
-            explanation:(v)=>`Energie = ${v.huHolz} MJ/kg · 750 kg ≈ <b>${(v.huHolz*750).toFixed(0)} MJ</b> pro Ster.`
+            explanation:(v)=>`Holzmasse = 0,70 m³ · 750 kg/m³ = 525 kg. Energie = ${v.huHolz} MJ/kg · 525 kg ≈ <b>${(v.huHolz*525).toFixed(0)} MJ</b> pro Ster.`
           },
           {
-            type:"dynamic", unit:"CHF", tolRel:0.1,
+            type:"dynamic", unit:"CHF", tolRel:0.02,
             prompt:"In 'Praktische Rechnungen' war Heizöl mit ≈ 0,0259 CHF/MJ die günstigste der beiden Heizarten. Wie viel darf 1 Ster Holz also höchstens kosten, damit Holz nicht teurer ist als Heizöl?",
-            compute:(v)=> v.huHolz ? v.huHolz*750*0.0259 : null,
+            compute:(v)=> v.huHolz > 0 ? v.huHolz*525*0.0259 : null,
             requires:["huHolz"],
             hints:[
   "Welche Heizölkosten würden für dieselbe Energiemenge entstehen?",
   "Verknüpfe deine berechnete Energie pro Ster mit dem Vergleichspreis pro MJ.",
-  "Verwende maximaler Preis = Energie pro Ster · Vergleichspreis pro MJ. Die Einheit des Ergebnisses muss CHF pro Ster sein."
+  "Prüfe, welche Einheit übrig bleibt, wenn du MJ pro Ster mit CHF pro MJ verknüpfst."
 ],
-            explanation:(v)=>`Preis_max = ${(v.huHolz*750).toFixed(0)} MJ · 0,0259 CHF/MJ ≈ <b>${(v.huHolz*750*0.0259).toFixed(0)} CHF</b> pro Ster.`
+            explanation:(v)=>`Preis_max = ${(v.huHolz*525).toFixed(0)} MJ · 0,0259 CHF/MJ ≈ <b>${(v.huHolz*525*0.0259).toFixed(0)} CHF</b> pro Ster (ohne Unterschiede im Wirkungsgrad).`
           },
           {
             type:"reflect",
@@ -840,7 +841,7 @@ const DATA = {
       {
         id:"waermepumpe", label:"2) Wärmepumpe vs. Gas",
         heading:"2) Ist Heizen mit einer Wärmepumpe günstiger als mit Gas?",
-        equation:"Wärmepumpe braucht nur 1/3 der Energie einer Gasheizung für die gleiche Wärmemenge      Strompreis: 30 Rp./kWh",
+        equation:"Modell: 1 MJ Gas liefert 1 MJ Nutzwärme; die Wärmepumpe liefert mit 1 MJ Strom 3 MJ Wärme. Strompreis: 30 Rp./kWh",
         given:[["Strompreis","30 Rp./kWh = 0,30 CHF/kWh"],["1 kWh","3,6·10⁶ J = 3,6 MJ"],["Erdgas (aus 'Praktische Rechnungen')","≈ 0,0313 CHF/MJ"]],
         givenLabel:"Gegeben",
         steps:[
@@ -857,7 +858,7 @@ const DATA = {
           },
           {
             type:"numeric", unit:"CHF/MJ", tol:0.002,
-            prompt:"Die Wärmepumpe braucht nur 1/3 so viel Energie wie eine Gasheizung für die gleiche Wärmemenge. Wie viel kostet dich 1 MJ Wärme aus der Wärmepumpe?",
+            prompt:"Die Wärmepumpe liefert 3 MJ Wärme pro 1 MJ Strom. Wie viel kostet dich 1 MJ Wärme?",
             answer:0.0278,
             hints:[
   "Welche elektrische Energiemenge braucht die Wärmepumpe nach der Aufgabenannahme, um ein MJ Wärme bereitzustellen?",
@@ -869,7 +870,7 @@ const DATA = {
           {
             type:"reflect",
             prompt:"Ist Heizen mit der Wärmepumpe bei diesem Strompreis günstiger als mit einer Gasheizung? Vergleiche mit dem Erdgas-Ergebnis (≈0,0313 CHF/MJ) aus 'Praktische Rechnungen'.",
-            sample:()=>"Wärmepumpe ≈ 0,0278 CHF/MJ, Erdgas ≈ 0,0313 CHF/MJ. Die Wärmepumpe ist trotz höherem Preis pro MJ Strom günstiger, weil sie dank des Wirkungsgradfaktors 3 pro eingesetzter Energieeinheit dreimal so viel Wärme liefert."
+            sample:()=>"Wärmepumpe ≈ 0,0278 CHF/MJ Wärme, Erdgas im vereinfachten Modell ≈ 0,0313 CHF/MJ Wärme. Die Wärmepumpe ist günstiger: Mit ihrer Leistungszahl 3 liefert sie pro MJ Strom 3 MJ Wärme. Reale Kosten hängen auch vom Wirkungsgrad der Gasheizung und der tatsächlichen Leistungszahl ab."
           }
         ]
       }
@@ -900,14 +901,14 @@ const DATA = {
           },
           {
             type:"numeric", unit:"kJ/g (≈ MJ/kg)", tol:0.15,
-            prompt:"Gib den spezifischen Brennwert an (Reaktionswärme bezogen auf die Masse der Baumnüsse).",
+            prompt:"Berechne die im Versuch an das Wasser übertragene Wärme pro Gramm Baumnüsse.",
             answer:1.15,
             hints:[
   "Auf welche Masse Brennstoff soll die gemessene Wärmemenge bezogen werden?",
   "Rechne deine Wärmemenge zuerst von J in kJ um.",
   "Teile die übertragene Wärme durch die verbrannte Nussmasse. Prüfe die Einheit kJ/g."
 ],
-            explanation:"5,41 kJ / 4,7 g ≈ <b>1,15 kJ/g ≈ 1,15 MJ/kg</b>."
+            explanation:"5,41 kJ / 4,7 g ≈ <b>1,15 kJ/g ≈ 1,15 MJ/kg</b>. Das ist der im Versuch erfasste Anteil und noch nicht der tatsächliche Brennwert der Baumnüsse."
           },
           {
             type:"reflect",
@@ -917,44 +918,44 @@ const DATA = {
         ]
       },
       {
-        id:"salzsaeure", label:"2) Salzsäure",
+        id:"salzsaeure_real", label:"2) Salzsäure",
         heading:"2) Lösungsenthalpie von HCl-Gas",
-        equation:"70 mL HCl-Gas lösen sich in 1 L Wasser, das sich dabei um 15 K erwärmt",
-        given:[["V(HCl-Gas)","70 mL"],["m(Wasser)","1000 g (1 L)"],["ΔT","15 K"],["c(Wasser)","4,18 J/(g·K)"],["Vm(Gas, RT)","24 L/mol"]],
+        equation:"700 mL HCl-Gas lösen sich in 1 L Wasser, das sich dabei um 0,5 K erwärmt",
+        given:[["V(HCl-Gas)","700 mL"],["m(Wasser)","1000 g (1 L)"],["ΔT","0,5 K"],["c(Wasser)","4,18 J/(g·K)"],["Vm(Gas, RT)","24 L/mol"]],
         givenLabel:"Gegeben",
         steps:[
           {
-            type:"numeric", unit:"kJ", tol:3,
+            type:"numeric", unit:"kJ", tol:0.12,
             prompt:"Berechne die vom Wasser aufgenommene Wärmemenge Q (als positiven Wert).",
-            answer:62.7,
+            answer:2.09,
             hints:[
   "Wessen Temperaturanstieg wurde gemessen?",
   "Nutze Q_Wasser = c · m(Wasser) · ΔT und achte auf die Masseinheit der Wärmekapazität.",
   "Die Formel liefert mit den angegebenen Einheiten Joule. Rechne erst anschliessend in kJ um."
 ],
-            explanation:"Q = 4,18 J/(g·K) · 1000 g · 15 K = 62700 J = <b>62,7 kJ</b>."
+            explanation:"Q = 4,18 J/(g·K) · 1000 g · 0,5 K = 2090 J = <b>2,09 kJ</b>."
           },
           {
-            type:"numeric", unit:"mol", tol:0.0003,
+            type:"numeric", unit:"mol", tol:0.0005,
             prompt:"Wie viel mol HCl-Gas wurden gelöst (Vm = 24 L/mol bei RT)?",
-            answer:0.00292,
+            answer:0.02917,
             hints:[
   "Welche Beziehung verbindet Gasvolumen, molares Volumen und Stoffmenge?",
   "Bringe das Gasvolumen und das molare Volumen auf dieselbe Volumeneinheit.",
   "Stelle V = n · V_m nach n um und prüfe, ob als Einheit mol übrig bleibt."
 ],
-            explanation:"n = 0,070 L / 24 L/mol ≈ <b>0,00292 mol</b> (2,92 mmol)."
+            explanation:"n = 0,700 L / 24 L/mol ≈ <b>0,0292 mol</b> (29,2 mmol)."
           },
           {
-            type:"numeric", unit:"kJ/mol", tol:1500,
+            type:"numeric", unit:"kJ/mol", tol:5,
             prompt:"Berechne daraus die molare Lösungsenthalpie ΔH_L des Gases (Vorzeichen aus der Erwärmung des Wassers ableiten).",
-            answer:-21500,
+            answer:-71.7,
             hints:[
   "Welche Wärmemenge nimmt das Wasser auf, und welches Vorzeichen hat deshalb die Energieänderung des Lösungsvorgangs?",
   "Beziehe die Energieänderung des Lösungsvorgangs auf die gelöste Stoffmenge.",
-  "Verwende ΔH_L = −Q_Wasser / n(HCl). Prüfe Einheit und Grössenordnung; was bedeutet hier die sehr kleine Stoffmenge?"
+  "Prüfe Einheit und Vorzeichen: Eine Erwärmung des Wassers bedeutet eine negative Enthalpieänderung des Lösungsvorgangs."
 ],
-            explanation:"ΔH_L = −62,7 kJ / 0,00292 mol ≈ <b>−21 500 kJ/mol</b>. Hinweis: Diese Grössenordnung wirkt sehr hoch, weil hier eine sehr kleine Gasmenge (wenige mmol) mit einer grossen Wärmemenge in einer grossen Wassermenge kombiniert wird — ein typischer Effekt, wenn Modellzahlen einer Übung nicht exakt einem realen Experiment entsprechen."
+            explanation:"ΔH_L = −2,09 kJ / 0,0292 mol ≈ <b>−71,7 kJ/mol</b>. Das Vorzeichen ist negativ, weil beim Lösen Wärme an das Wasser abgegeben wird."
           }
         ]
       },
@@ -967,7 +968,7 @@ const DATA = {
         steps:[
           {
             type:"text",
-            prompt:"Stelle zunächst die Reaktionsgleichung auf: Biogas (CH₄) reagiert mit Wasser zu Kohlenstoffmonoxid und Wasserstoff.",
+            prompt:"Stelle zunächst die Reaktionsgleichung auf: Methan aus Biogas reagiert mit Wasserdampf zu Kohlenstoffmonoxid und Wasserstoff.",
             hints:[
   "Notiere zuerst die Formeln aller genannten Edukte und Produkte.",
   "Gleiche Kohlenstoff und Sauerstoff aus. Zähle anschliessend die Wasserstoffatome auf beiden Seiten und passe den Koeffizienten von H₂ an."
@@ -1038,10 +1039,20 @@ async function saveProgress(){
 function stepKey(g,subId,i){ return g+":"+subId+":"+i; }
 function inputKey(g,subId,k){ return g+":"+subId+":"+k; }
 
-function parseNum(str){
+function parseNum(str, expected=null){
   if(str===undefined||str===null) return NaN;
-  const cleaned = String(str).trim().replace(/'/g,"").replace(",",".");
-  return parseFloat(cleaned);
+  const raw = String(str).trim().replace(/[\s']/g,"").replace(/[−–]/g,"-");
+  const candidates=[];
+  const decimal=raw.replace(",",".");
+  if(/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?$/i.test(decimal)) candidates.push(Number(decimal));
+  if(/^[+-]?\d{1,3}(?:[.,]\d{3})+$/.test(raw)) candidates.push(Number(raw.replace(/[.,]/g,"")));
+  if(!candidates.length) return NaN;
+  if(Number.isFinite(expected)) candidates.sort((a,b)=>Math.abs(a-expected)-Math.abs(b-expected));
+  return candidates[0];
+}
+
+function hasRequiredInputs(step, vals){
+  return (step.requires || []).every(r => Number.isFinite(vals[r]) && vals[r] > 0);
 }
 
 function totalStepsCount(){
@@ -1054,7 +1065,11 @@ function totalStepsCount(){
   return n;
 }
 function solvedStepsCount(){
-  return Object.values(state.solved).filter(Boolean).length;
+  let count=0;
+  GROUP_ORDER.forEach(g=>DATA[g].subtasks.forEach(st=>st.steps.forEach((_,i)=>{
+    if(state.solved[stepKey(g,st.id,i)]) count++;
+  })));
+  return count;
 }
 
 /* =========================================================
@@ -1189,15 +1204,29 @@ function renderMain(){
       lbl.textContent = inp.label;
       const input = document.createElement("input");
       input.type="text";
+      input.id = "given-" + inp.key;
+      input.inputMode = "decimal";
+      lbl.htmlFor = input.id;
       input.placeholder = inp.placeholder || "";
       const key = inputKey(state.group, st.id, inp.key);
       const existing = state.inputs[key] !== undefined ? state.inputs[key] : inp.default;
       if(existing!==null && existing!==undefined) input.value = existing;
-      input.addEventListener("change", ()=>{
+      input.addEventListener("input", ()=>{
         const val = parseNum(input.value);
-        state.inputs[key] = isNaN(val) ? null : val;
-        saveProgress();
-        renderStep();
+        const nextValue = Number.isFinite(val) && val > 0 ? val : null;
+        if(state.inputs[key] !== nextValue){
+          state.inputs[key] = nextValue;
+          // Ergebnisse hängen vom eingetragenen Brennwert ab.
+          st.steps.forEach((step, si)=>{
+            if(step.type === "dynamic"){
+              const stepId = stepKey(state.group, st.id, si);
+              delete state.solved[stepId];
+              delete state.drafts[stepId];
+            }
+          });
+          saveProgress();
+          renderNav(); renderProgress(); renderStep();
+        }
       });
       div.appendChild(lbl); div.appendChild(input);
       row.appendChild(div);
@@ -1233,7 +1262,8 @@ function renderStep(){
   const idx = state.stepIndex;
   const step = st.steps[idx];
   const key = stepKey(state.group, st.id, idx);
-  const solved = !!state.solved[key];
+  const prerequisitesReady = step.type !== "dynamic" || hasRequiredInputs(step, getInputValues(st));
+  const solved = !!state.solved[key] && prerequisitesReady;
 
   const prog = document.createElement("div");
   prog.className = "step-progress";
@@ -1268,27 +1298,26 @@ function renderStep(){
     let vals = {};
     if(step.type === "dynamic"){
       vals = getInputValues(st);
-      const missing = (step.requires||[]).some(r=> vals[r]===null || vals[r]===undefined || isNaN(vals[r]));
+      const missing = !hasRequiredInputs(step, vals);
       if(missing){
         checkBtn.disabled = true;
         input.disabled = true;
-        input.placeholder = "erst Werte oben eintragen";
+        input.placeholder = "erst gültigen Brennwert eintragen";
       }
     }
 
     checkBtn.addEventListener("click", ()=>{
-      const userVal = parseNum(input.value);
+      const expected = step.type==="dynamic" ? step.compute(vals) : step.answer;
+      const userVal = parseNum(input.value, expected);
       if(isNaN(userVal)){
         showFeedback(feedback, false, "Trag zuerst eine Zahl ein.");
         return;
       }
-      let expected, ok;
+      let ok;
       if(step.type==="dynamic"){
-        expected = step.compute(vals);
         const tolAbs = expected!==null ? Math.abs(expected)*step.tolRel + 0.001 : 0;
         ok = expected!==null && Math.abs(userVal-expected) <= tolAbs;
       } else {
-        expected = step.answer;
         ok = Math.abs(userVal-expected) <= step.tol;
       }
       if(ok){
@@ -1305,9 +1334,21 @@ function renderStep(){
 
     row.appendChild(input); row.appendChild(unit); row.appendChild(checkBtn);
     wrap.appendChild(row);
+    if(!prerequisitesReady){
+      const note = document.createElement("p");
+      note.className = "hint-line";
+      note.textContent = "Trage oben zuerst einen positiven Brennwert in MJ/kg ein. Danach kannst du die Antwort prüfen oder die Lösung anzeigen.";
+      wrap.appendChild(note);
+    }
   }
 
   if(step.type === "text"){
+    const area = document.createElement("textarea");
+    area.className = "reflect-area";
+    area.placeholder = "Notiere hier deine Gleichung oder Antwort …";
+    area.value = state.drafts[key] || "";
+    area.addEventListener("input", ()=>{ state.drafts[key] = area.value; });
+    wrap.appendChild(area);
     const row = document.createElement("div");
     row.className = "answer-row";
     const tryBtn = document.createElement("button");
@@ -1385,9 +1426,9 @@ function renderStep(){
 
   // explanation (revealed on correct / on request)
   const explainDiv = document.createElement("div");
-  explainDiv.className = "explain-block" + (solved ? " show" : "");
+  explainDiv.className = "explain-block" + (solved && step.type!=="reflect" ? " show" : "");
   explainDiv.id = "explainBlock";
-  if(solved){
+  if(solved && step.type!=="reflect"){
     const vals = getInputValues(st);
     explainDiv.innerHTML = "<b>Lösung: </b>" + (typeof step.explanation==="function" ? step.explanation(vals) : step.explanation);
   }
@@ -1399,6 +1440,7 @@ function renderStep(){
     const giveUp = document.createElement("button");
     giveUp.className = "action ghost";
     giveUp.textContent = "Lösung anzeigen";
+    giveUp.disabled = !prerequisitesReady;
     giveUp.addEventListener("click", ()=>{
       state.solved[key] = true;
       saveProgress();
