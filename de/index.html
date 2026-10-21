@@ -450,7 +450,7 @@ footer.foot{
     <main class="paper" id="mainPaper"></main>
   </div>
 
-  <footer class="foot">ΔH = Σ ΔH⁰f(Produkte) − Σ ΔH⁰f(Edukte)</footer>
+  <footer class="foot">Thermodynamik · Reaktionsenthalpien und Energie im Alltag</footer>
 </div>
 
 <script>
@@ -473,9 +473,9 @@ const DATA = {
             type:"text",
             prompt:"Bevor du rechnest: Wie lautet die allgemeine Formel, mit der man eine Reaktionsenthalpie aus Bildungsenthalpien berechnet?",
             hints:[
-              "Denk an das Prinzip: erst gedanklich alle Edukte in die Elemente zerlegen, dann die Produkte daraus aufbauen.",
-              "Die Formel enthält eine Summe für die Produktseite und eine Summe für die Eduktseite — mit einem Minus dazwischen."
-            ],
+  "Welche Energieänderung gehört zum Zerlegen der Edukte in ihre Elemente, welche zum Aufbau der Produkte?",
+  "Beim Umkehren einer Bildungsreaktion ändert sich das Vorzeichen. Welche Seite muss deshalb von welcher abgezogen werden?"
+],
             explanation:"ΔH = Σ ΔH⁰f(Produkte) − Σ ΔH⁰f(Edukte). Jeder Summand wird mit der Stoffmenge (den Koeffizienten der Gleichung) multipliziert."
           },
           {
@@ -483,10 +483,10 @@ const DATA = {
             prompt:"Berechne ΔH für die Gleichung genau so, wie sie oben steht (bezogen auf 4 mol NH₃).",
             answer:-908,
             hints:[
-              "Rechne zuerst die Produktseite aus: 4 mol·ΔHf(NO) + 6 mol·ΔHf(H₂O).",
-              "Produktseite: 4·(+90) + 6·(−242) = 360 − 1452 = −1092 kJ. Jetzt die Eduktseite: 4·(−46) + 5·0 = −184 kJ.",
-              "ΔH = (−1092 kJ) − (−184 kJ). Rechne das aus."
-            ],
+  "Welche Stoffmengen gehören laut Reaktionsgleichung zu den einzelnen Bildungsenthalpien?",
+  "Berechne die gewichteten Summen für Produkte und Edukte getrennt. Behalte die Vorzeichen der Tabellenwerte bei.",
+  "Ziehe die Eduktsumme als Ganzes von der Produktsumme ab. Was geschieht dabei mit einem negativen Wert in der Klammer?"
+],
             explanation:"ΔH = [4·90 + 6·(−242)] − [4·(−46) + 5·0] = (360 − 1452) − (−184) = −1092 + 184 = <b>−908 kJ</b>. Stark exotherm."
           }
         ]
@@ -501,10 +501,10 @@ const DATA = {
             prompt:"Wie gross ist die molare Verbrennungsenthalpie, also ΔH pro mol NH₃?",
             answer:-227,
             hints:[
-              "Auf wie viele mol NH₃ bezieht sich das ΔH aus a)? Schau dir den Koeffizienten von NH₃ in der Gleichung an.",
-              "Teile ΔH aus a) durch genau diese Stoffmenge.",
-              "ΔH_molar = −908 kJ / 4 mol"
-            ],
+  "Auf welche Stoffmenge Ammoniak bezieht sich die angegebene Reaktionsenthalpie?",
+  "Gesucht ist die Energieänderung für ein Mol. Wie rechnest du den Wert auf diese Stoffmenge um?",
+  "Verwende ΔH_m = ΔH / n(NH₃). Das Vorzeichen bleibt beim Teilen durch eine positive Stoffmenge erhalten."
+],
             explanation:"ΔH_molar = ΔH / n(NH₃) = −908 kJ / 4 mol = <b>−227 kJ/mol</b>."
           }
         ]
@@ -521,10 +521,10 @@ const DATA = {
             prompt:"Wie viel Energie wird frei bzw. benötigt, um die für die Verbrennungsgleichung nötigen 4 mol NH₃ aus den Elementen zu bilden?",
             answer:-184,
             hints:[
-              "Wie viel mol NH₃ tauchen in der Verbrennungsgleichung aus a) auf?",
-              "Multipliziere diese Stoffmenge mit ΔH⁰f(NH₃) = −46 kJ/mol.",
-              "4 mol · (−46 kJ/mol) = ?"
-            ],
+  "Für welche Stoffmenge gilt eine molare Bildungsenthalpie?",
+  "Wie verändert sich die Energieänderung, wenn entsprechend mehr Ammoniak gebildet wird?",
+  "Verwende ΔH = n · ΔH⁰f. Prüfe am Vorzeichen, ob Wärme frei wird oder aufgenommen wird."
+],
             explanation:"4 mol · (−46 kJ/mol) = <b>−184 kJ</b>. Das negative Vorzeichen zeigt: Die Bildung von NH₃ ist exotherm — es wird also gar keine Energie <i>benötigt</i>, sondern es werden 184 kJ <i>frei</i>. Ein guter Moment, um auf das Vorzeichen zu achten: die Frage nach 'benötigter Energie' geht hier von der falschen Annahme aus, dass die Bildung endotherm sei."
           }
         ]
@@ -541,10 +541,10 @@ const DATA = {
             prompt:"Stelle ΔH = ΣΔHf(Produkte) − ΣΔHf(Edukte) nach ΔH⁰f(C₈H₁₈) um und berechne den Wert.",
             answer:-250,
             hints:[
-              "Schreib die Formel für diese Gleichung zuerst vollständig auf: ΔH = [16·ΔHf(CO₂) + 18·ΔHf(H₂O)] − [2·ΔHf(C₈H₁₈) + 25·0].",
-              "Die Produktseite kannst du direkt ausrechnen: 16·(−393) + 18·(−242) = −6288 − 4356 = −10644 kJ.",
-              "−10144 kJ = −10644 kJ − 2 mol·ΔHf(C₈H₁₈). Löse nach ΔHf(C₈H₁₈) auf und teile durch 2 mol."
-            ],
+  "Welche Grösse ist in der Enthalpiebilanz unbekannt? Bezeichne sie zunächst mit x.",
+  "Berechne die gewichtete Produktsumme selbst. Berücksichtige auf der Eduktseite auch die Stoffmenge des Octans.",
+  "Schreibe ΔH = Produktsumme − n(Octan) · x. Isoliere zuerst n(Octan) · x und teile erst danach durch die Stoffmenge."
+],
             explanation:"2·ΔHf(C₈H₁₈) = −10644 kJ − (−10144 kJ) = −500 kJ  →  ΔHf(C₈H₁₈) = −500 kJ / 2 mol = <b>−250 kJ/mol</b>."
           }
         ]
@@ -566,9 +566,9 @@ const DATA = {
             prompt:"Schau in deinem Infoblatt nach: Wie gross ist der volumenbezogene Brennwert von Erdgas?",
             answer:32,
             hints:[
-              "Auf dem Infoblatt gibt es eine Tabelle mit volumenbezogenen Brennwerten (Einheit MJ/m³).",
-              "Gesucht ist der Eintrag 'Erdgas' in dieser Tabelle."
-            ],
+  "In welcher Tabelle stehen Brennwerte mit der Einheit MJ/m³?",
+  "Suche den Eintrag für Erdgas. Achte darauf, den Wert pro Volumen und nicht pro Masse zu verwenden."
+],
             explanation:"Laut Infoblatt: <b>32 MJ/m³</b>."
           },
           {
@@ -576,10 +576,10 @@ const DATA = {
             prompt:"Was kostet dich 1 MJ Energie aus Erdgas?",
             answer:0.03125,
             hints:[
-              "1 m³ Erdgas kostet 1 CHF und liefert so viel Energie, wie du im letzten Schritt nachgeschlagen hast.",
-              "Preis pro m³ geteilt durch Energie pro m³ ergibt den Preis pro MJ.",
-              "Kosten = 1 CHF / 32 MJ"
-            ],
+  "Wie viel Energie erhältst du für den Preis eines Kubikmeters Erdgas?",
+  "Gesucht ist der Preis für eine Energieeinheit. Welche Division führt zur Einheit CHF/MJ?",
+  "Verwende Kosten pro Energie = Gesamtpreis / gelieferte Energie. Nutze den selbst nachgeschlagenen Brennwert."
+],
             explanation:"Kosten = 1 CHF / 32 MJ ≈ <b>0,0313 CHF/MJ</b>."
           },
           {
@@ -587,10 +587,10 @@ const DATA = {
             prompt:"Wie viel wiegen die 100 Liter Heizöl (ρ = 0,84 g/cm³ = 0,84 kg/L)?",
             answer:84,
             hints:[
-              "Dichte ist Masse pro Volumen: ρ = m/V.",
-              "Stell nach der Masse um: m = ρ · V.",
-              "m = 0,84 kg/L · 100 L"
-            ],
+  "Welche Beziehung verbindet Dichte, Masse und Volumen?",
+  "Stelle ρ = m / V nach m um.",
+  "Prüfe die Einheiten: kg/L mal L ergibt kg. Setze dann Dichte und Volumen ein."
+],
             explanation:"m = ρ·V = 0,84 kg/L · 100 L = <b>84 kg</b>."
           },
           {
@@ -598,10 +598,10 @@ const DATA = {
             prompt:"Was kostet 1 kg Heizöl?",
             answer:1.0714,
             hints:[
-              "Du kennst den Preis für 100 L (= 90 CHF) und die Masse dieser 100 L (aus dem letzten Schritt).",
-              "Teile den Gesamtpreis durch die Gesamtmasse.",
-              "90 CHF / 84 kg"
-            ],
+  "Für welche Menge Heizöl gilt der angegebene Gesamtpreis?",
+  "Verwende die Masse aus deinem vorherigen Schritt. Wie verteilst du den Gesamtpreis auf die einzelnen Kilogramm?",
+  "Gesucht ist CHF/kg: Teile den Gesamtpreis durch die Gesamtmasse."
+],
             explanation:"90 CHF / 84 kg = <b>1,071 CHF/kg</b>."
           },
           {
@@ -609,9 +609,9 @@ const DATA = {
             prompt:"Schau in deinem Infoblatt nach: Wie gross ist der spezifische (massebezogene) Brennwert von Heizöl?",
             answer:41.4,
             hints:[
-              "Auf dem Infoblatt gibt es eine Tabelle mit spezifischen Brennwerten (Einheit MJ/kg).",
-              "Gesucht ist der Eintrag 'Heizöl' in dieser Tabelle."
-            ],
+  "In welcher Tabelle findest du die Einheit MJ/kg?",
+  "Suche den Eintrag für Heizöl und lies den massebezogenen Brennwert ab."
+],
             explanation:"Laut Infoblatt: <b>41,4 MJ/kg</b>."
           },
           {
@@ -619,10 +619,10 @@ const DATA = {
             prompt:"Was kostet dich 1 MJ Energie aus Heizöl?",
             answer:0.02588,
             hints:[
-              "Du hast gerade den Preis pro kg berechnet — teile ihn durch den Heizwert pro kg.",
-              "Kosten pro MJ = Preis pro kg / Brennwert (MJ/kg).",
-              "1,071 CHF/kg / 41,4 MJ/kg"
-            ],
+  "Wie viel Energie liefert ein Kilogramm Heizöl, und wie viel kostet dieses Kilogramm?",
+  "Welche Verknüpfung von CHF/kg und MJ/kg ergibt CHF/MJ?",
+  "Teile deinen Preis pro Kilogramm durch den massebezogenen Brennwert. Die Einheit kg kürzt sich heraus."
+],
             explanation:"Kosten = 1,071 CHF/kg / 41,4 MJ/kg ≈ <b>0,0259 CHF/MJ</b>."
           },
           {
@@ -649,10 +649,10 @@ const DATA = {
             prompt:"Berechne den molaren Heizwert von Erdgas. Nutze den volumenbezogenen Brennwert aus dem Infoblatt (32 MJ/m³) und das molare Volumen Vm = 24 L/mol.",
             answer:768,
             hints:[
-              "Wandle das molare Volumen zuerst in m³ um: 24 L = 0,024 m³.",
-              "Multipliziere den volumenbezogenen Brennwert mit dem Volumen, das 1 mol Gas einnimmt.",
-              "32 MJ/m³ · 0,024 m³/mol = ? (Ergebnis in MJ/mol, dann in kJ/mol umrechnen)"
-            ],
+  "Welches Volumen nimmt ein Mol Gas ein? Bringe dieses Volumen und den Tabellenwert auf dieselbe Volumeneinheit.",
+  "Multipliziere den volumenbezogenen Brennwert mit dem molaren Volumen. Welche Einheit bleibt übrig?",
+  "Verwende H_m = H_V · V_m. Rechne anschliessend von MJ/mol in kJ/mol um; ein MJ entspricht tausend kJ."
+],
             explanation:"32 MJ/m³ · 0,024 m³/mol = 0,768 MJ/mol = <b>768 kJ/mol</b>."
           },
           {
@@ -660,10 +660,10 @@ const DATA = {
             prompt:"Berechne auf die gleiche Art den molaren Heizwert von Butan (Infoblatt: 124 MJ/m³).",
             answer:2976,
             hints:[
-              "Gleiches Vorgehen wie beim Erdgas: Brennwert · Volumen pro Mol.",
-              "24 L/mol = 0,024 m³/mol.",
-              "124 MJ/m³ · 0,024 m³/mol = ?"
-            ],
+  "Welche Rechenschritte hast du beim Erdgas verwendet?",
+  "Nutze das gleiche molare Volumen, aber den Brennwert von Butan. Achte auf Liter und Kubikmeter.",
+  "Berechne H_m = H_V · V_m und wandle das Ergebnis in kJ/mol um."
+],
             explanation:"124 MJ/m³ · 0,024 m³/mol = 2,976 MJ/mol ≈ <b>2976 kJ/mol</b>."
           },
           {
@@ -671,10 +671,10 @@ const DATA = {
             prompt:"Ethanol ist eine Flüssigkeit, sein Brennwert ist daher massebezogen angegeben (29,7 MJ/kg). Berechne den molaren Heizwert mit M(Ethanol) = 46,07 g/mol.",
             answer:1368,
             hints:[
-              "Wandle die Molmasse zuerst in kg um: 46,07 g/mol = 0,04607 kg/mol.",
-              "Multipliziere den spezifischen (massebezogenen) Brennwert mit der Molmasse.",
-              "29,7 MJ/kg · 0,04607 kg/mol = ?"
-            ],
+  "Welche Masse hat ein Mol Ethanol? In welcher Masseneinheit ist der Brennwert angegeben?",
+  "Rechne die molare Masse in kg/mol um, bevor du sie mit dem Brennwert verknüpfst.",
+  "Berechne H_m = H_Masse · M. Prüfe die Einheit MJ/mol und rechne in kJ/mol um."
+],
             explanation:"29,7 MJ/kg · 0,04607 kg/mol = 1,368 MJ/mol ≈ <b>1368 kJ/mol</b>."
           },
           {
@@ -695,9 +695,9 @@ const DATA = {
             type:"text",
             prompt:"Schreibe zuerst die vollständige, ausgeglichene Reaktionsgleichung der Ethanolverbrennung auf.",
             hints:[
-              "Ethanol ist C₂H₅OH, es verbrennt mit O₂ zu CO₂ und H₂O.",
-              "Gleiche zuerst C und H aus, dann O."
-            ],
+  "Welche Produkte entstehen bei der vollständigen Verbrennung eines Stoffes aus Kohlenstoff, Wasserstoff und Sauerstoff?",
+  "Gleiche zuerst Kohlenstoff und Wasserstoff aus. Zähle danach die Sauerstoffatome auf beiden Seiten; Ethanol enthält selbst schon Sauerstoff."
+],
             explanation:"C₂H₅OH + 3 O₂ → 2 CO₂ + 3 H₂O"
           },
           {
@@ -705,17 +705,21 @@ const DATA = {
             prompt:"Berechne ΔH dieser Reaktion für 1 mol Ethanol mit den ΔH⁰f-Werten.",
             answer:-1235,
             hints:[
-              "Produktseite: 2·ΔHf(CO₂) + 3·ΔHf(H₂O).",
-              "Eduktseite: 1·ΔHf(C₂H₅OH) (O₂ ist ein Element, ΔHf=0).",
-              "ΔH = [2·(−393) + 3·(−242)] − [1·(−277)]"
-            ],
+  "Welche Koeffizienten stehen in deiner ausgeglichenen Reaktionsgleichung?",
+  "Multipliziere jede Bildungsenthalpie mit der zugehörigen Stoffmenge. Welcher Wert gilt für Sauerstoff als Element im Standardzustand?",
+  "Bilde die Produktsumme und ziehe die gesamte Eduktsumme ab. Behalte auch beim Abziehen einer negativen Bildungsenthalpie die Klammern bei."
+],
             explanation:"ΔH = 2mol·(−393) + 3mol·(−242) − 1mol·(−277) = −786 − 726 + 277 = <b>−1235 kJ</b>."
           },
           {
             type:"numeric", unit:"g", tol:0.5,
             prompt:"Wie viel Gramm sind 1 mol Ethanol (M = 46,07 g/mol)?",
             answer:46.07,
-            hints:["n = m/M → stell nach m um.", "m = n · M", "m = 1 mol · 46,07 g/mol"],
+            hints:[
+  "Welche Bedeutung hat die molare Masse?",
+  "Stelle n = m / M nach m um.",
+  "Verwende m = n · M und prüfe, ob sich die Einheit mol herauskürzt."
+],
             explanation:"m = 1 mol · 46,07 g/mol = <b>46,07 g</b>."
           },
           {
@@ -723,10 +727,10 @@ const DATA = {
             prompt:"Berechne daraus den Heizwert pro Gramm (bzw. MJ/kg).",
             answer:26.8,
             hints:[
-              "Teile die Energie aus Schritt 2 (als Betrag) durch die Masse aus Schritt 3.",
-              "1235 kJ / 46,07 g",
-              "Das Ergebnis in kJ/g ist zahlenmässig identisch mit MJ/kg."
-            ],
+  "Gesucht ist die freigesetzte Energie pro Masse. Welche deiner bisherigen Ergebnisse brauchst du dafür?",
+  "Verwende für den Heizwert den positiven Betrag der freigesetzten Energie und teile ihn durch die verbrannte Masse.",
+  "Prüfe die Einheiten: Der Zahlenwert in kJ/g ist derselbe wie in MJ/kg."
+],
             explanation:"1235 kJ / 46,07 g = <b>26,8 kJ/g = 26,8 MJ/kg</b>."
           },
           {
@@ -748,10 +752,10 @@ const DATA = {
             prompt:"Wie viel Energie in kWh wurde laut Rechnung verbraucht?",
             answer:12700,
             hints:[
-              "Du kennst den Gesamtbetrag und den Preis pro kWh.",
-              "Energie = Betrag / Preis pro kWh.",
-              "666,67 CHF / 0,0525 CHF/kWh"
-            ],
+  "Welche Energiemenge könntest du mit dem Rechnungsbetrag zum angegebenen Preis pro kWh kaufen?",
+  "Bringe Rechnungsbetrag und Energiepreis zunächst auf dieselbe Währungseinheit.",
+  "Verwende E = Gesamtbetrag / Preis pro kWh. Prüfe, ob als Einheit kWh übrig bleibt."
+],
             explanation:"666,67 CHF / 0,0525 CHF/kWh ≈ <b>12 700 kWh</b>."
           },
           {
@@ -759,10 +763,10 @@ const DATA = {
             prompt:"Rechne diese Energiemenge in MJ um (1 kWh = 3,6 MJ).",
             answer:45720,
             hints:[
-              "1 kWh entspricht 3,6 MJ — mit welcher Rechenoperation kommst du von kWh zu MJ?",
-              "Multipliziere die kWh-Zahl mit 3,6.",
-              "12700 kWh · 3,6 MJ/kWh"
-            ],
+  "Wie viele Megajoule gehören laut Angabe zu einer Kilowattstunde?",
+  "Muss der Zahlenwert beim Wechsel von kWh zu MJ grösser oder kleiner werden?",
+  "Multipliziere deinen Energieverbrauch mit dem Umrechnungsfaktor in MJ/kWh; kWh kürzt sich heraus."
+],
             explanation:"12 700 kWh · 3,6 MJ/kWh = <b>45 720 MJ</b>."
           },
           {
@@ -770,10 +774,10 @@ const DATA = {
             prompt:"Wie viel MJ liefert 1 m³ dieses Erdgases (der eigentliche Heizwert)?",
             answer:38.1,
             hints:[
-              "Du kennst jetzt die Gesamtenergie (MJ) und das Gesamtvolumen (m³) aus der Rechnung.",
-              "Teile die Energie durch das Volumen.",
-              "45720 MJ / 1200 m³"
-            ],
+  "Auf welches Gasvolumen verteilt sich die berechnete Gesamtenergie?",
+  "Gesucht ist die Energie für einen Kubikmeter. Welche Division führt zu MJ/m³?",
+  "Verwende volumenbezogener Energiewert = Gesamtenergie / Gesamtvolumen. Nutze dein vorheriges Ergebnis in MJ."
+],
             explanation:"45 720 MJ / 1200 m³ = <b>38,1 MJ/m³</b>."
           },
           {
@@ -808,10 +812,10 @@ const DATA = {
             compute:(v)=> v.huHolz ? v.huHolz*750 : null,
             requires:["huHolz"],
             hints:[
-              "Der spezifische Brennwert ist pro kg angegeben — 1 Ster wiegt bei dieser Dichte 750 kg.",
-              "Energie = Brennwert (MJ/kg) · Masse (750 kg).",
-              "Multipliziere deinen eingetragenen Wert mit 750."
-            ],
+  "Welche Energie liefert ein Kilogramm Holz laut deinem eingetragenen Tabellenwert?",
+  "Wie erhältst du daraus die Energie für die in dieser Aufgabe angenommene Holzmasse?",
+  "Verwende E = massebezogener Brennwert · Masse. Prüfe, ob als Einheit MJ übrig bleibt."
+],
             explanation:(v)=>`Energie = ${v.huHolz} MJ/kg · 750 kg ≈ <b>${(v.huHolz*750).toFixed(0)} MJ</b> pro Ster.`
           },
           {
@@ -820,10 +824,10 @@ const DATA = {
             compute:(v)=> v.huHolz ? v.huHolz*750*0.0259 : null,
             requires:["huHolz"],
             hints:[
-              "Du kennst jetzt die Energie pro Ster (MJ) aus dem letzten Schritt.",
-              "Multipliziere diese Energie mit dem Grenzpreis pro MJ (0,0259 CHF/MJ, der Heizöl-Wert).",
-              "Preis_max = Energie(MJ) · 0,0259 CHF/MJ"
-            ],
+  "Welche Heizölkosten würden für dieselbe Energiemenge entstehen?",
+  "Verknüpfe deine berechnete Energie pro Ster mit dem Vergleichspreis pro MJ.",
+  "Verwende maximaler Preis = Energie pro Ster · Vergleichspreis pro MJ. Die Einheit des Ergebnisses muss CHF pro Ster sein."
+],
             explanation:(v)=>`Preis_max = ${(v.huHolz*750).toFixed(0)} MJ · 0,0259 CHF/MJ ≈ <b>${(v.huHolz*750*0.0259).toFixed(0)} CHF</b> pro Ster.`
           },
           {
@@ -845,10 +849,10 @@ const DATA = {
             prompt:"Rechne den Strompreis von 30 Rp./kWh in CHF pro MJ um (1 kWh = 3,6 MJ).",
             answer:0.0833,
             hints:[
-              "0,30 CHF/kWh ist der Preis für 1 kWh elektrische Energie.",
-              "1 kWh entspricht 3,6 MJ (bzw. 3,6·10⁶ J).",
-              "Kosten pro MJ = 0,30 CHF / 3,6 MJ"
-            ],
+  "Für welche Energiemenge gilt der Strompreis? Rechne den Preis zunächst von Rappen in Franken um.",
+  "Wie viele MJ erhältst du für den Preis einer kWh?",
+  "Teile den Preis einer kWh durch deren Energie in MJ. Prüfe die Einheit CHF/MJ."
+],
             explanation:"0,30 CHF / 3,6 MJ ≈ <b>0,0833 CHF/MJ</b>."
           },
           {
@@ -856,10 +860,10 @@ const DATA = {
             prompt:"Die Wärmepumpe braucht nur 1/3 so viel Energie wie eine Gasheizung für die gleiche Wärmemenge. Wie viel kostet dich 1 MJ Wärme aus der Wärmepumpe?",
             answer:0.0278,
             hints:[
-              "Wenn nur ein Drittel der Energie nötig ist, kostet die gleiche Wärmemenge auch nur ein Drittel so viel.",
-              "Teile die Kosten pro MJ Strom aus dem letzten Schritt durch 3.",
-              "0,0833 CHF/MJ / 3"
-            ],
+  "Welche elektrische Energiemenge braucht die Wärmepumpe nach der Aufgabenannahme, um ein MJ Wärme bereitzustellen?",
+  "Verknüpfe diese benötigte elektrische Energiemenge mit deinem Preis pro MJ Strom.",
+  "Berechne Wärmekosten = benötigte elektrische Energie · Strompreis pro Energie. Die Kosten pro MJ Wärme müssen kleiner sein als die Kosten pro MJ Strom."
+],
             explanation:"0,0833 CHF/MJ / 3 ≈ <b>0,0278 CHF/MJ</b>."
           },
           {
@@ -885,13 +889,13 @@ const DATA = {
         steps:[
           {
             type:"numeric", unit:"J", tol:150,
-            prompt:"Berechne die Reaktionswärme Q.",
+            prompt:"Berechne die vom Wasser aufgenommene Wärmemenge Q (als positiven Wert).",
             answer:5409,
             hints:[
-              "Formel: Q = c · m(Wasser) · ΔT.",
-              "ΔT = 87,7°C − 23°C = 64,7 K.",
-              "Q = 4,18 J/(g·K) · 20 g · 64,7 K"
-            ],
+  "Welcher Körper nimmt die bei der Verbrennung übertragene Wärme auf?",
+  "Welche Masse und welche Temperaturänderung gehören deshalb in Q = c · m · ΔT?",
+  "Setze die Werte für das Wasser ein. Mit c in J/(g·K), m in g und ΔT in K erhältst du Q in J."
+],
             explanation:"Q = 4,18 J/(g·K) · 20 g · 64,7 K ≈ <b>5409 J ≈ 5,41 kJ</b>."
           },
           {
@@ -899,10 +903,10 @@ const DATA = {
             prompt:"Gib den spezifischen Brennwert an (Reaktionswärme bezogen auf die Masse der Baumnüsse).",
             answer:1.15,
             hints:[
-              "Spezifischer Brennwert = Q / m(Baumnüsse).",
-              "Nutze Q aus dem letzten Schritt (in kJ) und teile durch 4,7 g.",
-              "5,41 kJ / 4,7 g"
-            ],
+  "Auf welche Masse Brennstoff soll die gemessene Wärmemenge bezogen werden?",
+  "Rechne deine Wärmemenge zuerst von J in kJ um.",
+  "Teile die übertragene Wärme durch die verbrannte Nussmasse. Prüfe die Einheit kJ/g."
+],
             explanation:"5,41 kJ / 4,7 g ≈ <b>1,15 kJ/g ≈ 1,15 MJ/kg</b>."
           },
           {
@@ -921,13 +925,13 @@ const DATA = {
         steps:[
           {
             type:"numeric", unit:"kJ", tol:3,
-            prompt:"Berechne die Reaktionswärme Q.",
+            prompt:"Berechne die vom Wasser aufgenommene Wärmemenge Q (als positiven Wert).",
             answer:62.7,
             hints:[
-              "Formel: Q = c · m(Wasser) · ΔT.",
-              "Achte auf die Einheit von m(Wasser): 1 L Wasser = 1000 g.",
-              "Q = 4,18 J/(g·K) · 1000 g · 15 K"
-            ],
+  "Wessen Temperaturanstieg wurde gemessen?",
+  "Nutze Q_Wasser = c · m(Wasser) · ΔT und achte auf die Masseinheit der Wärmekapazität.",
+  "Die Formel liefert mit den angegebenen Einheiten Joule. Rechne erst anschliessend in kJ um."
+],
             explanation:"Q = 4,18 J/(g·K) · 1000 g · 15 K = 62700 J = <b>62,7 kJ</b>."
           },
           {
@@ -935,21 +939,21 @@ const DATA = {
             prompt:"Wie viel mol HCl-Gas wurden gelöst (Vm = 24 L/mol bei RT)?",
             answer:0.00292,
             hints:[
-              "n = V / Vm.",
-              "Wandle 70 mL zuerst in Liter um: 70 mL = 0,070 L.",
-              "n = 0,070 L / 24 L/mol"
-            ],
+  "Welche Beziehung verbindet Gasvolumen, molares Volumen und Stoffmenge?",
+  "Bringe das Gasvolumen und das molare Volumen auf dieselbe Volumeneinheit.",
+  "Stelle V = n · V_m nach n um und prüfe, ob als Einheit mol übrig bleibt."
+],
             explanation:"n = 0,070 L / 24 L/mol ≈ <b>0,00292 mol</b> (2,92 mmol)."
           },
           {
             type:"numeric", unit:"kJ/mol", tol:1500,
-            prompt:"Berechne daraus die molare Lösungsenthalpie ΔH_L des Gases (Vorzeichen beachten: die Lösung ist exotherm).",
+            prompt:"Berechne daraus die molare Lösungsenthalpie ΔH_L des Gases (Vorzeichen aus der Erwärmung des Wassers ableiten).",
             answer:-21500,
             hints:[
-              "ΔH_L = −Q / n (negativ, da beim Lösen Wärme frei wird).",
-              "Nutze Q aus Schritt 1 (in kJ) und n aus Schritt 2.",
-              "ΔH_L = −62,7 kJ / 0,00292 mol"
-            ],
+  "Welche Wärmemenge nimmt das Wasser auf, und welches Vorzeichen hat deshalb die Energieänderung des Lösungsvorgangs?",
+  "Beziehe die Energieänderung des Lösungsvorgangs auf die gelöste Stoffmenge.",
+  "Verwende ΔH_L = −Q_Wasser / n(HCl). Prüfe Einheit und Grössenordnung; was bedeutet hier die sehr kleine Stoffmenge?"
+],
             explanation:"ΔH_L = −62,7 kJ / 0,00292 mol ≈ <b>−21 500 kJ/mol</b>. Hinweis: Diese Grössenordnung wirkt sehr hoch, weil hier eine sehr kleine Gasmenge (wenige mmol) mit einer grossen Wärmemenge in einer grossen Wassermenge kombiniert wird — ein typischer Effekt, wenn Modellzahlen einer Übung nicht exakt einem realen Experiment entsprechen."
           }
         ]
@@ -957,7 +961,7 @@ const DATA = {
       {
         id:"biogas", label:"3) Biogas → Wasserstoff",
         heading:"3) Wasserstoffgewinnung aus Biogas (Dampfreformierung)",
-        equation:"CH₄(g) + H₂O(g)  →  CO(g) + 3 H₂(g)",
+        equation:"Dampfreformierung: Methan + Wasserdampf → Kohlenstoffmonoxid + Wasserstoff",
         given:[["ΔH⁰f(CH₄)","−74 kJ/mol"],["ΔH⁰f(H₂O,g)","−242 kJ/mol"],["ΔH⁰f(CO)","−111 kJ/mol"],["ΔH⁰f(H₂)","0 kJ/mol"]],
         givenLabel:"Gegeben (ΔH⁰f-Werte)",
         steps:[
@@ -965,9 +969,9 @@ const DATA = {
             type:"text",
             prompt:"Stelle zunächst die Reaktionsgleichung auf: Biogas (CH₄) reagiert mit Wasser zu Kohlenstoffmonoxid und Wasserstoff.",
             hints:[
-              "Methan hat 4 H-Atome, Wasser bringt ein weiteres O und 2 weitere H mit.",
-              "Achte darauf, dass am Ende alle Atome ausgeglichen sind."
-            ],
+  "Notiere zuerst die Formeln aller genannten Edukte und Produkte.",
+  "Gleiche Kohlenstoff und Sauerstoff aus. Zähle anschliessend die Wasserstoffatome auf beiden Seiten und passe den Koeffizienten von H₂ an."
+],
             explanation:"CH₄(g) + H₂O(g) → CO(g) + 3 H₂(g)"
           },
           {
@@ -975,10 +979,10 @@ const DATA = {
             prompt:"Berechne die Reaktionsenthalpie mit Hilfe der Bildungsenthalpien.",
             answer:205,
             hints:[
-              "Produktseite: 1·ΔHf(CO) + 3·ΔHf(H₂).",
-              "Eduktseite: 1·ΔHf(CH₄) + 1·ΔHf(H₂O).",
-              "ΔH = [−111 + 0] − [−74 − 242]"
-            ],
+  "Welche Stoffmengen gehören zu den Stoffen in deiner ausgeglichenen Gleichung?",
+  "Bilde für beide Seiten die Summe aus Stoffmenge mal Bildungsenthalpie. Wie behandelst du Wasserstoff als Element im Standardzustand?",
+  "Berechne ΔH = Produktsumme − Eduktsumme. Ziehe die Eduktsumme als ganze Klammer ab und deute das Vorzeichen."
+],
             explanation:"ΔH = −111 − (−74) − (−242) = −111 + 74 + 242 = <b>+205 kJ</b>. Die Reaktion ist endotherm."
           },
           {
@@ -986,10 +990,10 @@ const DATA = {
             prompt:"Berechne die Energie, die man benötigt, um 1 mol Wasserstoff zu erzeugen.",
             answer:68.3,
             hints:[
-              "Wie viel mol H₂ entstehen laut Reaktionsgleichung pro Reaktionsumsatz?",
-              "Teile die Reaktionsenthalpie durch diese Stoffmenge.",
-              "205 kJ / 3 mol"
-            ],
+  "Welche Stoffmenge Wasserstoff entsteht beim Reaktionsumsatz, für den du gerade ΔH berechnet hast?",
+  "Gesucht ist die zugeführte Energie pro Mol Wasserstoff, nicht pro Mol Methan.",
+  "Teile deine Reaktionsenthalpie durch die entstehende Stoffmenge H₂. Prüfe die Einheit kJ/mol."
+],
             explanation:"205 kJ / 3 mol ≈ <b>68,3 kJ/mol</b> H₂."
           }
         ]
@@ -1009,6 +1013,7 @@ let state = {
   stepIndex:0,
   solved:{},      // key "group:subId:stepIdx" -> true
   hintLevel:{},   // key -> number of hints shown
+  drafts:{},      // Eingaben beim Aufrufen weiterer Tipps erhalten
   inputs:{}       // key "group:subId:inputKey" -> value
 };
 
@@ -1251,6 +1256,8 @@ function renderStep(){
     input.type = "text";
     input.id = "answerInput";
     input.placeholder = "Zahl eingeben";
+    input.value = state.drafts[key] || "";
+    input.addEventListener("input", ()=>{ state.drafts[key] = input.value; });
     const unit = document.createElement("span");
     unit.className = "unit-tag";
     unit.textContent = step.unit || "";
@@ -1321,6 +1328,8 @@ function renderStep(){
     const area = document.createElement("textarea");
     area.className = "reflect-area";
     area.placeholder = "Notiere hier kurz deine Gedanken …";
+    area.value = state.drafts[key] || "";
+    area.addEventListener("input", ()=>{ state.drafts[key] = area.value; });
     wrap.appendChild(area);
     const row = document.createElement("div");
     row.className = "answer-row";
@@ -1384,7 +1393,7 @@ function renderStep(){
   }
   wrap.appendChild(explainDiv);
 
-  if(!solved){
+  if(!solved && (step.type === "numeric" || step.type === "dynamic")){
     const giveUpRow = document.createElement("div");
     giveUpRow.style.cssText = "margin-top:12px;";
     const giveUp = document.createElement("button");
