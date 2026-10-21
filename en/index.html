@@ -245,6 +245,12 @@ main.paper{
 @media (max-width:480px){
   .equation-box{ font-size:13.5px; padding:13px 14px; }
 }
+.task-context{
+  margin:0 0 12px;
+  font-size:15px;
+  line-height:1.55;
+  color:var(--ink-soft);
+}
 
 .given-box{
   background: var(--cream);
@@ -256,6 +262,7 @@ main.paper{
   color: var(--ink-soft);
 }
 .given-box strong{ color:var(--ink); }
+.given-note{ margin:11px 0 0; line-height:1.5; font-size:13px; }
 .given-grid{
   display:grid;
   grid-template-columns: repeat(auto-fit, minmax(130px,1fr));
@@ -330,9 +337,9 @@ main.paper{
   padding:9px 12px;
   border-radius:7px;
   border:1.5px solid var(--paper-edge);
-  width:150px;
+  width:190px;
   max-width:100%;
-  flex:0 1 150px;
+  flex:0 1 190px;
   background:#fff;
   color:var(--ink);
 }
@@ -469,7 +476,7 @@ footer.foot{
       <span class="kicker">Chemistry · Thermodynamics</span>
     </div>
     <h1>KSK - Chemistry - 3M - <em>Thermodynamics</em></h1>
-    <p class="sub">Work through the Reaction Enthalpy tasks and the Practical Calculations. Each task is broken into steps — if you get stuck, grab a guiding question as a hint before you check the solution.</p>
+    <p class="sub">Work through reaction enthalpy, practical calculations and industrial reactions using bond enthalpies. Each task is broken into steps — if you get stuck, grab a hint before you check the solution.</p>
     <div class="progress-shell">
       <span id="progressLabel">0 / 0 steps solved</span>
       <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
@@ -481,7 +488,7 @@ footer.foot{
     <main class="paper" id="mainPaper"></main>
   </div>
 
-  <footer class="foot">ΔH = Σ ΔH⁰f(products) − Σ ΔH⁰f(reactants)</footer>
+  <footer class="foot">Formation enthalpies: ΔH = Σ ΔH⁰f(products) − Σ ΔH⁰f(reactants) · Bond enthalpies: ΔH ≈ ΣD(broken) − ΣD(formed)</footer>
 </div>
 
 <script>
@@ -505,7 +512,7 @@ const DATA = {
             prompt:"Before you calculate: what is the general formula for finding a reaction enthalpy from enthalpies of formation?",
             hints:[
               "Think of the principle: first mentally break all reactants down into the elements, then build the products from those elements.",
-              "The formula has a sum for the product side and a sum for the reactant side — with a minus sign in between."
+              "Reversing a formation reaction changes its sign. Which side's sum must you subtract?"
             ],
             explanation:"ΔH = Σ ΔH⁰f(products) − Σ ΔH⁰f(reactants). Each term is multiplied by the amount of substance (the coefficients of the equation)."
           },
@@ -514,9 +521,9 @@ const DATA = {
             prompt:"Calculate ΔH for the equation exactly as written above (for 4 mol NH₃).",
             answer:-908,
             hints:[
-              "Work out the product side first: 4 mol·ΔHf(NO) + 6 mol·ΔHf(H₂O).",
-              "Product side: 4·(+90) + 6·(−242) = 360 − 1452 = −1092 kJ. Now the reactant side: 4·(−46) + 5·0 = −184 kJ.",
-              "ΔH = (−1092 kJ) − (−184 kJ). Work that out."
+              "Which coefficients belong to NO and H₂O on the product side?",
+              "Calculate weighted sums for products and reactants separately. Keep the signs of the given values.",
+              "Subtract the entire reactant sum from the product sum. What happens when you subtract a negative sum?"
             ],
             explanation:"ΔH = [4·90 + 6·(−242)] − [4·(−46) + 5·0] = (360 − 1452) − (−184) = −1092 + 184 = <b>−908 kJ</b>. Strongly exothermic."
           }
@@ -534,7 +541,7 @@ const DATA = {
             hints:[
               "How many mol of NH₃ does the ΔH from a) refer to? Look at the coefficient of NH₃ in the equation.",
               "Divide the ΔH from a) by exactly that amount of substance.",
-              "ΔH_molar = −908 kJ / 4 mol"
+              "Write the result per mole and retain the negative sign when dividing by a positive amount."
             ],
             explanation:"ΔH_molar = ΔH / n(NH₃) = −908 kJ / 4 mol = <b>−227 kJ/mol</b>."
           }
@@ -554,16 +561,16 @@ const DATA = {
             hints:[
               "How many mol of NH₃ appear in the combustion equation from a)?",
               "Multiply that amount of substance by ΔH⁰f(NH₃) = −46 kJ/mol.",
-              "4 mol · (−46 kJ/mol) = ?"
+              "Check the sign of the result: is heat released or absorbed?"
             ],
-            explanation:"4 mol · (−46 kJ/mol) = <b>−184 kJ</b>. The negative sign shows that forming NH₃ is exothermic — so no energy is actually <i>needed</i>; instead, 184 kJ are <i>released</i>. A good moment to watch the sign: the question about 'energy needed' assumes the formation is endothermic, which it isn't."
+            explanation:"4 mol · (−46 kJ/mol) = <b>−184 kJ</b>. The negative sign means that forming 4 mol NH₃ releases 184 kJ of heat."
           }
         ]
       },
       {
         id:"d", label:"d) ΔHf octane",
         heading:"d) Molar enthalpy of formation of octane",
-        equation:"2 C₈H₁₈ + 25 O₂  →  16 CO₂ + 18 H₂O     ΔH = −10144 kJ",
+        equation:"2 C₈H₁₈(l) + 25 O₂(g)  →  16 CO₂(g) + 18 H₂O(g)     ΔH = −10144 kJ",
         given:[["ΔH⁰f(CO₂)","−393 kJ/mol"],["ΔH⁰f(H₂O,g)","−242 kJ/mol"],["ΔH⁰f(O₂)","0 kJ/mol"],["ΔH⁰f(C₈H₁₈)","wanted"]],
         givenLabel:"ΔH⁰f values",
         steps:[
@@ -572,9 +579,9 @@ const DATA = {
             prompt:"Rearrange ΔH = ΣΔHf(products) − ΣΔHf(reactants) to solve for ΔH⁰f(C₈H₁₈) and calculate the value.",
             answer:-250,
             hints:[
-              "Write out the full formula for this equation first: ΔH = [16·ΔHf(CO₂) + 18·ΔHf(H₂O)] − [2·ΔHf(C₈H₁₈) + 25·0].",
-              "You can calculate the product side directly: 16·(−393) + 18·(−242) = −6288 − 4356 = −10644 kJ.",
-              "−10144 kJ = −10644 kJ − 2 mol·ΔHf(C₈H₁₈). Solve for ΔHf(C₈H₁₈) and divide by 2 mol."
+              "Call the unknown formation enthalpy x. Which coefficient multiplies x?",
+              "Calculate the product-side sum yourself before rearranging the equation.",
+              "Isolate the term containing x, then divide by the amount of octane in the equation."
             ],
             explanation:"2·ΔHf(C₈H₁₈) = −10644 kJ − (−10144 kJ) = −500 kJ  →  ΔHf(C₈H₁₈) = −500 kJ / 2 mol = <b>−250 kJ/mol</b>."
           }
@@ -592,21 +599,21 @@ const DATA = {
         heading:"1) Which is cheaper to heat with — natural gas or heating oil?",
         equation:"1 m³ natural gas: 1 CHF          100 L heating oil: 90 CHF, ρ = 0.84 g/cm³",
         hasInputs:true,
-        inputsIntro:"This task needs heating values from your infosheet. Enter them here (the natural gas value is usually a known reference figure; you'll need to look up the heating oil value yourself).",
+        inputsIntro:"Look up both heating values in your infosheet and enter positive numbers in the stated units.",
         inputs:[
-          {key:"huGas", label:"Heating value of natural gas per infosheet (MJ/m³)", placeholder:"e.g. 32", default:32},
-          {key:"huOil", label:"Heating value of heating oil per infosheet (MJ/kg)", placeholder:"look it up, e.g. 42–43", default:null}
+          {key:"huGas", label:"Heating value of natural gas per infosheet (MJ/m³)", placeholder:"look it up", default:null},
+          {key:"huOil", label:"Heating value of heating oil per infosheet (MJ/kg)", placeholder:"look it up", default:null}
         ],
         steps:[
           {
-            type:"dynamic", unit:"CHF/MJ", tolRel:0.06,
+            type:"dynamic", unit:"CHF/MJ", tolRel:0.02,
             prompt:"What does 1 MJ of energy from natural gas cost you?",
-            compute:(v)=> v.huGas ? 1/v.huGas : null,
+            compute:(v)=> v.huGas>0 ? 1/v.huGas : null,
             requires:["huGas"],
             hints:[
               "1 m³ of natural gas costs 1 CHF and delivers Hu(natural gas) MJ of energy, per the infosheet.",
               "Price per m³ divided by energy per m³ gives the price per MJ.",
-              "Cost = 1 CHF / Hu(natural gas)"
+              "Check that dividing CHF per m³ by MJ per m³ leaves CHF per MJ."
             ],
             explanation:(v)=>`Cost = 1 CHF / ${v.huGas} MJ ≈ <b>${(1/v.huGas).toFixed(4)} CHF/MJ</b>.`
           },
@@ -617,7 +624,7 @@ const DATA = {
             hints:[
               "Density is mass per volume: ρ = m/V.",
               "Rearrange for mass: m = ρ · V.",
-              "m = 0.84 kg/L · 100 L"
+              "Check that multiplying kg/L by L leaves kg."
             ],
             explanation:"m = ρ·V = 0.84 kg/L · 100 L = <b>84 kg</b>."
           },
@@ -628,19 +635,19 @@ const DATA = {
             hints:[
               "You know the price for 100 L (= 90 CHF) and the mass of those 100 L (from the previous step).",
               "Divide the total price by the total mass.",
-              "90 CHF / 84 kg"
+              "Check that dividing the total price by the total mass leaves CHF/kg."
             ],
             explanation:"90 CHF / 84 kg = <b>1.071 CHF/kg</b>."
           },
           {
-            type:"dynamic", unit:"CHF/MJ", tolRel:0.08,
+            type:"dynamic", unit:"CHF/MJ", tolRel:0.03,
             prompt:"What does 1 MJ of energy from heating oil cost you?",
-            compute:(v)=> v.huOil ? 1.0714/v.huOil : null,
+            compute:(v)=> v.huOil>0 ? 1.0714/v.huOil : null,
             requires:["huOil"],
             hints:[
               "You just calculated the price per kg — divide it by the heating value per kg.",
               "Cost per MJ = price per kg / Hu(heating oil in MJ/kg).",
-              "1.071 CHF/kg / Hu(heating oil)"
+              "Which unit cancels when you divide CHF/kg by MJ/kg?"
             ],
             explanation:(v)=>`Cost = 1.071 CHF/kg / ${v.huOil} MJ/kg ≈ <b>${(1.0714/v.huOil).toFixed(4)} CHF/MJ</b>.`
           },
@@ -657,7 +664,7 @@ const DATA = {
           },
           {
             type:"reflect",
-            prompt:"The task asks: which other costs would you have to factor in besides the pure heating value? Jot down a few keywords.",
+            prompt:"Which other costs would you have to factor in besides the fuel price per MJ? Jot down a few keywords.",
             sample:()=>"For example: the investment/connection cost of the heating system, maintenance and chimney-sweep fees, the efficiency of the heating system (not 100% of the energy ends up as usable heat in the room), tank cleaning/storage for oil, CO₂ levies, and price fluctuations or delivery costs."
           }
         ]
@@ -676,7 +683,7 @@ const DATA = {
             hints:[
               "Convert the molar volume to m³ first: 24 L = 0.024 m³.",
               "Multiply the volume-based calorific value by the volume occupied by 1 mol of gas.",
-              "32 MJ/m³ · 0.024 m³/mol = ? (result in MJ/mol, then convert to kJ/mol)"
+              "Check that the cubic-metre units cancel. Convert your result from MJ/mol to kJ/mol."
             ],
             explanation:"32 MJ/m³ · 0.024 m³/mol = 0.768 MJ/mol = <b>768 kJ/mol</b>."
           },
@@ -687,18 +694,18 @@ const DATA = {
             hints:[
               "Same approach as for natural gas: calorific value · volume per mole.",
               "24 L/mol = 0.024 m³/mol.",
-              "124 MJ/m³ · 0.024 m³/mol = ?"
+              "Does your intermediate result have units of MJ/mol? Convert it to kJ/mol."
             ],
             explanation:"124 MJ/m³ · 0.024 m³/mol = 2.976 MJ/mol ≈ <b>2976 kJ/mol</b>."
           },
           {
             type:"numeric", unit:"kJ/mol", tol:40,
-            prompt:"Ethanol is a liquid, so its calorific value is given per mass (29.7 MJ/kg). Calculate the molar heating value using M(ethanol) = 46.07 g/mol.",
+            prompt:"The infosheet gives ethanol's calorific value per mass (29.7 MJ/kg). Calculate the molar value using M(ethanol) = 46.07 g/mol.",
             answer:1368,
             hints:[
               "Convert the molar mass to kg first: 46.07 g/mol = 0.04607 kg/mol.",
               "Multiply the specific (mass-based) calorific value by the molar mass.",
-              "29.7 MJ/kg · 0.04607 kg/mol = ?"
+              "The kilograms should cancel. Convert your result from MJ/mol to kJ/mol."
             ],
             explanation:"29.7 MJ/kg · 0.04607 kg/mol = 1.368 MJ/mol ≈ <b>1368 kJ/mol</b>."
           },
@@ -732,7 +739,7 @@ const DATA = {
             hints:[
               "Product side: 2·ΔHf(CO₂) + 3·ΔHf(H₂O).",
               "Reactant side: 1·ΔHf(C₂H₅OH) (O₂ is an element, ΔHf=0).",
-              "ΔH = [2·(−393) + 3·(−242)] − [1·(−277)]"
+              "Subtract the entire reactant sum; be careful when that sum is negative."
             ],
             explanation:"ΔH = 2mol·(−393) + 3mol·(−242) − 1mol·(−277) = −786 − 726 + 277 = <b>−1235 kJ</b>."
           },
@@ -740,7 +747,7 @@ const DATA = {
             type:"numeric", unit:"g", tol:0.5,
             prompt:"How many grams is 1 mol of ethanol (M = 46.07 g/mol)?",
             answer:46.07,
-            hints:["n = m/M → rearrange for m.", "m = n · M", "m = 1 mol · 46.07 g/mol"],
+            hints:["What does molar mass tell you about the mass of one mole?", "Rearrange n = m/M to find m.", "Check that mol cancels and grams remain."],
             explanation:"m = 1 mol · 46.07 g/mol = <b>46.07 g</b>."
           },
           {
@@ -749,7 +756,7 @@ const DATA = {
             answer:26.8,
             hints:[
               "Divide the energy from step 2 (as a magnitude) by the mass from step 3.",
-              "1235 kJ / 46.07 g",
+              "Use the magnitude of the energy from step 2 and the mass from step 3.",
               "The result in kJ/g is numerically identical to MJ/kg."
             ],
             explanation:"1235 kJ / 46.07 g = <b>26.8 kJ/g = 26.8 MJ/kg</b>."
@@ -775,7 +782,7 @@ const DATA = {
             hints:[
               "You know the total amount and the price per kWh.",
               "Energy = amount / price per kWh.",
-              "666.67 CHF / 0.0525 CHF/kWh"
+              "Check that CHF cancels to leave kWh."
             ],
             explanation:"666.67 CHF / 0.0525 CHF/kWh ≈ <b>12,700 kWh</b>."
           },
@@ -786,7 +793,7 @@ const DATA = {
             hints:[
               "1 kWh corresponds to 3.6 MJ — which operation gets you from kWh to MJ?",
               "Multiply the kWh figure by 3.6.",
-              "12700 kWh · 3.6 MJ/kWh"
+              "Check that kWh cancels to leave MJ."
             ],
             explanation:"12,700 kWh · 3.6 MJ/kWh = <b>45,720 MJ</b>."
           },
@@ -797,14 +804,14 @@ const DATA = {
             hints:[
               "You now know the total energy (MJ) and the total volume (m³) from the bill.",
               "Divide the energy by the volume.",
-              "45720 MJ / 1200 m³"
+              "Check that your result is energy per cubic metre, not total energy."
             ],
             explanation:"45,720 MJ / 1200 m³ = <b>38.1 MJ/m³</b>."
           },
           {
             type:"reflect",
             prompt:"This value (38.1 MJ/m³) is higher than the heating value of natural gas tabulated on the infosheet (32 MJ/m³). How might that be explained?",
-            sample:()=>"Real natural gas is not pure methane — it often also contains higher alkanes such as ethane, propane or butane, which have a higher heating value per m³. The actual gas mix delivered can therefore be more energy-rich than the tabulated value for 'natural gas'. The tabulated value may also refer to slightly different standard measurement conditions (pressure, temperature) than the gas meter."
+            sample:()=>"Natural gas is a mixture, so its composition and calorific value vary. The reference conditions for the gas volume may also differ. This calculation works only if the whole bill was charged at the stated price per kWh; standing charges and levies would distort the result."
           }
         ]
       }
@@ -816,40 +823,40 @@ const DATA = {
     subtitle:"Wood heating & heat pump",
     subtasks:[
       {
-        id:"wood", label:"1) Wood heating",
+        id:"wood_ster", label:"1) Wood heating",
         heading:"1) How much can wood cost at most?",
-        equation:"1 Ster (= 1 m³) of wood, density of beech firewood: 750 kg/m³ — comparison with natural gas & heating oil from 'Practical Calculations'",
-        given:[["Density of beech firewood","750 kg/m³"],["Mass of 1 Ster","750 kg"]],
+        equation:"1 Ster (= 1 m³ stacked wood) contains 0.70 m³ solid beech wood; density of beech: 750 kg/m³ — compare with heating oil",
+        given:[["Solid wood in 1 Ster","0.70 m³"],["Density of beech","750 kg/m³"],["Wood mass","525 kg"]],
         givenLabel:"Given",
         hasInputs:true,
-        inputsIntro:"Check your infosheet: what is the specific calorific value of wood? Enter the value.",
+        inputsIntro:"Look up the specific calorific value of wood in your infosheet. Enter a positive value in MJ/kg.",
         inputs:[
           {key:"huWood", label:"Specific calorific value of wood per infosheet (MJ/kg)", placeholder:"look it up (approx. …)", default:null}
         ],
         steps:[
           {
-            type:"dynamic", unit:"MJ", tolRel:0.1,
-            prompt:"How much total energy does 1 Ster of wood (750 kg, beech density) deliver?",
-            compute:(v)=> v.huWood ? v.huWood*750 : null,
+            type:"dynamic", unit:"MJ", tolRel:0.02,
+            prompt:"How much total energy does 1 Ster containing 525 kg of wood deliver?",
+            compute:(v)=> v.huWood>0 ? v.huWood*525 : null,
             requires:["huWood"],
             hints:[
-              "The specific calorific value is given per kg — at this density, 1 Ster weighs 750 kg.",
-              "Energy = calorific value (MJ/kg) · mass (750 kg).",
-              "Multiply your entered value by 750."
+              "How much energy does one kilogram supply according to your infosheet value?",
+              "How do you scale that energy to the wood mass stated above?",
+              "Check that kilograms cancel, leaving MJ per Ster."
             ],
-            explanation:(v)=>`Energy = ${v.huWood} MJ/kg · 750 kg ≈ <b>${(v.huWood*750).toFixed(0)} MJ</b> per Ster.`
+            explanation:(v)=>`Wood mass = 0.70 m³ · 750 kg/m³ = 525 kg. Energy = ${v.huWood} MJ/kg · 525 kg ≈ <b>${(v.huWood*525).toFixed(0)} MJ</b> per Ster.`
           },
           {
-            type:"dynamic", unit:"CHF", tolRel:0.1,
+            type:"dynamic", unit:"CHF", tolRel:0.02,
             prompt:"In 'Practical Calculations', heating oil at ≈ 0.0259 CHF/MJ was the cheaper of the two heating options. So how much can 1 Ster of wood cost at most so that wood isn't more expensive than heating oil?",
-            compute:(v)=> v.huWood ? v.huWood*750*0.0259 : null,
+            compute:(v)=> v.huWood>0 ? v.huWood*525*0.0259 : null,
             requires:["huWood"],
             hints:[
               "You now know the energy per Ster (MJ) from the previous step.",
-              "Multiply that energy by the threshold price per MJ (0.0259 CHF/MJ, the heating oil value).",
-              "Max price = energy (MJ) · 0.0259 CHF/MJ"
+              "Relate the energy per Ster to the comparison price per MJ.",
+              "Which units cancel when you combine MJ per Ster with CHF per MJ?"
             ],
-            explanation:(v)=>`Max price = ${(v.huWood*750).toFixed(0)} MJ · 0.0259 CHF/MJ ≈ <b>${(v.huWood*750*0.0259).toFixed(0)} CHF</b> per Ster.`
+            explanation:(v)=>`Max price = ${(v.huWood*525).toFixed(0)} MJ · 0.0259 CHF/MJ ≈ <b>${(v.huWood*525*0.0259).toFixed(0)} CHF</b> per Ster (ignoring differences in heating efficiency).`
           },
           {
             type:"reflect",
@@ -861,7 +868,7 @@ const DATA = {
       {
         id:"heatpump", label:"2) Heat pump vs. gas",
         heading:"2) Is heating with a heat pump cheaper than with gas?",
-        equation:"A heat pump needs only 1/3 of the energy of a gas heating system for the same amount of heat      Electricity price: 30 Rp./kWh",
+        equation:"Model: 1 MJ of gas provides 1 MJ of useful heat; the heat pump provides 3 MJ of heat per 1 MJ of electricity. Electricity: 30 Rp./kWh",
         given:[["Electricity price","30 Rp./kWh = 0.30 CHF/kWh"],["1 kWh","3.6·10⁶ J = 3.6 MJ"],["Natural gas (from 'Practical Calculations')","≈ 0.0313 CHF/MJ"]],
         givenLabel:"Given",
         steps:[
@@ -872,25 +879,25 @@ const DATA = {
             hints:[
               "0.30 CHF/kWh is the price for 1 kWh of electrical energy.",
               "1 kWh corresponds to 3.6 MJ (i.e. 3.6·10⁶ J).",
-              "Cost per MJ = 0.30 CHF / 3.6 MJ"
+              "Which division leaves CHF/MJ as the unit?"
             ],
             explanation:"0.30 CHF / 3.6 MJ ≈ <b>0.0833 CHF/MJ</b>."
           },
           {
             type:"numeric", unit:"CHF/MJ", tol:0.002,
-            prompt:"The heat pump needs only 1/3 as much energy as a gas heating system for the same amount of heat. What does 1 MJ of heat from the heat pump cost you?",
+            prompt:"The heat pump provides 3 MJ of heat per 1 MJ of electricity. What does 1 MJ of heat cost?",
             answer:0.0278,
             hints:[
               "If only a third of the energy is needed, the same amount of heat also costs only a third as much.",
               "Divide the cost per MJ of electricity from the previous step by 3.",
-              "0.0833 CHF/MJ / 3"
+              "The cost per MJ of useful heat must be less than the cost per MJ of electricity."
             ],
             explanation:"0.0833 CHF/MJ / 3 ≈ <b>0.0278 CHF/MJ</b>."
           },
           {
             type:"reflect",
             prompt:"At this electricity price, is heating with the heat pump cheaper than with a gas heating system? Compare with the natural gas result (≈0.0313 CHF/MJ) from 'Practical Calculations'.",
-            sample:()=>"Heat pump ≈ 0.0278 CHF/MJ, natural gas ≈ 0.0313 CHF/MJ. Despite the higher price per MJ of electricity, the heat pump is cheaper because, thanks to its efficiency factor of 3, it delivers three times as much heat per unit of energy used."
+            sample:()=>"Heat pump ≈ 0.0278 CHF/MJ of heat; natural gas ≈ 0.0313 CHF/MJ of heat in this simplified model. The heat pump is cheaper because its coefficient of performance of 3 provides 3 MJ of heat per MJ of electricity. Real costs also depend on gas-boiler efficiency and the actual heat-pump performance."
           }
         ]
       }
@@ -913,22 +920,22 @@ const DATA = {
             prompt:"Calculate the reaction heat Q.",
             answer:5409,
             hints:[
-              "Formula: Q = c · m(water) · ΔT.",
-              "ΔT = 87.7°C − 23°C = 64.7 K.",
-              "Q = 4.18 J/(g·K) · 20 g · 64.7 K"
+              "Which material absorbs the heat measured in this experiment?",
+              "Use the water's mass and its temperature change in the heat equation.",
+              "Check that using c in J/(g·K), mass in g and ΔT in K gives Q in J."
             ],
             explanation:"Q = 4.18 J/(g·K) · 20 g · 64.7 K ≈ <b>5409 J ≈ 5.41 kJ</b>."
           },
           {
             type:"numeric", unit:"kJ/g (≈ MJ/kg)", tol:0.15,
-            prompt:"Give the specific calorific value (reaction heat per mass of walnuts).",
+            prompt:"Calculate the heat transferred to the water per gram of walnuts in this experiment.",
             answer:1.15,
             hints:[
-              "Specific calorific value = Q / m(walnuts).",
-              "Use Q from the last step (in kJ) and divide by 4.7 g.",
-              "5.41 kJ / 4.7 g"
+              "Which mass should you use to express the captured heat per gram of fuel?",
+              "Convert the captured heat from J to kJ before dividing.",
+              "Your result should have units of kJ/g; this has the same numerical value in MJ/kg."
             ],
-            explanation:"5.41 kJ / 4.7 g ≈ <b>1.15 kJ/g ≈ 1.15 MJ/kg</b>."
+            explanation:"5.41 kJ / 4.7 g ≈ <b>1.15 kJ/g ≈ 1.15 MJ/kg</b>. This is the fraction captured by the water, not the actual calorific value of walnuts."
           },
           {
             type:"reflect",
@@ -938,44 +945,44 @@ const DATA = {
         ]
       },
       {
-        id:"hcl", label:"2) Hydrochloric acid",
+        id:"hcl_real", label:"2) Hydrochloric acid",
         heading:"2) Enthalpy of solution of HCl gas",
-        equation:"70 mL of HCl gas dissolve in 1 L of water, which warms up by 15 K",
-        given:[["V(HCl gas)","70 mL"],["m(water)","1000 g (1 L)"],["ΔT","15 K"],["c(water)","4.18 J/(g·K)"],["Vm(gas, RT)","24 L/mol"]],
+        equation:"700 mL of HCl gas dissolve in 1 L of water, which warms up by 0.5 K",
+        given:[["V(HCl gas)","700 mL"],["m(water)","1000 g (1 L)"],["ΔT","0.5 K"],["c(water)","4.18 J/(g·K)"],["Vm(gas, RT)","24 L/mol"]],
         givenLabel:"Given",
         steps:[
           {
-            type:"numeric", unit:"kJ", tol:3,
-            prompt:"Calculate the reaction heat Q.",
-            answer:62.7,
+            type:"numeric", unit:"kJ", tol:0.12,
+            prompt:"Calculate the heat Q absorbed by the water (enter a positive value).",
+            answer:2.09,
             hints:[
-              "Formula: Q = c · m(water) · ΔT.",
-              "Watch the unit of m(water): 1 L of water = 1000 g.",
-              "Q = 4.18 J/(g·K) · 1000 g · 15 K"
+              "Whose temperature increase is measured?",
+              "Use the water's mass in grams with c in J/(g·K).",
+              "The heat equation first gives joules. Convert to kJ only after calculating."
             ],
-            explanation:"Q = 4.18 J/(g·K) · 1000 g · 15 K = 62700 J = <b>62.7 kJ</b>."
+            explanation:"Q = 4.18 J/(g·K) · 1000 g · 0.5 K = 2090 J = <b>2.09 kJ</b>."
           },
           {
-            type:"numeric", unit:"mol", tol:0.0003,
+            type:"numeric", unit:"mol", tol:0.0005,
             prompt:"How many mol of HCl gas were dissolved (Vm = 24 L/mol at RT)?",
-            answer:0.00292,
+            answer:0.02917,
             hints:[
-              "n = V / Vm.",
-              "Convert 70 mL to litres first: 70 mL = 0.070 L.",
-              "n = 0.070 L / 24 L/mol"
+              "Which equation connects a gas volume, its molar volume and the amount of substance?",
+              "Convert the gas volume into litres before using the given molar volume.",
+              "Check that your calculation leaves moles as the unit."
             ],
-            explanation:"n = 0.070 L / 24 L/mol ≈ <b>0.00292 mol</b> (2.92 mmol)."
+            explanation:"n = 0.700 L / 24 L/mol ≈ <b>0.0292 mol</b> (29.2 mmol)."
           },
           {
-            type:"numeric", unit:"kJ/mol", tol:1500,
-            prompt:"From this, calculate the molar enthalpy of solution ΔH_L of the gas (watch the sign: dissolving is exothermic).",
-            answer:-21500,
+            type:"numeric", unit:"kJ/mol", tol:5,
+            prompt:"Calculate the molar enthalpy of solution ΔH_L. Infer its sign from the warming of the water.",
+            answer:-71.7,
             hints:[
-              "ΔH_L = −Q / n (negative, since heat is released on dissolving).",
-              "Use Q from step 1 (in kJ) and n from step 2.",
-              "ΔH_L = −62.7 kJ / 0.00292 mol"
+              "If the water gains heat, what is the sign of the solution process's energy change?",
+              "Relate that energy change to the amount of HCl you calculated.",
+              "Check that the result has units of kJ/mol and a negative sign."
             ],
-            explanation:"ΔH_L = −62.7 kJ / 0.00292 mol ≈ <b>−21,500 kJ/mol</b>. Note: this magnitude looks very large because a tiny amount of gas (a few mmol) is here combined with a large heat quantity in a large amount of water — a typical effect when the numbers in an exercise don't exactly match a real experiment."
+            explanation:"ΔH_L = −2.09 kJ / 0.0292 mol ≈ <b>−71.7 kJ/mol</b>. The sign is negative because dissolving releases heat to the water."
           }
         ]
       },
@@ -988,7 +995,7 @@ const DATA = {
         steps:[
           {
             type:"text",
-            prompt:"First set up the reaction equation: biogas (CH₄) reacts with water to give carbon monoxide and hydrogen.",
+            prompt:"First set up the reaction equation: methane from biogas reacts with steam to form carbon monoxide and hydrogen.",
             hints:[
               "Methane has 4 H atoms; water brings one more O and 2 more H.",
               "Make sure all atoms balance at the end."
@@ -1002,7 +1009,7 @@ const DATA = {
             hints:[
               "Product side: 1·ΔHf(CO) + 3·ΔHf(H₂).",
               "Reactant side: 1·ΔHf(CH₄) + 1·ΔHf(H₂O).",
-              "ΔH = [−111 + 0] − [−74 − 242]"
+              "Subtract the reactant sum as a whole, including its negative signs."
             ],
             explanation:"ΔH = −111 − (−74) − (−242) = −111 + 74 + 242 = <b>+205 kJ</b>. The reaction is endothermic."
           },
@@ -1013,9 +1020,135 @@ const DATA = {
             hints:[
               "How many mol of H₂ are produced per reaction, according to the equation?",
               "Divide the reaction enthalpy by this amount of substance.",
-              "205 kJ / 3 mol"
+              "Check that dividing the reaction's energy by the H₂ produced gives kJ/mol."
             ],
             explanation:"205 kJ / 3 mol ≈ <b>68.3 kJ/mol</b> H₂."
+          }
+        ]
+      }
+    ]
+  },
+
+  bondEnthalpy: {
+    title:"Industrial Bond Enthalpies",
+    subtitle:"Natural gas → hydrogen → ammonia",
+    subtasks:[
+      {
+        id:"reforming", label:"1) Steam reforming",
+        heading:"1) Hydrogen from natural gas: steam reforming",
+        context:"Industrial steam reforming converts methane from natural gas and steam into synthesis gas. Its hydrogen can be separated or used to make other chemicals.",
+        equation:"CH₄(g) + H₂O(g)  →  CO(g) + 3 H₂(g)",
+        given:[["C–H","413 kJ/mol"],["O–H","463 kJ/mol"],["C≡O in CO","1077 kJ/mol"],["H–H","436 kJ/mol"]],
+        givenLabel:"Molar standard bond enthalpies (see table)",
+        givenNote:"All listed bond values are positive. For gaseous molecules, ΔH ≈ ΣD(bonds broken) − ΣD(bonds formed). Equivalently, add the broken-bond values as positive and the formed-bond values as negative.",
+        steps:[
+          {
+            type:"text",
+            prompt:"List the bonds broken in the reactants and the bonds formed in the products. Include the coefficients in the equation.",
+            hints:["How many C–H bonds are in one CH₄ molecule, and O–H bonds in one H₂O molecule?","Draw the products. Remember that the coefficient before H₂ counts molecules, not bonds in one molecule."],
+            explanation:"Broken: 4 C–H and 2 O–H. Formed: 1 C≡O (in CO) and 3 H–H."
+          },
+          {
+            type:"numeric", unit:"kJ", tol:2,
+            prompt:"How much energy is needed to break all bonds on the reactant side, for the reaction as written?",
+            answer:2578,
+            hints:["Multiply each bond enthalpy by the number of that bond.","Check that the C–H bonds in methane and O–H bonds in water are both included."],
+            explanation:"ΣD(broken) = 4·413 + 2·463 = <b>2578 kJ</b>."
+          },
+          {
+            type:"numeric", unit:"kJ", tol:2,
+            prompt:"What is the sum of the positive bond enthalpies for all bonds formed?",
+            answer:2385,
+            hints:["Use the C≡O value for CO from the table.","How many H–H bonds are formed according to the coefficient of H₂?"],
+            explanation:"ΣD(formed) = 1077 + 3·436 = <b>2385 kJ</b>. Bond formation releases this amount of energy."
+          },
+          {
+            type:"numeric", unit:"kJ", tol:2,
+            prompt:"Calculate ΔH for steam reforming using the bond enthalpies. Is the reaction endothermic or exothermic?",
+            answer:193,
+            hints:["Subtract the positive formed-bond sum from the broken-bond sum.","If breaking bonds requires more energy than formation releases, which sign should ΔH have?"],
+            explanation:"ΔH ≈ 2578 − 2385 = <b>+193 kJ</b> for the equation as written: endothermic. With signed contributions, the same calculation is 2578 + (−2385)."
+          }
+        ]
+      },
+      {
+        id:"shift", label:"2) Water-gas shift",
+        heading:"2) More hydrogen: the water-gas shift reaction",
+        context:"After steam reforming, the water-gas shift reaction converts carbon monoxide and steam into more hydrogen and carbon dioxide. This step increases the hydrogen yield.",
+        equation:"CO(g) + H₂O(g)  →  CO₂(g) + H₂(g)",
+        given:[["C≡O in CO","1077 kJ/mol"],["O–H","463 kJ/mol"],["C=O","745 kJ/mol"],["H–H","436 kJ/mol"]],
+        givenLabel:"Molar standard bond enthalpies (see table)",
+        givenNote:"Use the table's generic C=O value for each of the two bonds in CO₂. All values are positive: ΔH ≈ ΣD(broken) − ΣD(formed). Average bond values can be inaccurate for particular molecules.",
+        steps:[
+          {
+            type:"text",
+            prompt:"List all the bonds broken and formed. How many C=O bonds are there in one CO₂ molecule?",
+            hints:["Draw the bonds in CO and H₂O before looking at the products.","Draw CO₂ as O=C=O. How many double bonds does that show?"],
+            explanation:"Broken: 1 C≡O (in CO), 2 O–H. Formed: 2 C=O (in CO₂), 1 H–H."
+          },
+          {
+            type:"numeric", unit:"kJ", tol:2,
+            prompt:"Calculate the sum of the positive bond enthalpies for bonds broken.",
+            answer:2003,
+            hints:["Which bonds are present in CO and H₂O?", "Count each O–H bond in the water molecule separately."],
+            explanation:"ΣD(broken) = 1077 + 2·463 = <b>2003 kJ</b>."
+          },
+          {
+            type:"numeric", unit:"kJ", tol:2,
+            prompt:"Calculate the sum of the positive bond enthalpies for bonds formed.",
+            answer:1926,
+            hints:["Which bonds are present in CO₂ and H₂?","Use the table's generic C=O value for every C=O bond you counted."],
+            explanation:"ΣD(formed) = 2·745 + 436 = <b>1926 kJ</b>."
+          },
+          {
+            type:"numeric", unit:"kJ", tol:2,
+            prompt:"Calculate ΔH using the bond enthalpies in the table.",
+            answer:77,
+            hints:["Subtract the formed-bond sum from the broken-bond sum.","Keep the sign of the difference; you will compare this approximation with another method next."],
+            explanation:"Using these average bond values, ΔH ≈ 2003 − 1926 = <b>+77 kJ</b>. Compare this result with formation enthalpies in the next step."
+          },
+          {
+            type:"reflect",
+            prompt:"The formation enthalpies in the table are ΔH⁰f(CO) = −111, ΔH⁰f(H₂O,g) = −242, ΔH⁰f(CO₂) = −393 and ΔH⁰f(H₂) = 0 kJ/mol. Compare the reaction enthalpy from these values with your bond-enthalpy calculation. What does the difference teach you?",
+            sample:()=>"From formation enthalpies: ΔH = [−393 + 0] − [−111 + (−242)] = −40 kJ. The bond-enthalpy estimate above is +77 kJ because the table uses an average C=O value; a molecule-specific bond value for CO₂ is different. Average bond enthalpies are estimates and can even predict the wrong sign."
+          }
+        ]
+      },
+      {
+        id:"haber", label:"3) Ammonia synthesis",
+        heading:"3) Using hydrogen: ammonia synthesis",
+        context:"The Haber–Bosch process combines nitrogen from air with hydrogen to produce ammonia, an important starting material for fertilisers.",
+        equation:"N₂(g) + 3 H₂(g)  →  2 NH₃(g)",
+        given:[["N≡N","945 kJ/mol"],["H–H","436 kJ/mol"],["N–H","391 kJ/mol"]],
+        givenLabel:"Molar standard bond enthalpies (see table)",
+        givenNote:"Count bonds in all molecules on both sides of the equation. Use positive table values and subtract the formed-bond sum (or add it with a negative sign).",
+        steps:[
+          {
+            type:"text",
+            prompt:"List the bonds broken and formed. How many N–H bonds are formed in two NH₃ molecules?",
+            hints:["Draw N₂ and one H₂ molecule, then apply the coefficient before H₂.","How many N–H bonds are in one NH₃ molecule, and how many NH₃ molecules form?"],
+            explanation:"Broken: 1 N≡N and 3 H–H. Formed: 2·3 = 6 N–H bonds."
+          },
+          {
+            type:"numeric", unit:"kJ", tol:2,
+            prompt:"Calculate the sum of the positive bond enthalpies for bonds broken.",
+            answer:2253,
+            hints:["Include every hydrogen molecule in the balanced equation.","Check how many N≡N and H–H bonds break in total."],
+            explanation:"ΣD(broken) = 945 + 3·436 = <b>2253 kJ</b>."
+          },
+          {
+            type:"numeric", unit:"kJ", tol:2,
+            prompt:"Calculate the sum of the positive bond enthalpies for bonds formed.",
+            answer:2346,
+            hints:["Count the N–H bonds in one NH₃ molecule.","Multiply by the number of NH₃ molecules formed."],
+            explanation:"ΣD(formed) = 6·391 = <b>2346 kJ</b>."
+          },
+          {
+            type:"numeric", unit:"kJ", tol:2,
+            prompt:"Calculate ΔH for the reaction as written using the bond enthalpies. What does its sign mean?",
+            answer:-93,
+            hints:["Subtract the formed-bond sum from the broken-bond sum.","If forming bonds releases more energy than breaking them requires, which sign should ΔH have?"],
+            explanation:"ΔH ≈ 2253 − 2346 = <b>−93 kJ</b> for the production of 2 mol NH₃. The negative sign means that the reaction releases energy: it is exothermic."
           }
         ]
       }
@@ -1023,7 +1156,7 @@ const DATA = {
   }
 };
 
-const GROUP_ORDER = ["reaction","practical","followup","moreEnthalpy"];
+const GROUP_ORDER = ["reaction","practical","followup","moreEnthalpy","bondEnthalpy"];
 
 /* =========================================================
    STATE
@@ -1034,6 +1167,7 @@ let state = {
   stepIndex:0,
   solved:{},      // key "group:subId:stepIdx" -> true
   hintLevel:{},   // key -> number of hints shown
+  drafts:{},      // keep entered answers when a hint rerenders a step
   inputs:{}       // key "group:subId:inputKey" -> value
 };
 
@@ -1058,10 +1192,16 @@ async function saveProgress(){
 function stepKey(g,subId,i){ return g+":"+subId+":"+i; }
 function inputKey(g,subId,k){ return g+":"+subId+":"+k; }
 
-function parseNum(str){
+function parseNum(str, expected=null){
   if(str===undefined||str===null) return NaN;
-  const cleaned = String(str).trim().replace(/'/g,"").replace(",",".");
-  return parseFloat(cleaned);
+  const raw = String(str).trim().replace(/[\s']/g,"").replace(/[−–]/g,"-");
+  const candidates=[];
+  const decimal=raw.replace(",",".");
+  if(/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?$/i.test(decimal)) candidates.push(Number(decimal));
+  if(/^[+-]?\d{1,3}(?:[.,]\d{3})+$/.test(raw)) candidates.push(Number(raw.replace(/[.,]/g,"")));
+  if(!candidates.length) return NaN;
+  if(Number.isFinite(expected)) candidates.sort((a,b)=>Math.abs(a-expected)-Math.abs(b-expected));
+  return candidates[0];
 }
 
 function totalStepsCount(){
@@ -1074,7 +1214,11 @@ function totalStepsCount(){
   return n;
 }
 function solvedStepsCount(){
-  return Object.values(state.solved).filter(Boolean).length;
+  let count=0;
+  GROUP_ORDER.forEach(g=>DATA[g].subtasks.forEach(st=>st.steps.forEach((_,i)=>{
+    if(state.solved[stepKey(g,st.id,i)]) count++;
+  })));
+  return count;
 }
 
 /* =========================================================
@@ -1166,6 +1310,13 @@ function renderMain(){
   head.appendChild(navBtns);
   main.appendChild(head);
 
+  if(st.context){
+    const context = document.createElement("p");
+    context.className = "task-context";
+    context.textContent = st.context;
+    main.appendChild(context);
+  }
+
   // equation
   if(st.equation){
     const eq = document.createElement("div");
@@ -1189,6 +1340,12 @@ function renderMain(){
       grid.appendChild(span);
     });
     gb.appendChild(grid);
+    if(st.givenNote){
+      const note = document.createElement("p");
+      note.className = "given-note";
+      note.textContent = st.givenNote;
+      gb.appendChild(note);
+    }
     main.appendChild(gb);
   }
 
@@ -1213,9 +1370,9 @@ function renderMain(){
       const key = inputKey(state.group, st.id, inp.key);
       const existing = state.inputs[key] !== undefined ? state.inputs[key] : inp.default;
       if(existing!==null && existing!==undefined) input.value = existing;
-      input.addEventListener("change", ()=>{
+      input.addEventListener("input", ()=>{
         const val = parseNum(input.value);
-        state.inputs[key] = isNaN(val) ? null : val;
+        state.inputs[key] = Number.isFinite(val) && val>0 ? val : null;
         saveProgress();
         renderStep();
       });
@@ -1276,6 +1433,8 @@ function renderStep(){
     input.type = "text";
     input.id = "answerInput";
     input.placeholder = "enter a number";
+    input.value = state.drafts[key] || "";
+    input.addEventListener("input", ()=>{ state.drafts[key] = input.value; });
     const unit = document.createElement("span");
     unit.className = "unit-tag";
     unit.textContent = step.unit || "";
@@ -1286,7 +1445,7 @@ function renderStep(){
     let vals = {};
     if(step.type === "dynamic"){
       vals = getInputValues(st);
-      const missing = (step.requires||[]).some(r=> vals[r]===null || vals[r]===undefined || isNaN(vals[r]));
+      const missing = (step.requires||[]).some(r=> !Number.isFinite(vals[r]) || vals[r]<=0);
       if(missing){
         checkBtn.disabled = true;
         input.disabled = true;
@@ -1295,18 +1454,17 @@ function renderStep(){
     }
 
     checkBtn.addEventListener("click", ()=>{
-      const userVal = parseNum(input.value);
+      const expected = step.type==="dynamic" ? step.compute(vals) : step.answer;
+      const userVal = parseNum(input.value, expected);
       if(isNaN(userVal)){
         showFeedback(feedback, false, "Enter a number first.");
         return;
       }
-      let expected, ok;
+      let ok;
       if(step.type==="dynamic"){
-        expected = step.compute(vals);
         const tolAbs = expected!==null ? Math.abs(expected)*step.tolRel + 0.001 : 0;
         ok = expected!==null && Math.abs(userVal-expected) <= tolAbs;
       } else {
-        expected = step.answer;
         ok = Math.abs(userVal-expected) <= step.tol;
       }
       if(ok){
@@ -1326,6 +1484,12 @@ function renderStep(){
   }
 
   if(step.type === "text"){
+    const area = document.createElement("textarea");
+    area.className = "reflect-area";
+    area.placeholder = "Write your equation or answer here …";
+    area.value = state.drafts[key] || "";
+    area.addEventListener("input", ()=>{ state.drafts[key] = area.value; });
+    wrap.appendChild(area);
     const row = document.createElement("div");
     row.className = "answer-row";
     const tryBtn = document.createElement("button");
@@ -1346,6 +1510,8 @@ function renderStep(){
     const area = document.createElement("textarea");
     area.className = "reflect-area";
     area.placeholder = "Jot down your thoughts here …";
+    area.value = state.drafts[key] || "";
+    area.addEventListener("input", ()=>{ state.drafts[key] = area.value; });
     wrap.appendChild(area);
     const row = document.createElement("div");
     row.className = "answer-row";
@@ -1401,15 +1567,15 @@ function renderStep(){
 
   // explanation (revealed on correct / on request)
   const explainDiv = document.createElement("div");
-  explainDiv.className = "explain-block" + (solved ? " show" : "");
+  explainDiv.className = "explain-block" + (solved && step.type!=="reflect" ? " show" : "");
   explainDiv.id = "explainBlock";
-  if(solved){
+  if(solved && step.type!=="reflect"){
     const vals = getInputValues(st);
     explainDiv.innerHTML = "<b>Solution: </b>" + (typeof step.explanation==="function" ? step.explanation(vals) : step.explanation);
   }
   wrap.appendChild(explainDiv);
 
-  if(!solved){
+  if(!solved && step.type!=="reflect"){
     const giveUpRow = document.createElement("div");
     giveUpRow.style.cssText = "margin-top:12px;";
     const giveUp = document.createElement("button");
