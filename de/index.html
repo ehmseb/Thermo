@@ -229,6 +229,12 @@ main.paper{
   white-space:pre-wrap;
 }
 .equation-box .dH{ color: var(--flame2); }
+.task-context{
+  margin:0 0 12px;
+  font-size:15px;
+  line-height:1.55;
+  color:var(--ink-soft);
+}
 
 .given-box{
   background: var(--cream);
@@ -240,6 +246,7 @@ main.paper{
   color: var(--ink-soft);
 }
 .given-box strong{ color:var(--ink); }
+.given-note{ margin:11px 0 0; line-height:1.5; font-size:13px; }
 .given-grid{
   display:grid;
   grid-template-columns: repeat(auto-fit, minmax(130px,1fr));
@@ -439,7 +446,7 @@ footer.foot{
       <span class="kicker">Chemie · Thermodynamik</span>
     </div>
     <h1>KSK - Chemie - 3M - <em>Thermodynamik</em></h1>
-    <p class="sub">Arbeite dich durch die Aufgaben Reaktionsenthalpien und die Praktischen Rechnungen. Jede Aufgabe ist in Schritte zerlegt — wenn du nicht weiterkommst, hol dir eine Gegenfrage als Tipp, bevor du die Lösung ansiehst.</p>
+    <p class="sub">Übe Reaktionsenthalpien, praktische Rechnungen und industrielle Reaktionen mit Bindungsenthalpien. Jede Aufgabe ist in Schritte zerlegt — wenn du nicht weiterkommst, hol dir eine Gegenfrage als Tipp, bevor du die Lösung ansiehst.</p>
     <div class="progress-shell">
       <span id="progressLabel">0 / 0 Schritte gelöst</span>
       <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
@@ -451,7 +458,7 @@ footer.foot{
     <main class="paper" id="mainPaper"></main>
   </div>
 
-  <footer class="foot">Thermodynamik · Reaktionsenthalpien und Energie im Alltag</footer>
+  <footer class="foot">Bildungsenthalpien: ΔH = ΣΔH⁰f(Produkte) − ΣΔH⁰f(Edukte) · Bindungsenthalpien: ΔH ≈ ΣD(gespalten) − ΣD(gebildet)</footer>
 </div>
 
 <script>
@@ -1000,10 +1007,172 @@ const DATA = {
         ]
       }
     ]
+  },
+
+  bondEnthalpy: {
+    title:"Industrielle Bindungsenthalpien",
+    subtitle:"Erdgas → Wasserstoff → Ammoniak",
+    subtasks:[
+      {
+        id:"reforming", label:"1) Dampfreformierung",
+        heading:"1) Wasserstoff aus Erdgas: Dampfreformierung",
+        context:"Bei der industriellen Dampfreformierung werden Methan aus Erdgas und Wasserdampf zu Synthesegas umgesetzt. Der Wasserstoff kann abgetrennt oder zur Herstellung weiterer Chemikalien verwendet werden.",
+        equation:"CH₄(g) + H₂O(g)  →  CO(g) + 3 H₂(g)",
+        given:[["C–H","413 kJ/mol"],["O–H","463 kJ/mol"],["C≡O in CO","1077 kJ/mol"],["H–H","436 kJ/mol"]],
+        givenLabel:"Molare Standard-Bindungsenthalpien (siehe Tabelle)",
+        givenNote:"Alle angegebenen Bindungsenthalpien sind positiv. Für gasförmige Moleküle gilt näherungsweise ΔH ≈ ΣD(gespaltene Bindungen) − ΣD(gebildete Bindungen). Gleichwertig: Werte für gespaltene Bindungen positiv, für gebildete Bindungen negativ einsetzen und addieren.",
+        steps:[
+          {
+            type:"text",
+            prompt:"Zähle die gespaltenen Bindungen der Edukte und die gebildeten Bindungen der Produkte. Berücksichtige die Koeffizienten der Reaktionsgleichung.",
+            hints:[
+              "Wie viele C–H-Bindungen hat ein CH₄-Molekül, wie viele O–H-Bindungen ein H₂O-Molekül?",
+              "Zeichne die Produkte. Der Koeffizient vor H₂ gibt die Zahl der Moleküle an."
+            ],
+            explanation:"Gespalten: 4 C–H- und 2 O–H-Bindungen. Gebildet: 1 C≡O-Bindung (in CO) und 3 H–H-Bindungen."
+          },
+          {
+            type:"numeric", unit:"kJ", tol:2,
+            prompt:"Wie viel Energie wird zum Spalten aller Bindungen auf der Eduktseite für die Reaktion wie angegeben benötigt?",
+            answer:2578,
+            hints:[
+              "Multipliziere jede Bindungsenthalpie mit der Anzahl dieser Bindungen.",
+              "Sind sowohl die C–H-Bindungen im Methan als auch die O–H-Bindungen im Wasser enthalten?"
+            ],
+            explanation:"ΣD(gespalten) = 4·413 + 2·463 = <b>2578 kJ</b>."
+          },
+          {
+            type:"numeric", unit:"kJ", tol:2,
+            prompt:"Wie gross ist die Summe der positiven Bindungsenthalpien aller gebildeten Bindungen?",
+            answer:2385,
+            hints:[
+              "Verwende für CO den C≡O-Wert aus der Tabelle.",
+              "Wie viele H–H-Bindungen entstehen laut dem Koeffizienten vor H₂?"
+            ],
+            explanation:"ΣD(gebildet) = 1077 + 3·436 = <b>2385 kJ</b>. Beim Bilden dieser Bindungen wird Energie frei."
+          },
+          {
+            type:"numeric", unit:"kJ", tol:2,
+            prompt:"Berechne ΔH für die Dampfreformierung mit Bindungsenthalpien. Ist die Reaktion endotherm oder exotherm?",
+            answer:193,
+            hints:[
+              "Ziehe die positive Summe der gebildeten Bindungen von der Summe der gespaltenen Bindungen ab.",
+              "Welches Vorzeichen erwartest du, wenn das Spalten mehr Energie benötigt, als beim Bilden frei wird?"
+            ],
+            explanation:"ΔH ≈ 2578 − 2385 = <b>+193 kJ</b> für die Reaktion wie angegeben: endotherm. Mit vorzeichenbehafteten Beiträgen erhältst du dasselbe Ergebnis aus 2578 + (−2385)."
+          }
+        ]
+      },
+      {
+        id:"shift", label:"2) Wassergas-Shift",
+        heading:"2) Weiterer Wasserstoff: die Wassergas-Shift-Reaktion",
+        context:"Nach der Dampfreformierung wird Kohlenstoffmonoxid mit Wasserdampf zu Kohlenstoffdioxid und weiterem Wasserstoff umgesetzt. Dieser Schritt erhöht die Wasserstoffausbeute.",
+        equation:"CO(g) + H₂O(g)  →  CO₂(g) + H₂(g)",
+        given:[["C≡O in CO","1077 kJ/mol"],["O–H","463 kJ/mol"],["C=O","745 kJ/mol"],["H–H","436 kJ/mol"]],
+        givenLabel:"Molare Standard-Bindungsenthalpien (siehe Tabelle)",
+        givenNote:"Verwende den allgemeinen C=O-Wert aus der Tabelle für jede der beiden Bindungen in CO₂. Alle Werte sind positiv: ΔH ≈ ΣD(gespalten) − ΣD(gebildet). Mittlere Bindungsenthalpien können für einzelne Moleküle ungenau sein.",
+        steps:[
+          {
+            type:"text",
+            prompt:"Zähle alle gespaltenen und gebildeten Bindungen. Wie viele C=O-Bindungen enthält ein CO₂-Molekül?",
+            hints:[
+              "Zeichne zunächst die Bindungen in CO und H₂O.",
+              "Stelle CO₂ als O=C=O dar. Wie viele Doppelbindungen sind darin zu sehen?"
+            ],
+            explanation:"Gespalten: 1 C≡O-Bindung (in CO) und 2 O–H-Bindungen. Gebildet: 2 C=O-Bindungen (in CO₂) und 1 H–H-Bindung."
+          },
+          {
+            type:"numeric", unit:"kJ", tol:2,
+            prompt:"Berechne die Summe der positiven Bindungsenthalpien für die gespaltenen Bindungen.",
+            answer:2003,
+            hints:[
+              "Welche Bindungen liegen in CO und H₂O vor?",
+              "Zähle jede O–H-Bindung im Wassermolekül einzeln."
+            ],
+            explanation:"ΣD(gespalten) = 1077 + 2·463 = <b>2003 kJ</b>."
+          },
+          {
+            type:"numeric", unit:"kJ", tol:2,
+            prompt:"Berechne die Summe der positiven Bindungsenthalpien für die gebildeten Bindungen.",
+            answer:1926,
+            hints:[
+              "Welche Bindungen liegen in CO₂ und H₂ vor?",
+              "Verwende den allgemeinen C=O-Wert für jede gezählte C=O-Bindung."
+            ],
+            explanation:"ΣD(gebildet) = 2·745 + 436 = <b>1926 kJ</b>."
+          },
+          {
+            type:"numeric", unit:"kJ", tol:2,
+            prompt:"Berechne ΔH mit den Bindungsenthalpien aus der Tabelle.",
+            answer:77,
+            hints:[
+              "Ziehe die Summe der gebildeten Bindungen von der Summe der gespaltenen Bindungen ab.",
+              "Behalte das Vorzeichen der Differenz bei; im nächsten Schritt vergleichst du mit einer anderen Methode."
+            ],
+            explanation:"Mit diesen mittleren Bindungsenthalpien ergibt sich ΔH ≈ 2003 − 1926 = <b>+77 kJ</b>. Vergleiche den Wert im nächsten Schritt mit dem Ergebnis aus Bildungsenthalpien."
+          },
+          {
+            type:"reflect",
+            prompt:"In der Tabelle stehen ΔH⁰f(CO) = −111, ΔH⁰f(H₂O,g) = −242, ΔH⁰f(CO₂) = −393 und ΔH⁰f(H₂) = 0 kJ/mol. Berechne damit die Reaktionsenthalpie und vergleiche sie mit deiner Rechnung aus Bindungsenthalpien. Was zeigt dir der Unterschied?",
+            sample:()=>"Aus den Bildungsenthalpien: ΔH = [−393 + 0] − [−111 + (−242)] = −40 kJ. Die Abschätzung mit den angegebenen Bindungsenthalpien liefert dagegen +77 kJ. Der allgemeine C=O-Wert ist ein Mittelwert; die Bindung in CO₂ kann davon abweichen. Eine Rechnung mit mittleren Bindungsenthalpien ist eine Näherung und kann sogar das falsche Vorzeichen ergeben."
+          }
+        ]
+      },
+      {
+        id:"haber", label:"3) Ammoniaksynthese",
+        heading:"3) Wasserstoff nutzen: Ammoniaksynthese",
+        context:"Im Haber-Bosch-Verfahren werden Stickstoff aus der Luft und Wasserstoff zu Ammoniak umgesetzt. Ammoniak ist ein wichtiger Ausgangsstoff für Düngemittel.",
+        equation:"N₂(g) + 3 H₂(g)  →  2 NH₃(g)",
+        given:[["N≡N","945 kJ/mol"],["H–H","436 kJ/mol"],["N–H","391 kJ/mol"]],
+        givenLabel:"Molare Standard-Bindungsenthalpien (siehe Tabelle)",
+        givenNote:"Zähle die Bindungen in allen Molekülen auf beiden Seiten der Gleichung. Verwende positive Tabellenwerte und ziehe die Summe der gebildeten Bindungen ab (oder addiere sie mit negativem Vorzeichen).",
+        steps:[
+          {
+            type:"text",
+            prompt:"Zähle die gespaltenen und gebildeten Bindungen. Wie viele N–H-Bindungen entstehen in zwei NH₃-Molekülen?",
+            hints:[
+              "Zeichne N₂ und ein H₂-Molekül und berücksichtige dann den Koeffizienten vor H₂.",
+              "Wie viele N–H-Bindungen hat ein NH₃-Molekül, und wie viele NH₃-Moleküle entstehen?"
+            ],
+            explanation:"Gespalten: 1 N≡N- und 3 H–H-Bindungen. Gebildet: 2·3 = 6 N–H-Bindungen."
+          },
+          {
+            type:"numeric", unit:"kJ", tol:2,
+            prompt:"Berechne die Summe der positiven Bindungsenthalpien für die gespaltenen Bindungen.",
+            answer:2253,
+            hints:[
+              "Berücksichtige alle Wasserstoffmoleküle der ausgeglichenen Gleichung.",
+              "Wie viele N≡N- und H–H-Bindungen werden insgesamt gespalten?"
+            ],
+            explanation:"ΣD(gespalten) = 945 + 3·436 = <b>2253 kJ</b>."
+          },
+          {
+            type:"numeric", unit:"kJ", tol:2,
+            prompt:"Berechne die Summe der positiven Bindungsenthalpien für die gebildeten Bindungen.",
+            answer:2346,
+            hints:[
+              "Zähle die N–H-Bindungen in einem NH₃-Molekül.",
+              "Multipliziere mit der Anzahl der gebildeten NH₃-Moleküle."
+            ],
+            explanation:"ΣD(gebildet) = 6·391 = <b>2346 kJ</b>."
+          },
+          {
+            type:"numeric", unit:"kJ", tol:2,
+            prompt:"Berechne ΔH mit Bindungsenthalpien für die Reaktion wie angegeben. Was bedeutet das Vorzeichen?",
+            answer:-93,
+            hints:[
+              "Ziehe die Summe der gebildeten Bindungen von der Summe der gespaltenen Bindungen ab.",
+              "Welches Vorzeichen ergibt sich, wenn beim Bilden der Bindungen mehr Energie frei wird, als ihr Spalten benötigt?"
+            ],
+            explanation:"ΔH ≈ 2253 − 2346 = <b>−93 kJ</b> für die Bildung von 2 mol NH₃. Das negative Vorzeichen bedeutet: Die Reaktion setzt Energie frei und ist exotherm."
+          }
+        ]
+      }
+    ]
   }
 };
 
-const GROUP_ORDER = ["reaction","practical","followup","moreEnthalpy"];
+const GROUP_ORDER = ["reaction","practical","followup","moreEnthalpy","bondEnthalpy"];
 
 /* =========================================================
    STATE
@@ -1161,6 +1330,13 @@ function renderMain(){
   head.appendChild(navBtns);
   main.appendChild(head);
 
+  if(st.context){
+    const context = document.createElement("p");
+    context.className = "task-context";
+    context.textContent = st.context;
+    main.appendChild(context);
+  }
+
   // equation
   if(st.equation){
     const eq = document.createElement("div");
@@ -1184,6 +1360,12 @@ function renderMain(){
       grid.appendChild(span);
     });
     gb.appendChild(grid);
+    if(st.givenNote){
+      const note = document.createElement("p");
+      note.className = "given-note";
+      note.textContent = st.givenNote;
+      gb.appendChild(note);
+    }
     main.appendChild(gb);
   }
 
@@ -1354,6 +1536,7 @@ function renderStep(){
     const tryBtn = document.createElement("button");
     tryBtn.className = "action";
     tryBtn.textContent = "Ich habe eine Antwort — Lösung zeigen";
+    tryBtn.classList.add("show-answer-trigger");
     tryBtn.addEventListener("click", ()=>{
       state.solved[key] = true;
       saveProgress();
@@ -1361,8 +1544,7 @@ function renderStep(){
       renderNav(); renderProgress();
       updateFooterDots();
     });
-    row.appendChild(tryBtn);
-    wrap.appendChild(row);
+    if(!solved){ row.appendChild(tryBtn); wrap.appendChild(row); }
   }
 
   if(step.type === "reflect"){
@@ -1436,6 +1618,7 @@ function renderStep(){
 
   if(!solved && (step.type === "numeric" || step.type === "dynamic")){
     const giveUpRow = document.createElement("div");
+    giveUpRow.className = "give-up-row";
     giveUpRow.style.cssText = "margin-top:12px;";
     const giveUp = document.createElement("button");
     giveUp.className = "action ghost";
@@ -1499,6 +1682,8 @@ function revealExplanation(step, vals){
   if(!block) return;
   block.classList.add("show");
   block.innerHTML = "<b>Lösung: </b>" + (typeof step.explanation==="function" ? step.explanation(vals) : step.explanation);
+  document.querySelector("#stepWrap .give-up-row")?.remove();
+  document.querySelector("#stepWrap .show-answer-trigger")?.parentElement?.remove();
 }
 
 function updateFooterDots(){
